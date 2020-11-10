@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "vNfuE0IkWm2SWXCNJdBD24Ov7zNBXr5SWXK3Xx6qCOhA/oE89bVl05K/Xj9XTkLx+0DKCoqhhwuKNX4EVfF6Lg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Tom\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project.iOS\\COMP3000Project.iOS.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Tom\\.nuget\\packages\\mltoolkit.forms.swipecardview\\2.2.0\\mltoolkit.forms.swipecardview.2.2.0.nupkg.sha512",
+    "C:\\Users\\Tom\\.nuget\\packages\\xamarin.essentials\\1.5.3.2\\xamarin.essentials.1.5.3.2.nupkg.sha512",
+    "C:\\Users\\Tom\\.nuget\\packages\\xamarin.forms\\4.8.0.1560\\xamarin.forms.4.8.0.1560.nupkg.sha512"
+  ],
+  "logs": []
+}

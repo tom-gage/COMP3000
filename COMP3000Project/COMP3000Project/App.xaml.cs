@@ -1,0 +1,29 @@
+﻿using COMP3000Project.Views.MainMenu;
+using System;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+
+namespace COMP3000Project
+{
+    public partial class App : Application
+    {
+        public App()
+        {
+            InitializeComponent();
+
+            MainPage = new Views.Search.SearchPage();
+        }
+
+        protected override void OnStart()
+        {
+        }
+
+        protected override void OnSleep()
+        {
+        }
+
+        protected override void OnResume()
+        {
+        }
+    }
+}

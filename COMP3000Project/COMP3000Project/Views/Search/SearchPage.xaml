@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:swipeCardView="clr-namespace:MLToolkit.Forms.SwipeCardView;assembly=MLToolkit.Forms.SwipeCardView"
+             mc:Ignorable="d"
+             x:Class="COMP3000Project.Views.Search.SearchPage">
+    <ContentPage.Content>
+        <Grid RowSpacing="1" ColumnSpacing="1" x:Name="GridOuter">
+            <Grid.Resources>
+                <ResourceDictionary>
+
+                </ResourceDictionary>
+            </Grid.Resources>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.1*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.1*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="0.1*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Text="Search Code: A1 B2 C3"
+                   Grid.Row="0"
+                   Grid.Column="1"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+
+            <ListView ItemsSource="{Binding sampleEateries}"
+                Grid.Row="1"
+                Grid.Column="1"
+                HorizontalOptions="Center"
+                VerticalOptions="CenterAndExpand">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding EateryName}"></TextCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <!--<StackLayout
+                Grid.Row="1"
+                Grid.Column="1">
+                
+                <swipeCardView:SwipeCardView
+                    x:Name="swipeView1"
+                    ItemsSource="{Binding sampleEateries}"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="FillAndExpand"
+                    Padding="10"
+                    SupportedSwipeDirections="Left,Right" >
+                    <swipeCardView:SwipeCardView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout 
+                            HorizontalOptions="FillAndExpand"
+                            VerticalOptions="FillAndExpand">
+                                <Frame CornerRadius="10" Padding="8" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                    <AbsoluteLayout>
+                                        <Label Text="swipe card goes here"></Label>
+                                    </AbsoluteLayout>
+                                </Frame>
+                            </StackLayout>
+                        </DataTemplate>
+                    </swipeCardView:SwipeCardView.ItemTemplate>
+                </swipeCardView:SwipeCardView>
+            </StackLayout>-->
+            
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
