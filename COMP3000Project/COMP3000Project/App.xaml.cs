@@ -11,7 +11,7 @@ namespace COMP3000Project
         {
             InitializeComponent();
 
-            MainPage = new Views.Search.SearchPage();
+            MainPage = new Views.Testing.TestingPage();
         }
 
         protected override void OnStart()
