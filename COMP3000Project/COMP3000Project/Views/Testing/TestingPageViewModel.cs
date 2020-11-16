@@ -7,6 +7,8 @@ using System.Net.WebSockets;
 using System.Threading;
 using System.Linq;
 using System.ComponentModel;
+using System.Text.Json;
+
 
 namespace COMP3000Project.Views.Testing
 {
@@ -65,7 +67,7 @@ namespace COMP3000Project.Views.Testing
 
             await ws.ConnectAsync(new Uri("ws://10.0.2.2:9000"), CancellationToken.None);
 
-            var data = "this is my data";
+            var data = "please send me some restaurant data";
 
             var encodedData = Encoding.UTF8.GetBytes(data);
             var buffer = new ArraySegment<Byte>(encodedData, 0, encodedData.Length);
@@ -83,7 +85,6 @@ namespace COMP3000Project.Views.Testing
                     string serialisedMessage = Encoding.UTF8.GetString(messageBytes);
 
                     TestText = serialisedMessage;
-
 
                 } while (!result.EndOfMessage);
             }

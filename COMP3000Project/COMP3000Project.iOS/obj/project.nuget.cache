@@ -1,12 +1,18 @@
 {
   "version": 2,
-  "dgSpecHash": "vNfuE0IkWm2SWXCNJdBD24Ov7zNBXr5SWXK3Xx6qCOhA/oE89bVl05K/Xj9XTkLx+0DKCoqhhwuKNX4EVfF6Lg==",
+  "dgSpecHash": "LK2VQsmuT6X3chlwAFRtgbmIMn367YUVxv7W6acjlCwmiAVOLgQu/ZTvjoxsghu7t7hywuhhaTcy1F4hj+CQLw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Tom\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project.iOS\\COMP3000Project.iOS.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Tom\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\5.0.0\\microsoft.bcl.asyncinterfaces.5.0.0.nupkg.sha512",
     "C:\\Users\\Tom\\.nuget\\packages\\mltoolkit.forms.swipecardview\\2.2.0\\mltoolkit.forms.swipecardview.2.2.0.nupkg.sha512",
+    "C:\\Users\\Tom\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
+    "C:\\Users\\Tom\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
+    "C:\\Users\\Tom\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\5.0.0\\system.runtime.compilerservices.unsafe.5.0.0.nupkg.sha512",
+    "C:\\Users\\Tom\\.nuget\\packages\\system.text.encodings.web\\5.0.0\\system.text.encodings.web.5.0.0.nupkg.sha512",
+    "C:\\Users\\Tom\\.nuget\\packages\\system.text.json\\5.0.0\\system.text.json.5.0.0.nupkg.sha512",
     "C:\\Users\\Tom\\.nuget\\packages\\xamarin.essentials\\1.5.3.2\\xamarin.essentials.1.5.3.2.nupkg.sha512",
-    "C:\\Users\\Tom\\.nuget\\packages\\xamarin.forms\\4.8.0.1560\\xamarin.forms.4.8.0.1560.nupkg.sha512"
+    "C:\\Users\\Tom\\.nuget\\packages\\xamarin.forms\\4.8.0.1687\\xamarin.forms.4.8.0.1687.nupkg.sha512"
   ],
   "logs": []
 }

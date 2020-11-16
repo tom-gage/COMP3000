@@ -14,6 +14,6 @@ C:\Users\Tom\Documents\COMP3000\COMP3000Project\COMP3000Project\obj\Debug\netsta
 C:\Users\Tom\Documents\COMP3000\COMP3000Project\COMP3000Project\obj\Debug\netstandard2.0\Views\MainMenu\MainMenuPage.xaml.g.cs
 C:\Users\Tom\Documents\COMP3000\COMP3000Project\COMP3000Project\obj\Debug\netstandard2.0\Views\ResultDetails\ResultDetailsPage.xaml.g.cs
 C:\Users\Tom\Documents\COMP3000\COMP3000Project\COMP3000Project\obj\Debug\netstandard2.0\Views\Search\SearchPage.xaml.g.cs
+C:\Users\Tom\Documents\COMP3000\COMP3000Project\COMP3000Project\obj\Debug\netstandard2.0\Views\Testing\TestingPage.xaml.g.cs
 C:\Users\Tom\Documents\COMP3000\COMP3000Project\COMP3000Project\obj\Debug\netstandard2.0\COMP3000Project.csproj.CoreCompileInputs.cache
 C:\Users\Tom\Documents\COMP3000\COMP3000Project\COMP3000Project\obj\Debug\netstandard2.0\XamlC.stamp
-C:\Users\Tom\Documents\COMP3000\COMP3000Project\COMP3000Project\obj\Debug\netstandard2.0\Views\Testing\TestingPage.xaml.g.cs
