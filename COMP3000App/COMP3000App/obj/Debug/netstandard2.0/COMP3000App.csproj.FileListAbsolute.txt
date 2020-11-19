@@ -1,0 +1,15 @@
+C:\Users\Tom\Documents\COMP3000\COMP3000App\COMP3000App\obj\Debug\netstandard2.0\COMP3000App.csprojAssemblyReference.cache
+C:\Users\Tom\Documents\COMP3000\COMP3000App\COMP3000App\obj\Debug\netstandard2.0\App.xaml.g.cs
+C:\Users\Tom\Documents\COMP3000\COMP3000App\COMP3000App\obj\Debug\netstandard2.0\MainPage.xaml.g.cs
+C:\Users\Tom\Documents\COMP3000\COMP3000App\COMP3000App\obj\Debug\netstandard2.0\Views\Testing\TestingPage.xaml.g.cs
+C:\Users\Tom\Documents\COMP3000\COMP3000App\COMP3000App\obj\Debug\netstandard2.0\COMP3000App.AssemblyInfoInputs.cache
+C:\Users\Tom\Documents\COMP3000\COMP3000App\COMP3000App\obj\Debug\netstandard2.0\COMP3000App.AssemblyInfo.cs
+C:\Users\Tom\Documents\COMP3000\COMP3000App\COMP3000App\obj\Debug\netstandard2.0\COMP3000App.csproj.CoreCompileInputs.cache
+C:\Users\Tom\Documents\COMP3000\COMP3000App\COMP3000App\bin\Debug\netstandard2.0\COMP3000App.deps.json
+C:\Users\Tom\Documents\COMP3000\COMP3000App\COMP3000App\bin\Debug\netstandard2.0\COMP3000App.dll
+C:\Users\Tom\Documents\COMP3000\COMP3000App\COMP3000App\bin\Debug\netstandard2.0\ref\COMP3000App.dll
+C:\Users\Tom\Documents\COMP3000\COMP3000App\COMP3000App\bin\Debug\netstandard2.0\COMP3000App.pdb
+C:\Users\Tom\Documents\COMP3000\COMP3000App\COMP3000App\obj\Debug\netstandard2.0\XamlC.stamp
+C:\Users\Tom\Documents\COMP3000\COMP3000App\COMP3000App\obj\Debug\netstandard2.0\COMP3000App.dll
+C:\Users\Tom\Documents\COMP3000\COMP3000App\COMP3000App\obj\Debug\netstandard2.0\ref\COMP3000App.dll
+C:\Users\Tom\Documents\COMP3000\COMP3000App\COMP3000App\obj\Debug\netstandard2.0\COMP3000App.pdb

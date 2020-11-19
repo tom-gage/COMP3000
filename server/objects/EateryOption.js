@@ -1,12 +1,12 @@
 class EateryOption{
-    title = '';
-    description = '';
-    rating = 0;
+    Title = '';
+    Description = '';
+    Rating = 0;
 
     constructor(title, description, rating) {
-        this.title = title;
-        this.description = description;
-        this.rating = rating;
+        this.Title = title;
+        this.Description = description;
+        this.Rating = rating;
     }
 }
 

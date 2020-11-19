@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "F4AFvub3mZtfByRFl9U0+1aTYmKXZUbo6zkc1VMUu5C3Kim9rXoLgmnqj/uKQrDeL7DfZJaIz3sEF7DWYvyxyQ==",
+  "dgSpecHash": "dgCUF/kZUxma90Pe5H4Hc/jq94+M3zsTXL1Wyg7oK7+zmNpIsIT+whNQEEY6eKcQOdBNZdGJYMBgUoc7m6smOg==",
   "success": true,
   "projectFilePath": "C:\\Users\\Tom\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project.Android\\COMP3000Project.Android.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Tom\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\5.0.0\\microsoft.bcl.asyncinterfaces.5.0.0.nupkg.sha512",
+    "C:\\Users\\Tom\\.nuget\\packages\\microsoft.netcore.universalwindowsplatform\\6.2.10\\microsoft.netcore.universalwindowsplatform.6.2.10.nupkg.sha512",
     "C:\\Users\\Tom\\.nuget\\packages\\mltoolkit.forms.swipecardview\\2.2.0\\mltoolkit.forms.swipecardview.2.2.0.nupkg.sha512",
     "C:\\Users\\Tom\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
     "C:\\Users\\Tom\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",

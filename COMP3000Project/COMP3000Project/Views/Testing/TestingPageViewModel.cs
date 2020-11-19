@@ -8,26 +8,33 @@ using System.Threading;
 using System.Linq;
 using System.ComponentModel;
 using System.Text.Json;
-
+using COMP3000Project.TestObjects;
+using COMP3000Project._RemoteDataHandler;
+using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 namespace COMP3000Project.Views.Testing
 {
     class TestingPageViewModel : INotifyPropertyChanged
     {
+        //VARS
 
+        public RemoteDataHandler remoteDataHandler;
 
-
+        public EateryOption eateryOption;
         public class testData
         {
             public string title { get; set; }
             public string description { get; set; }
         }
+
         string testText;
         public event PropertyChangedEventHandler PropertyChanged;
-        public string TestText {
+        public string TestText
+        {
             set
             {
-                if(testText != value)
+                if (testText != value)
                 {
                     testText = value;
                     if (PropertyChanged != null)
@@ -41,26 +48,21 @@ namespace COMP3000Project.Views.Testing
                 return testText;
             }
         }
+        ObservableCollection<EateryOption> _testCollection;
+        public ObservableCollection<EateryOption> TestCollection { get => _testCollection; set => SetProperty(ref _testCollection, value); }
 
-        public string TestText2 { get; set; }
-
-        public IList<testData> testCollection { get; private set; }
-
+        //CONSTRUCTOR
         public TestingPageViewModel()
         {
-            testCollection = new List<testData>();
-
-            testCollection.Add(new testData { title = "title 0", description = "description 0"});
-            testCollection.Add(new testData { title = "title 1", description = "description 1" });
-            testCollection.Add(new testData { title = "title 2", description = "description 2" });
-            testCollection.Add(new testData { title = "title 3", description = "description 3" });
-            testCollection.Add(new testData { title = "title 4", description = "description 4" });
-
-            TestText = "this is the test Text";
-
+            TestCollection = new ObservableCollection<EateryOption>();
+            //eateryOption = new EateryOption("title", "description", 1.2f);
+            //TestCollection.Add(eateryOption);
             connectToWS();
+
+
         }
 
+        //FUNCTIONS
         public async void connectToWS()
         {
             ClientWebSocket ws = new ClientWebSocket();
@@ -86,8 +88,29 @@ namespace COMP3000Project.Views.Testing
 
                     TestText = serialisedMessage;
 
+                    eateryOption = JsonSerializer.Deserialize<EateryOption>(TestText);
+
+                    TestCollection.Add(eateryOption);
+
                 } while (!result.EndOfMessage);
             }
         }
+
+        //BLACK MAGIC - THOU SHALT NOT TOUCH
+        protected void SetProperty<T>(ref T backingStore, T value, Action onChanged = null, [CallerMemberName] string propertyName = "")
+        {
+            if (EqualityComparer<T>.Default.Equals(backingStore, value))
+                return;
+
+            backingStore = value;
+
+            onChanged?.Invoke();
+
+            HandlePropertyChanged(propertyName);
+        }
+
+        protected void HandlePropertyChanged(string propertyName = "") =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
     }
 }

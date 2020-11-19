@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "VJp2ui2vYgfeTEfczOENwWeZ2pwp7/Q9vwKpZp6AnksjPXco63EImjhjRZgpXjRQ3Ty2PQ7QlOqYZeBfMF4U4A==",
+  "dgSpecHash": "ALNVffp1s4vyk3k/wUrbpxyE9GwuYbwX3kNbTIWoxgUz3tkV+6cav/Uop1XhxigvgYnmvyaBipyh6/awKyANtA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Tom\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project\\COMP3000Project.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Tom\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\5.0.0\\microsoft.bcl.asyncinterfaces.5.0.0.nupkg.sha512",
     "C:\\Users\\Tom\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\Tom\\.nuget\\packages\\microsoft.netcore.universalwindowsplatform\\6.2.10\\microsoft.netcore.universalwindowsplatform.6.2.10.nupkg.sha512",
     "C:\\Users\\Tom\\.nuget\\packages\\mltoolkit.forms.swipecardview\\2.2.0\\mltoolkit.forms.swipecardview.2.2.0.nupkg.sha512",
     "C:\\Users\\Tom\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
     "C:\\Users\\Tom\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
