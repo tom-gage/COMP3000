@@ -88,9 +88,9 @@ namespace COMP3000Project.Views.Testing
 
                     TestText = serialisedMessage;
 
-                    eateryOption = JsonSerializer.Deserialize<EateryOption>(TestText);
+                    TestCollection = JsonSerializer.Deserialize<ObservableCollection<EateryOption>>(TestText);
 
-                    TestCollection.Add(eateryOption);
+                    //TestCollection.Add(eateryOption);
 
                 } while (!result.EndOfMessage);
             }

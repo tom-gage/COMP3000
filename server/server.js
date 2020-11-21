@@ -25,11 +25,21 @@ wss.on('connection', function connection(ws) {
 
         if(data === "please send me some restaurant data"){
             wss.clients.forEach(function (client) {
-                if(client.readyState === WebSocket.OPEN){
+                if (client.readyState === WebSocket.OPEN) {
                     console.log('sending data: ' + restaurantData);
 
                     let x = new EateryOption(restaurantData.data.results[0].name, "description would be here, if there was one", restaurantData.data.results[0].rating);
-                    client.send(JSON.stringify(x));
+
+
+                    EateryList = new Array();
+
+                    for (i = 0; i < restaurantData.data.results.length; i++) {
+                        console.log("adding: " + restaurantData.data.results[i]);
+                        let eatery = new EateryOption(restaurantData.data.results[i].name, "description would be here, if there was one", restaurantData.data.results[i].rating);
+                        EateryList.push(eatery);
+                    }
+
+                    client.send(JSON.stringify(EateryList));
                 }
             });
         }
