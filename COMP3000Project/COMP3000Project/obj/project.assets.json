@@ -23,7 +23,7 @@
           "lib/netstandard1.0/_._": {}
         }
       },
-      "Microsoft.NETCore.UniversalWindowsPlatform/6.2.10": {
+      "Microsoft.NETCore.UniversalWindowsPlatform/6.2.11": {
         "type": "package",
         "build": {
           "build/Microsoft.NETCore.UniversalWindowsPlatform.props": {},
@@ -217,10 +217,10 @@
         "runtime.json"
       ]
     },
-    "Microsoft.NETCore.UniversalWindowsPlatform/6.2.10": {
-      "sha512": "ROxFw/6HrgkUQKna0NAPWfmnuHpp/5JFB+lvTG47ELXiYjYpBfEKCGXax8kh/KKzP6uLDn4M3zJUUXC6Bst1+Q==",
+    "Microsoft.NETCore.UniversalWindowsPlatform/6.2.11": {
+      "sha512": "YeOCD+m2tfqkYzQ2hAKZ52cTrHWU0HRS4/2vf3SeZ+KHWq+unmskH+TrRktaIj/pChwPUMwLdCTU5/+4WeQcWQ==",
       "type": "package",
-      "path": "microsoft.netcore.universalwindowsplatform/6.2.10",
+      "path": "microsoft.netcore.universalwindowsplatform/6.2.11",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -228,7 +228,7 @@
         "THIRD-PARTY-NOTICES.TXT",
         "build/Microsoft.NETCore.UniversalWindowsPlatform.props",
         "build/Microsoft.NetCore.UniversalWindowsPlatform.targets",
-        "microsoft.netcore.universalwindowsplatform.6.2.10.nupkg.sha512",
+        "microsoft.netcore.universalwindowsplatform.6.2.11.nupkg.sha512",
         "microsoft.netcore.universalwindowsplatform.nuspec",
         "ref/netcore50/_._",
         "ref/uap10.0.15138/Microsoft.CSharp.dll",
@@ -1266,7 +1266,7 @@
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
       "MLToolkit.Forms.SwipeCardView >= 2.2.0",
-      "Microsoft.NETCore.UniversalWindowsPlatform >= 6.2.10",
+      "Microsoft.NETCore.UniversalWindowsPlatform >= 6.2.11",
       "NETStandard.Library >= 2.0.3",
       "Newtonsoft.Json >= 12.0.3",
       "System.Text.Json >= 5.0.0",
@@ -1326,7 +1326,7 @@
           },
           "Microsoft.NETCore.UniversalWindowsPlatform": {
             "target": "Package",
-            "version": "[6.2.10, )"
+            "version": "[6.2.11, )"
           },
           "NETStandard.Library": {
             "suppressParent": "All",

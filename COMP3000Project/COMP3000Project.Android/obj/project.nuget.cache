@@ -1,12 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "dgCUF/kZUxma90Pe5H4Hc/jq94+M3zsTXL1Wyg7oK7+zmNpIsIT+whNQEEY6eKcQOdBNZdGJYMBgUoc7m6smOg==",
+  "dgSpecHash": "d0B2a0UCCZupeqrn14MOqlod40vvGLCj2cLzP/uL00wwXsMD7hsEKaV9fsdwkZhmsPmnVDS+SBZ2nQ1V2bNIvg==",
   "success": true,
   "projectFilePath": "C:\\Users\\Tom\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project.Android\\COMP3000Project.Android.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Tom\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\5.0.0\\microsoft.bcl.asyncinterfaces.5.0.0.nupkg.sha512",
-    "C:\\Users\\Tom\\.nuget\\packages\\microsoft.netcore.universalwindowsplatform\\6.2.10\\microsoft.netcore.universalwindowsplatform.6.2.10.nupkg.sha512",
+    "C:\\Users\\Tom\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\Tom\\.nuget\\packages\\microsoft.netcore.universalwindowsplatform\\6.2.11\\microsoft.netcore.universalwindowsplatform.6.2.11.nupkg.sha512",
     "C:\\Users\\Tom\\.nuget\\packages\\mltoolkit.forms.swipecardview\\2.2.0\\mltoolkit.forms.swipecardview.2.2.0.nupkg.sha512",
+    "C:\\Users\\Tom\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
     "C:\\Users\\Tom\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
     "C:\\Users\\Tom\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
     "C:\\Users\\Tom\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\5.0.0\\system.runtime.compilerservices.unsafe.5.0.0.nupkg.sha512",

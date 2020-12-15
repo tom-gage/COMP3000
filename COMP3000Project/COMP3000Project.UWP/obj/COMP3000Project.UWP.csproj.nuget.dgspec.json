@@ -43,9 +43,17 @@
       "frameworks": {
         "uap10.0.16299": {
           "dependencies": {
+            "MLToolkit.Forms.SwipeCardView": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
             "Microsoft.NETCore.UniversalWindowsPlatform": {
               "target": "Package",
-              "version": "[6.2.10, )"
+              "version": "[6.2.11, )"
+            },
+            "NETStandard.Library": {
+              "target": "Package",
+              "version": "[2.0.3, )"
             },
             "Newtonsoft.Json": {
               "target": "Package",
@@ -142,7 +150,7 @@
             },
             "Microsoft.NETCore.UniversalWindowsPlatform": {
               "target": "Package",
-              "version": "[6.2.10, )"
+              "version": "[6.2.11, )"
             },
             "NETStandard.Library": {
               "suppressParent": "All",

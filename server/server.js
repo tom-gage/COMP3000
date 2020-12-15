@@ -28,14 +28,20 @@ wss.on('connection', function connection(ws) {
                 if (client.readyState === WebSocket.OPEN) {
                     console.log('sending data: ' + restaurantData);
 
+
                     let x = new EateryOption(restaurantData.data.results[0].name, "description would be here, if there was one", restaurantData.data.results[0].rating);
 
 
                     EateryList = new Array();
 
                     for (i = 0; i < restaurantData.data.results.length; i++) {
-                        console.log("adding: " + restaurantData.data.results[i]);
-                        let eatery = new EateryOption(restaurantData.data.results[i].name, "description would be here, if there was one", restaurantData.data.results[i].rating);
+                        console.log("adding: " + restaurantData.data.results[i].toString());
+                        console.log('data, photos: ' + restaurantData.data.results[i].photos[0].photo_reference);
+                        let eatery = new EateryOption(
+                            restaurantData.data.results[i].name,
+                            "description would be here, if there was one",
+                            restaurantData.data.results[i].rating, restaurantData.data.results[i].photos[0].photo_reference
+                        );
                         EateryList.push(eatery);
                     }
 

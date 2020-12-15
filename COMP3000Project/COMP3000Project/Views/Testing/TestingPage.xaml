@@ -19,6 +19,10 @@
                 </ListView.ItemTemplate>
             </ListView>-->
 
+            <Label>
+                my ass
+            </Label>
+
             <swipeCardView:SwipeCardView
                 ItemsSource="{Binding TestCollection}"
                 SwipedCommand="{Binding SwipedCommand}"
@@ -26,10 +30,11 @@
                 VerticalOptions="FillAndExpand">
                 <swipeCardView:SwipeCardView.ItemTemplate>
                     <DataTemplate>
-                        <Label Text="{Binding Title}" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="Beige" />
+                        <Label Text="{Binding PhotoReference}" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="Gray" />
                     </DataTemplate>
                 </swipeCardView:SwipeCardView.ItemTemplate>
             </swipeCardView:SwipeCardView>
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

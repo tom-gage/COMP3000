@@ -29,13 +29,66 @@ namespace COMP3000Project.TestObjects
             }
         }
 
-        public string description { get; set; }
-        public float rating { get; set; }
-        public EateryOption(string title, string description, float rating)
+        string description;
+
+        public string Description
+        {
+            get
+            {
+                return description;
+            }
+            set
+            {
+                if (description == value)
+                {
+                    return;
+                }
+                description = value;
+                HandlePropertyChanged();
+            }
+        }
+        float rating;
+
+        public float Rating
+        {
+            get
+            {
+                return rating;
+            }
+            set
+            {
+                if (rating == value)
+                {
+                    return;
+                }
+                rating = value;
+                HandlePropertyChanged();
+            }
+        }
+        string photoReference;
+
+        public string PhotoReference
+        {
+            get
+            {
+                return photoReference;
+            }
+            set
+            {
+                if (photoReference == value)
+                {
+                    return;
+                }
+                photoReference = value;
+                HandlePropertyChanged();
+            }
+        }
+        public EateryOption(string title, string description, float rating, string photoReference)
         {
             this.Title = title;
-            this.description = description;
-            this.rating = rating;
+            this.Description = description;
+            this.Rating = rating;
+            this.PhotoReference = photoReference;
         }
 
 
