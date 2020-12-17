@@ -23,14 +23,17 @@
                 my ass
             </Label>
 
+
             <swipeCardView:SwipeCardView
                 ItemsSource="{Binding TestCollection}"
-                SwipedCommand="{Binding SwipedCommand}"
+                SwipedCommand="{Binding OnSwipeCommand}"
+                SwipedCommandParameter=""
                 LoopCards="True"
                 VerticalOptions="FillAndExpand">
                 <swipeCardView:SwipeCardView.ItemTemplate>
                     <DataTemplate>
-                        <Label Text="{Binding PhotoReference}" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="Gray" />
+                        <Image Source="{Binding TestImage}"/>
+                        <!--<Label Text="{Binding Title}" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="Gray" />-->
                     </DataTemplate>
                 </swipeCardView:SwipeCardView.ItemTemplate>
             </swipeCardView:SwipeCardView>

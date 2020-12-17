@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Xamarin.Forms;
 
 namespace COMP3000Project.TestObjects
 {
@@ -65,8 +66,8 @@ namespace COMP3000Project.TestObjects
                 HandlePropertyChanged();
             }
         }
-        string photoReference;
 
+        string photoReference;
         public string PhotoReference
         {
             get
@@ -83,12 +84,38 @@ namespace COMP3000Project.TestObjects
                 HandlePropertyChanged();
             }
         }
+
+        ImageSource testImage;
+
+        public ImageSource TestImage
+        {
+            get
+            {
+                return testImage;
+            }
+            set
+            {
+                if(testImage == value)
+                {
+                    return;
+                }
+                testImage = value;
+                HandlePropertyChanged();
+            }
+        }
+
         public EateryOption(string title, string description, float rating, string photoReference)
         {
             this.Title = title;
             this.Description = description;
             this.Rating = rating;
             this.PhotoReference = photoReference;
+
+            //FOR TESTING PURPOSES
+            var webImage = new Image { Aspect = Aspect.AspectFit };
+            webImage.Source = ImageSource.FromUri(new Uri("https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Ash_Tree_-_geograph.org.uk_-_590710.jpg/220px-Ash_Tree_-_geograph.org.uk_-_590710.jpg"));
+
+            TestImage = webImage.Source;
         }
 
 

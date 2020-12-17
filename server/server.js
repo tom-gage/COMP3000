@@ -29,7 +29,6 @@ wss.on('connection', function connection(ws) {
                     console.log('sending data: ' + restaurantData);
 
 
-                    let x = new EateryOption(restaurantData.data.results[0].name, "description would be here, if there was one", restaurantData.data.results[0].rating);
 
 
                     EateryList = new Array();
