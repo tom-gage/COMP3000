@@ -22,7 +22,11 @@
             <Label>
                 my ass
             </Label>
+            
+            <Button Text="send ws message"
+                    Command="{Binding OnButtonClick}">
 
+            </Button>
 
             <swipeCardView:SwipeCardView
                 ItemsSource="{Binding TestCollection}"

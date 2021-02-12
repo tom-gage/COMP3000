@@ -1,4 +1,5 @@
-class EateryOption{
+class EateryOption {
+
     Title = '';
     Description = '';
     Rating = 0;

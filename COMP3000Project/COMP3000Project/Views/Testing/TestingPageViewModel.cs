@@ -9,12 +9,13 @@ using System.Linq;
 using System.ComponentModel;
 using System.Text.Json;
 using COMP3000Project.TestObjects;
-using COMP3000Project._RemoteDataHandler;
+using COMP3000Project.WS;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using Xamarin.Essentials;
 
 namespace COMP3000Project.Views.Testing
 {
@@ -22,9 +23,10 @@ namespace COMP3000Project.Views.Testing
     {
         //COMMANDS
         public ICommand OnSwipeCommand { get; }
+        public ICommand OnButtonClick { get; }
 
         //VARS
-        //public RemoteDataHandler remoteDataHandler;
+        private WebsocketHandler WSHandler;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -64,18 +66,68 @@ namespace COMP3000Project.Views.Testing
         public TestingPageViewModel()
         {
             OnSwipeCommand = new Command(onSwipe);
+            OnButtonClick = new Command(SendWSMessage);
+
             TestCollection = new ObservableCollection<EateryOption>();
             //eateryOption = new EateryOption("title", "description", 1.2f);
             //TestCollection.Add(eateryOption);
 
+            WSHandler = new WebsocketHandler();
 
+            WSHandler.InitialiseConnectionAsync();
 
-            connectToWS();
-
+            getLocation();
 
         }
 
         //FUNCTIONS
+        public async void SendWSMessage()
+        {
+            //asks server for eateries
+            await WSHandler.SendMessage("{ \"type\":\"getEateries\",\"body\":\"\"}");//TEMP SHIT
+
+            //sets our local eateries list as the result we got
+            TestCollection = WSHandler.MessageList;
+            Console.WriteLine(WSHandler.MessageList[0].Title);
+            //Console.WriteLine(TestCollection[0].Title);
+
+        }
+        public async void getLocation()
+        {
+            try
+            {
+                var location = await Geolocation.GetLastKnownLocationAsync();
+
+                if (location != null)
+                {
+                    Console.WriteLine($"Latitude: {location.Latitude}, Longitude: {location.Longitude}, Altitude: {location.Altitude}");
+                }
+            }
+            catch (FeatureNotSupportedException fnsEx)
+            {
+                // Handle not supported on device exception
+            }
+            catch (FeatureNotEnabledException fneEx)
+            {
+                // Handle not enabled on device exception
+            }
+            catch (PermissionException pEx)
+            {
+                // Handle permission exception
+            }
+            catch (Exception ex)
+            {
+                // Unable to get location
+            }
+        }
+        public async void onSwipe()
+        {
+            Console.WriteLine("----- DEBUG FLAG -----");
+            //string test = await MakeGooglePhotosCall();
+
+
+        }
+
         public async void connectToWS()
         {
             ClientWebSocket ws = new ClientWebSocket();
@@ -109,13 +161,7 @@ namespace COMP3000Project.Views.Testing
             }
         }
 
-        public async void onSwipe()
-        {
-            Console.WriteLine("----- DEBUG FLAG -----");
-            //string test = await MakeGooglePhotosCall();
 
-
-        }
 
         public async Task<string> MakeGooglePhotosCall()
         {
