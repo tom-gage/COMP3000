@@ -61,11 +61,13 @@ wss.on('connection', function connection(ws) {
                         for (i = 0; i < restaurantData.data.results.length; i++) {
                             // console.log("adding: " + restaurantData.data.results[i].toString());
                             // console.log('data, photos: ' + restaurantData.data.results[i].photos[0].photo_reference);
+
                             let eatery = new EateryOption(
                                 restaurantData.data.results[i].name,
                                 "description would be here, if there was one",
                                 restaurantData.data.results[i].rating, restaurantData.data.results[i].photos[0].photo_reference
                             );
+
                             EateryList.push(eatery);
                         }
 
@@ -98,6 +100,13 @@ server.listen(port, function () {
     }).catch((error) => {
         console.log("error is: " + error.response.data.error_message);
     });
+
+    console.log({
+        type : "getEateries",
+        body : "",
+        latitude : "",
+        longitude : ""
+    })
 });
 
 // wss.on('connection', function connection(ws) {
