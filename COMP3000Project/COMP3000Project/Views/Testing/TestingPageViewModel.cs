@@ -76,7 +76,7 @@ namespace COMP3000Project.Views.Testing
 
             WSHandler.InitialiseConnectionAsync();
 
-            getLocation();
+            //getLocation();
 
         }
 
@@ -84,23 +84,34 @@ namespace COMP3000Project.Views.Testing
         public async void SendWSMessage()
         {
             //asks server for eateries
-            await WSHandler.SendMessage("{ \"type\":\"getEateries\",\"body\":\"\"}");//TEMP SHIT
+
+            Location location = await getLocation();
+
+            Console.WriteLine("longitude is: ");
+            Console.WriteLine(location.Longitude);
+
+            //await WSHandler.SendMessage("{ \"type\":\"getEateries\",\"body\":\"\"}");//TEMP SHIT
+            //await WSHandler.SendMessage("{ \"type\": \"getEateries\", \"body\": \"\", \"latitude\": \"" + location.Latitude + "\", \"longitude\": \"" + location.Longitude + "\" }");//TEMP SHIT
+            await WSHandler.SendMessage("{ \"type\": \"getEateries\", \"body\": \"\", \"latitude\": \"\", \"longitude\": \"\" }");//TEMP SHIT
 
             //sets our local eateries list as the result we got
-            TestCollection = WSHandler.MessageList;
-            Console.WriteLine(WSHandler.MessageList[0].Title);
+            //TestCollection = WSHandler.MessageList;
+            //Console.WriteLine(WSHandler.MessageList[0]);
             //Console.WriteLine(TestCollection[0].Title);
 
         }
-        public async void getLocation()
+        public async Task<Location> getLocation()
         {
+            Location location;
             try
             {
-                var location = await Geolocation.GetLastKnownLocationAsync();
+                location = await Geolocation.GetLastKnownLocationAsync();
 
                 if (location != null)
                 {
                     Console.WriteLine($"Latitude: {location.Latitude}, Longitude: {location.Longitude}, Altitude: {location.Altitude}");
+
+                    return location;
                 }
             }
             catch (FeatureNotSupportedException fnsEx)
@@ -119,13 +130,13 @@ namespace COMP3000Project.Views.Testing
             {
                 // Unable to get location
             }
+
+            return null;
         }
         public async void onSwipe()
         {
             Console.WriteLine("----- DEBUG FLAG -----");
             //string test = await MakeGooglePhotosCall();
-
-
         }
 
         public async void connectToWS()
@@ -163,7 +174,7 @@ namespace COMP3000Project.Views.Testing
 
 
 
-        public async Task<string> MakeGooglePhotosCall()
+        public async Task<string> MakeGooglePhotosCall()//dont think this does anything
         {
             string result = null;
             using (var httpClient = CreateClient())

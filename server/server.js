@@ -43,41 +43,57 @@ wss.on('connection', function connection(ws) {
 
         let message = JSON.parse(data);
 
+        console.log(message);
 
 
         switch(message.type) {
             case "getEateries":
-                // make api call
+
+                //make api call
+                client.placesNearby({params:{
+                        location : [data.latitude,data.longitude],
+                        radius : 50,
+                        type : "restaurant",
+                        key : "AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"
+                    },
+                    timeout:1000
+                }).then((response) => {
+                    console.log("response is: " + response.data.results[0].name);
+                    restaurantData = response;
+
+                    // returns eatery list to each client, needs refactoring
+                    wss.clients.forEach(function (WSClient) {
+                        if (WSClient.readyState === WebSocket.OPEN) {
+                            console.log('sending data: ' + restaurantData);
 
 
-                //returns eatery list to each client, needs refactoring
-                wss.clients.forEach(function (client) {
-                    if (client.readyState === WebSocket.OPEN) {
-                        console.log('sending data: ' + restaurantData);
+                            EateryList = new Array();
 
+                            for (i = 0; i < restaurantData.data.results.length; i++) {
+                                // console.log("adding: " + restaurantData.data.results[i].toString());
+                                // console.log('data, photos: ' + restaurantData.data.results[i].photos[0].photo_reference);
 
-                        EateryList = new Array();
+                                let eatery = new EateryOption(
+                                    restaurantData.data.results[i].name,
+                                    "description would be here, if there was one",
+                                    restaurantData.data.results[i].rating, restaurantData.data.results[i].photos[0].photo_reference
+                                );
 
-                        for (i = 0; i < restaurantData.data.results.length; i++) {
-                            // console.log("adding: " + restaurantData.data.results[i].toString());
-                            // console.log('data, photos: ' + restaurantData.data.results[i].photos[0].photo_reference);
+                                EateryList.push(eatery);
+                            }
 
-                            let eatery = new EateryOption(
-                                restaurantData.data.results[i].name,
-                                "description would be here, if there was one",
-                                restaurantData.data.results[i].rating, restaurantData.data.results[i].photos[0].photo_reference
-                            );
-
-                            EateryList.push(eatery);
+                            WSClient.send(JSON.stringify(EateryList));
                         }
-
-                        client.send(JSON.stringify(EateryList));
-                    }
+                    });
+                }).catch((error) => {
+                    console.log("ERROR");
+                    console.log("error is: " + error);
+                    // console.log("error is: " + error.response.data.error_message);
                 });
-                //return eateries
                 break;
+
             default:
-            console.log('message received but not recognised');
+                console.log('message received but not recognised');
         }
     })
 });
@@ -85,28 +101,28 @@ wss.on('connection', function connection(ws) {
 server.listen(port, function () {
     console.log('server listening on port: ' + port);
 
-    //api call
-    client.placesNearby({params:{
-            location : [50.381773,-4.133786],
-            radius : 50,
-            type : "restaurant",
-            key : "AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"
-        },
-        timeout:1000
-    }).then((response) => {
-        console.log("response is: " + response.data.results[0].name);
-        restaurantData = response;
+    // //api call
+    // client.placesNearby({params:{
+    //         location : [50.381773,-4.133786],
+    //         radius : 50,
+    //         type : "restaurant",
+    //         key : "AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"
+    //     },
+    //     timeout:1000
+    // }).then((response) => {
+    //     console.log("response is: " + response.data.results[0].name);
+    //     restaurantData = response;
+    //
+    // }).catch((error) => {
+    //     console.log("error is: " + error.response.data.error_message);
+    // });
 
-    }).catch((error) => {
-        console.log("error is: " + error.response.data.error_message);
-    });
-
-    console.log({
-        type : "getEateries",
-        body : "",
-        latitude : "",
-        longitude : ""
-    })
+    // console.log({
+    //     type : "getEateries",
+    //     body : "",
+    //     latitude : "",
+    //     longitude : ""
+    // })
 });
 
 // wss.on('connection', function connection(ws) {
