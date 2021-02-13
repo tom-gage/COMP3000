@@ -76,7 +76,7 @@ namespace COMP3000Project.Views.Testing
 
             WSHandler.InitialiseConnectionAsync();
 
-            //getLocation();
+            getLocation();
 
         }
 
@@ -87,15 +87,13 @@ namespace COMP3000Project.Views.Testing
 
             Location location = await getLocation();
 
-            Console.WriteLine("longitude is: ");
-            Console.WriteLine(location.Longitude);
-
             //await WSHandler.SendMessage("{ \"type\":\"getEateries\",\"body\":\"\"}");//TEMP SHIT
-            //await WSHandler.SendMessage("{ \"type\": \"getEateries\", \"body\": \"\", \"latitude\": \"" + location.Latitude + "\", \"longitude\": \"" + location.Longitude + "\" }");//TEMP SHIT
-            await WSHandler.SendMessage("{ \"type\": \"getEateries\", \"body\": \"\", \"latitude\": \"\", \"longitude\": \"\" }");//TEMP SHIT
+            await WSHandler.SendMessage("{ \"type\": \"getEateries\", \"body\": \"\", \"latitude\": \"" + location.Latitude + "\", \"longitude\": \"" + location.Longitude + "\" }");//TEMP SHIT
+            //await WSHandler.SendMessage("{ \"type\": \"getEateries\", \"body\": \"\", \"latitude\": \"\", \"longitude\": \"\" }");//TEMP SHIT
 
             //sets our local eateries list as the result we got
-            //TestCollection = WSHandler.MessageList;
+
+            TestCollection = WSHandler.MessageList;
             //Console.WriteLine(WSHandler.MessageList[0]);
             //Console.WriteLine(TestCollection[0].Title);
 
@@ -117,20 +115,25 @@ namespace COMP3000Project.Views.Testing
             catch (FeatureNotSupportedException fnsEx)
             {
                 // Handle not supported on device exception
+                Console.WriteLine(fnsEx);
             }
             catch (FeatureNotEnabledException fneEx)
             {
                 // Handle not enabled on device exception
+                Console.WriteLine(fneEx);
             }
             catch (PermissionException pEx)
             {
                 // Handle permission exception
+                Console.WriteLine(pEx);
             }
             catch (Exception ex)
             {
                 // Unable to get location
+                Console.WriteLine(ex);
             }
 
+            Console.WriteLine("LOCATION NOT FOUND");
             return null;
         }
         public async void onSwipe()

@@ -112,10 +112,10 @@ namespace COMP3000Project.TestObjects
             this.PhotoReference = photoReference;
 
             //FOR TESTING PURPOSES
-            //var webImage = new Image { Aspect = Aspect.AspectFit };
-            //webImage.Source = ImageSource.FromUri(new Uri("https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Ash_Tree_-_geograph.org.uk_-_590710.jpg/220px-Ash_Tree_-_geograph.org.uk_-_590710.jpg"));
+            var webImage = new Image { Aspect = Aspect.AspectFit };
+            webImage.Source = ImageSource.FromUri(new Uri("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + PhotoReference + "&key=AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"));
 
-            //TestImage = webImage.Source;
+            TestImage = webImage.Source;
         }
 
 

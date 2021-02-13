@@ -46,25 +46,29 @@ wss.on('connection', function connection(ws) {
         console.log(message);
 
 
+
         switch(message.type) {
             case "getEateries":
 
                 //make api call
                 client.placesNearby({params:{
-                        location : [data.latitude,data.longitude],
+                        // location : [message.latitude, message.longitude],
+                        location : [50.381773,-4.133786],
                         radius : 50,
                         type : "restaurant",
                         key : "AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"
                     },
                     timeout:1000
                 }).then((response) => {
-                    console.log("response is: " + response.data.results[0].name);
+
+                    // console.log("response is: " + response.data.results[0].name);
+                    // console.log(response);
                     restaurantData = response;
 
                     // returns eatery list to each client, needs refactoring
                     wss.clients.forEach(function (WSClient) {
                         if (WSClient.readyState === WebSocket.OPEN) {
-                            console.log('sending data: ' + restaurantData);
+
 
 
                             EateryList = new Array();
@@ -82,6 +86,7 @@ wss.on('connection', function connection(ws) {
                                 EateryList.push(eatery);
                             }
 
+                            console.log('sending eateryList to client: ' + JSON.stringify(EateryList));
                             WSClient.send(JSON.stringify(EateryList));
                         }
                     });
