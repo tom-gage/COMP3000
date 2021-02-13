@@ -52,8 +52,8 @@ wss.on('connection', function connection(ws) {
 
                 //make api call
                 client.placesNearby({params:{
-                        // location : [message.latitude, message.longitude],
-                        location : [50.381773,-4.133786],
+                        location : [message.latitude, message.longitude],
+                        // location : [50.381773,-4.133786],
                         radius : 50,
                         type : "restaurant",
                         key : "AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"
@@ -80,7 +80,8 @@ wss.on('connection', function connection(ws) {
                                 let eatery = new EateryOption(
                                     restaurantData.data.results[i].name,
                                     "description would be here, if there was one",
-                                    restaurantData.data.results[i].rating, restaurantData.data.results[i].photos[0].photo_reference
+                                    restaurantData.data.results[i].rating,
+                                    restaurantData.data.results[i].photos[0].photo_reference
                                 );
 
                                 EateryList.push(eatery);
@@ -90,11 +91,12 @@ wss.on('connection', function connection(ws) {
                             WSClient.send(JSON.stringify(EateryList));
                         }
                     });
-                }).catch((error) => {
-                    console.log("ERROR");
-                    console.log("error is: " + error);
-                    // console.log("error is: " + error.response.data.error_message);
-                });
+                })
+                //     .catch((error) => {
+                //     console.log("ERROR");
+                //     console.log("error is: " + error);
+                //     // console.log("error is: " + error.response.data.error_message);
+                // });
                 break;
 
             default:

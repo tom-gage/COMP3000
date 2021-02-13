@@ -87,9 +87,10 @@ namespace COMP3000Project.Views.Testing
 
             Location location = await getLocation();
 
-            //await WSHandler.SendMessage("{ \"type\":\"getEateries\",\"body\":\"\"}");//TEMP SHIT
+            //await WSHandler.SendMessage("{ \"type\": \"getEateries\", \"body\": \"\", \"latitude\": \"50.381773\", \"longitude\": \"-4.133786\" }");//TEMP SHIT
+
             await WSHandler.SendMessage("{ \"type\": \"getEateries\", \"body\": \"\", \"latitude\": \"" + location.Latitude + "\", \"longitude\": \"" + location.Longitude + "\" }");//TEMP SHIT
-            //await WSHandler.SendMessage("{ \"type\": \"getEateries\", \"body\": \"\", \"latitude\": \"\", \"longitude\": \"\" }");//TEMP SHIT
+
 
             //sets our local eateries list as the result we got
 
