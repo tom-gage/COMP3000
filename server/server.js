@@ -54,7 +54,7 @@ wss.on('connection', function connection(ws) {
                 client.placesNearby({params:{
                         location : [message.latitude, message.longitude],
                         // location : [50.381773,-4.133786],
-                        radius : 50,
+                        radius : 1500,
                         type : "restaurant",
                         key : "AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"
                     },

@@ -58,7 +58,6 @@ namespace COMP3000Project.Views.Testing
         }
 
 
-
         ObservableCollection<EateryOption> _testCollection;
         public ObservableCollection<EateryOption> TestCollection { get => _testCollection; set => SetProperty(ref _testCollection, value); }
 
@@ -69,15 +68,10 @@ namespace COMP3000Project.Views.Testing
             OnButtonClick = new Command(SendWSMessage);
 
             TestCollection = new ObservableCollection<EateryOption>();
-            //eateryOption = new EateryOption("title", "description", 1.2f);
-            //TestCollection.Add(eateryOption);
 
             WSHandler = new WebsocketHandler();
 
             WSHandler.InitialiseConnectionAsync();
-
-            getLocation();
-
         }
 
         //FUNCTIONS
@@ -87,13 +81,10 @@ namespace COMP3000Project.Views.Testing
 
             Location location = await getLocation();
 
-            //await WSHandler.SendMessage("{ \"type\": \"getEateries\", \"body\": \"\", \"latitude\": \"50.381773\", \"longitude\": \"-4.133786\" }");//TEMP SHIT
-
             await WSHandler.SendMessage("{ \"type\": \"getEateries\", \"body\": \"\", \"latitude\": \"" + location.Latitude + "\", \"longitude\": \"" + location.Longitude + "\" }");//TEMP SHIT
 
 
             //sets our local eateries list as the result we got
-
             TestCollection = WSHandler.MessageList;
             //Console.WriteLine(WSHandler.MessageList[0]);
             //Console.WriteLine(TestCollection[0].Title);

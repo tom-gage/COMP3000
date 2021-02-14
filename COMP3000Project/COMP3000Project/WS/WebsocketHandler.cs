@@ -33,7 +33,7 @@ namespace COMP3000Project.WS
 
 
 
-            while (true)//this gets messages
+            while (true)//this gets messages, maybe
             {
                 WebSocketReceiveResult result;
                 var message = new ArraySegment<byte>(new byte[4096]);
@@ -46,7 +46,7 @@ namespace COMP3000Project.WS
                     var textMessage = serialisedMessage;
 
                     MessageList = JsonSerializer.Deserialize<ObservableCollection<EateryOption>>(textMessage);
-
+                    Console.WriteLine("");
 
                 } while (!result.EndOfMessage);
             }
