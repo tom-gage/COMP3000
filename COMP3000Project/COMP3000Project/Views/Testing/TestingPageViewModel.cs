@@ -81,11 +81,14 @@ namespace COMP3000Project.Views.Testing
 
             Location location = await getLocation();
 
-            await WSHandler.SendMessage("{ \"type\": \"getEateries\", \"body\": \"\", \"latitude\": \"" + location.Latitude + "\", \"longitude\": \"" + location.Longitude + "\" }");//TEMP SHIT
+            //await WSHandler.SendMessage("{ \"type\": \"getEateries\", \"body\": \"\", \"latitude\": \"" + location.Latitude + "\", \"longitude\": \"" + location.Longitude + "\" }");//TEMP SHIT
+
+
+            TestCollection = await WSHandler.RequestEateriesList("{ \"type\": \"getEateries\", \"body\": \"\", \"latitude\": \"" + location.Latitude + "\", \"longitude\": \"" + location.Longitude + "\" }");//TEMP SHIT
 
 
             //sets our local eateries list as the result we got
-            TestCollection = WSHandler.MessageList;
+            //TestCollection = WSHandler.MessageList;
             //Console.WriteLine(WSHandler.MessageList[0]);
             //Console.WriteLine(TestCollection[0].Title);
 

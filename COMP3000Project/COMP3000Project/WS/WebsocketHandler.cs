@@ -33,23 +33,23 @@ namespace COMP3000Project.WS
 
 
 
-            while (true)//this gets messages, maybe
-            {
-                WebSocketReceiveResult result;
-                var message = new ArraySegment<byte>(new byte[4096]);
-                do
-                {
-                    result = await ws.ReceiveAsync(message, CancellationToken.None);
-                    var messageBytes = message.Skip(message.Offset).Take(result.Count).ToArray();
-                    string serialisedMessage = Encoding.UTF8.GetString(messageBytes);
+            //while (true)//this gets messages, maybe
+            //{
+            //    WebSocketReceiveResult result;
+            //    var message = new ArraySegment<byte>(new byte[4096]);
+            //    do
+            //    {
+            //        result = await ws.ReceiveAsync(message, CancellationToken.None);
+            //        var messageBytes = message.Skip(message.Offset).Take(result.Count).ToArray();
+            //        string serialisedMessage = Encoding.UTF8.GetString(messageBytes);
 
-                    var textMessage = serialisedMessage;
+            //        var textMessage = serialisedMessage;
 
-                    MessageList = JsonSerializer.Deserialize<ObservableCollection<EateryOption>>(textMessage);
-                    Console.WriteLine("");
+            //        MessageList = JsonSerializer.Deserialize<ObservableCollection<EateryOption>>(textMessage);
+            //        Console.WriteLine("");
 
-                } while (!result.EndOfMessage);
-            }
+            //    } while (!result.EndOfMessage);
+            //}
         }
 
         public async void RequestJoinSearchAsync()
@@ -59,6 +59,33 @@ namespace COMP3000Project.WS
             var encodedData = Encoding.UTF8.GetBytes(data);
             var buffer = new ArraySegment<Byte>(encodedData, 0, encodedData.Length);
             await ws.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
+        }
+
+        public async Task<ObservableCollection<EateryOption>> RequestEateriesList(string data)
+        {
+            //send request
+            var encodedData = Encoding.UTF8.GetBytes(data);
+            var buffer = new ArraySegment<Byte>(encodedData, 0, encodedData.Length);
+            await ws.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
+
+            //get response?
+            while (true)//this gets messages, maybe
+            {
+                WebSocketReceiveResult result;
+                //var message = new ArraySegment<byte>(new byte[4096]);
+                var message = new ArraySegment<byte>(new byte[10000]);//byte limit governs max size of message, ive slapped it up to high, should revisit it
+                do
+                {
+                    result = await ws.ReceiveAsync(message, CancellationToken.None);
+                    var messageBytes = message.Skip(message.Offset).Take(result.Count).ToArray();
+                    string serialisedMessage = Encoding.UTF8.GetString(messageBytes);
+
+                    var textMessage = serialisedMessage;
+
+                    return JsonSerializer.Deserialize<ObservableCollection<EateryOption>>(textMessage);
+                    
+                } while (!result.EndOfMessage);
+            }
         }
 
         public async Task SendMessage(string data)

@@ -69,25 +69,35 @@ wss.on('connection', function connection(ws) {
                     wss.clients.forEach(function (WSClient) {
                         if (WSClient.readyState === WebSocket.OPEN) {
 
+                            let EateryList = [];
 
-
-                            EateryList = new Array();
-
-                            for (i = 0; i < restaurantData.data.results.length; i++) {
+                            for (let i = 0; i < restaurantData.data.results.length; i++) {
                                 // console.log("adding: " + restaurantData.data.results[i].toString());
                                 // console.log('data, photos: ' + restaurantData.data.results[i].photos[0].photo_reference);
 
+                                let name = restaurantData.data.results[i].name;
+                                let description = "description would be here, if there was one";
+                                let rating = restaurantData.data.results[i].rating;
+                                let photoRef;
+                                if(restaurantData.data.results[i].photos){
+                                    photoRef = restaurantData.data.results[i].photos[0].photo_reference;
+                                } else {
+                                    photoRef = "";
+                                }
+
                                 let eatery = new EateryOption(
-                                    restaurantData.data.results[i].name,
-                                    "description would be here, if there was one",
-                                    restaurantData.data.results[i].rating,
-                                    restaurantData.data.results[i].photos[0].photo_reference
+                                    name,
+                                    description,
+                                    rating,
+                                    photoRef
                                 );
 
                                 EateryList.push(eatery);
                             }
 
-                            console.log('sending eateryList to client: ' + JSON.stringify(EateryList));
+                            // console.log('sending eateryList to client: ' + JSON.stringify(EateryList));
+                            console.log('sending eateryList to client: ' + EateryList);
+
                             WSClient.send(JSON.stringify(EateryList));
                         }
                     });
