@@ -17,6 +17,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using Xamarin.Essentials;
 
+
 namespace COMP3000Project.Views.Testing
 {
     class TestingPageViewModel : INotifyPropertyChanged
@@ -81,7 +82,11 @@ namespace COMP3000Project.Views.Testing
             //Location location = await getLocation();
             //TestCollection = await WSHandler.RequestEateriesList("{ \"type\": \"getEateries\", \"body\": \"\", \"latitude\": \"" + location.Latitude + "\", \"longitude\": \"" + location.Longitude + "\" }");//TEMP SHIT
 
-            WSHandler.SendMessage("testMessage");
+            Message testMessage = new Message("testID", "testMessage", "slime man");
+
+            
+
+            WSHandler.SendMessage(JsonSerializer.Serialize(testMessage));
         }
         public async Task<Location> getLocation()
         {
