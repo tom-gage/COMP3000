@@ -34,15 +34,14 @@ wss.on('connection', function connection(ws) {
 
     ws.on('message', function incoming(data){
         console.log('got message');
-        console.log(data);
 
         let message = JSON.parse(data);
-
         console.log(message);
+        console.log(message.Type);
 
 
 
-        switch(message.type) {
+        switch(message.Type) {
             case "getEateries":
 
                 //make api call
@@ -104,6 +103,7 @@ wss.on('connection', function connection(ws) {
                 break;
 
             case "testMessage":
+                console.log("test message received!");
                 ws.send(JSON.stringify(new Message("1", "debugMessage", "hello there")));
                 ws.send(JSON.stringify(new Message("2", "debugMessage", "hello there, again")));
                 break;
