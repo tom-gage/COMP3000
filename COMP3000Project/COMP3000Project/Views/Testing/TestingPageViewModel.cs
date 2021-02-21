@@ -78,20 +78,10 @@ namespace COMP3000Project.Views.Testing
         public async void SendWSMessage()
         {
             //asks server for eateries
+            //Location location = await getLocation();
+            //TestCollection = await WSHandler.RequestEateriesList("{ \"type\": \"getEateries\", \"body\": \"\", \"latitude\": \"" + location.Latitude + "\", \"longitude\": \"" + location.Longitude + "\" }");//TEMP SHIT
 
-            Location location = await getLocation();
-
-            //await WSHandler.SendMessage("{ \"type\": \"getEateries\", \"body\": \"\", \"latitude\": \"" + location.Latitude + "\", \"longitude\": \"" + location.Longitude + "\" }");//TEMP SHIT
-
-
-            TestCollection = await WSHandler.RequestEateriesList("{ \"type\": \"getEateries\", \"body\": \"\", \"latitude\": \"" + location.Latitude + "\", \"longitude\": \"" + location.Longitude + "\" }");//TEMP SHIT
-
-
-            //sets our local eateries list as the result we got
-            //TestCollection = WSHandler.MessageList;
-            //Console.WriteLine(WSHandler.MessageList[0]);
-            //Console.WriteLine(TestCollection[0].Title);
-
+            WSHandler.SendMessage("testMessage");
         }
         public async Task<Location> getLocation()
         {

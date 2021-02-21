@@ -5188,7 +5188,7 @@
       ]
     },
     "Microsoft.NETCore.Platforms/2.1.0": {
-      "sha512": "ok+RPAtESz/9MUXeIEz6Lv5XAGQsaNmEYXMsgVALj4D7kqC8gveKWXWXbufLySR2fWrwZf8smyN5RmHu0e4BHA==",
+      "sha512": "GmkKfoyerqmsHMn7OZj0AKpcBabD+GaafqphvX2Mw406IwiJRy1pKcKqdCfKJfYmkRyJ6+e+RaUylgdJoDa1jQ==",
       "type": "package",
       "path": "microsoft.netcore.platforms/2.1.0",
       "files": [
@@ -10167,18 +10167,18 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Tom\\.nuget\\packages\\": {},
+    "C:\\Users\\btgage\\.nuget\\packages\\": {},
     "C:\\Microsoft\\Xamarin\\NuGet\\": {},
     "C:\\Program Files (x86)\\Microsoft SDKs\\UWPNuGetPackages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Tom\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project.UWP\\COMP3000Project.UWP.csproj",
+      "projectUniqueName": "C:\\Users\\btgage\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project.UWP\\COMP3000Project.UWP.csproj",
       "projectName": "COMP3000Project.UWP",
-      "projectPath": "C:\\Users\\Tom\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project.UWP\\COMP3000Project.UWP.csproj",
-      "packagesPath": "C:\\Users\\Tom\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Tom\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project.UWP\\obj\\",
+      "projectPath": "C:\\Users\\btgage\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project.UWP\\COMP3000Project.UWP.csproj",
+      "packagesPath": "C:\\Users\\btgage\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\btgage\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project.UWP\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
@@ -10186,7 +10186,7 @@
         "C:\\Program Files (x86)\\Microsoft SDKs\\UWPNuGetPackages\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\Tom\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\btgage\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
@@ -10200,8 +10200,8 @@
       "frameworks": {
         "uap10.0.16299": {
           "projectReferences": {
-            "C:\\Users\\Tom\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project\\COMP3000Project.csproj": {
-              "projectPath": "C:\\Users\\Tom\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project\\COMP3000Project.csproj"
+            "C:\\Users\\btgage\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project\\COMP3000Project.csproj": {
+              "projectPath": "C:\\Users\\btgage\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project\\COMP3000Project.csproj"
             }
           }
         }

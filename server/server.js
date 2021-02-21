@@ -1,10 +1,11 @@
 const EateryOption = require('./objects/EateryOption');
+const Message = require('./objects/Message');
 
 const express = require('express');
 const http = require('http');
 const https = require('https');
 const WebSocket = require("ws");
-
+const { v4: uuid } = require('uuid');
 
 const {Client} = require('@googlemaps/google-maps-services-js');
 const client = new Client({});
@@ -13,33 +14,27 @@ const port = 9000;
 const server = http.createServer(express);
 const wss = new WebSocket.Server({ server });
 
-var increment = 0;
+const idMap = new Map();
 
 
 var restaurantData;
 
-// let server = http.createServer(app);
 
-// setup sockets
-// let io = socketIo(server);
-// io.on('connection', async function(socket) {
-//     console.log('got connection');
-//     socket.on('please send me some restaurant data', async function(msg) {
-//         console.log('message received: ' + msg);
-//
-//     });
-// });
-//
-//
-// server.listen(9000, function (request, response) {
-//     console.log('listening on port 9000');
-// });
 
 
 wss.on('connection', function connection(ws) {
     console.log('got connection');
+    ws.id = uuid();
+    idMap.set(ws.id, ws);
+
+    ws.on('close', function() {
+        // remove from the map
+        idMap.delete(ws.id);
+    });
+
     ws.on('message', function incoming(data){
         console.log('got message');
+        console.log(data);
 
         let message = JSON.parse(data);
 
@@ -101,14 +96,17 @@ wss.on('connection', function connection(ws) {
                             WSClient.send(JSON.stringify(EateryList));
                         }
                     });
-                })
-                //     .catch((error) => {
-                //     console.log("ERROR");
-                //     console.log("error is: " + error);
-                //     // console.log("error is: " + error.response.data.error_message);
-                // });
+                }).catch((error) => {
+                    console.log("ERROR");
+                    console.log("error is: " + error);
+                    // console.log("error is: " + error.response.data.error_message);
+                });
                 break;
 
+            case "testMessage":
+                ws.send(JSON.stringify(new Message("1", "debugMessage", "hello there")));
+                ws.send(JSON.stringify(new Message("2", "debugMessage", "hello there, again")));
+                break;
             default:
                 console.log('message received but not recognised');
         }
