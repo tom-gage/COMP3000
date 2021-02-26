@@ -79,14 +79,12 @@ namespace COMP3000Project.Views.Testing
         public async void SendWSMessage()
         {
             //asks server for eateries
-            //Location location = await getLocation();
-            //TestCollection = await WSHandler.RequestEateriesList("{ \"type\": \"getEateries\", \"body\": \"\", \"latitude\": \"" + location.Latitude + "\", \"longitude\": \"" + location.Longitude + "\" }");//TEMP SHIT
+            Location location = await getLocation();
+            TestCollection = await WSHandler.RequestEateriesList("{ \"type\": \"getEateries\", \"body\": \"\", \"latitude\": \"" + location.Latitude + "\", \"longitude\": \"" + location.Longitude + "\" }");//TEMP SHIT
 
-            Message testMessage = new Message("testID", "testMessage", "slime man");
+            //Message testMessage = new Message("testID", "testMessage", "slime man");
 
-            
-
-            WSHandler.SendMessage(JsonSerializer.Serialize(testMessage));
+            //WSHandler.SendMessage(JsonSerializer.Serialize(testMessage));
         }
         public async Task<Location> getLocation()
         {

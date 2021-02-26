@@ -37,11 +37,11 @@ wss.on('connection', function connection(ws) {
 
         let message = JSON.parse(data);
         console.log(message);
-        console.log(message.Type);
+        console.log(message.type);
 
 
 
-        switch(message.Type) {
+        switch(message.type) {
             case "getEateries":
 
                 //make api call
@@ -53,65 +53,67 @@ wss.on('connection', function connection(ws) {
                         key : "AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"
                     },
                     timeout:1000
-                }).then((response) => {
+                }).then((eateryData) => {
 
-                    // console.log("response is: " + response.data.results[0].name);
-                    // console.log(response);
-                    restaurantData = response;
+                    if(ws.readyState === WebSocket.OPEN){
+                        let EateryOptionsArray = createEateriesArray(eateryData)
+                        let x = new Message(1, "eatery options array", JSON.stringify(EateryOptionsArray));
+                        ws.send(JSON.stringify(x));
 
-                    // returns eatery list to each client, needs refactoring
-                    wss.clients.forEach(function (WSClient) {
-                        if (WSClient.readyState === WebSocket.OPEN) {
-
-                            let EateryList = [];
-
-                            for (let i = 0; i < restaurantData.data.results.length; i++) {
-                                // console.log("adding: " + restaurantData.data.results[i].toString());
-                                // console.log('data, photos: ' + restaurantData.data.results[i].photos[0].photo_reference);
-
-                                let name = restaurantData.data.results[i].name;
-                                let description = "description would be here, if there was one";
-                                let rating = restaurantData.data.results[i].rating;
-                                let photoRef;
-                                if(restaurantData.data.results[i].photos){
-                                    photoRef = restaurantData.data.results[i].photos[0].photo_reference;
-                                } else {
-                                    photoRef = "";
-                                }
-
-                                let eatery = new EateryOption(
-                                    name,
-                                    description,
-                                    rating,
-                                    photoRef
-                                );
-
-                                EateryList.push(eatery);
-                            }
-
-                            // console.log('sending eateryList to client: ' + JSON.stringify(EateryList));
-                            console.log('sending eateryList to client: ' + EateryList);
-
-                            WSClient.send(JSON.stringify(EateryList));
-                        }
-                    });
+                    }
                 }).catch((error) => {
-                    console.log("ERROR");
-                    console.log("error is: " + error);
-                    // console.log("error is: " + error.response.data.error_message);
+
+                    console.log("got error: " + error);
+
                 });
                 break;
 
             case "testMessage":
                 console.log("test message received!");
                 ws.send(JSON.stringify(new Message("1", "debugMessage", "hello there")));
-                ws.send(JSON.stringify(new Message("2", "debugMessage", "hello there, again")));
                 break;
             default:
                 console.log('message received but not recognised');
         }
     })
 });
+
+function createEateriesArray(eateryData){
+    let EateriesArray = [];
+
+    try{
+        if(eateryData.data.results.length === 0){
+            return [];
+        }
+
+        for (let i = 0; i < eateryData.data.results.length; i++) {
+
+            let name = eateryData.data.results[i].name;
+            let description = "description would be here, if there was one";
+            let rating = eateryData.data.results[i].rating;
+            let photoRef;
+            if(eateryData.data.results[i].photos){
+                photoRef = eateryData.data.results[i].photos[0].photo_reference;
+            } else {
+                photoRef = "";
+            }
+
+            let eatery = new EateryOption(
+                name,
+                description,
+                rating,
+                photoRef
+            );
+
+            EateriesArray.push(eatery);
+        }
+    } catch {
+        console.log('could not parse places data');
+        return [];
+    }
+
+    return EateriesArray;
+}
 
 server.listen(port, function () {
     console.log('server listening on port: ' + port);
@@ -140,58 +142,3 @@ server.listen(port, function () {
     // })
 });
 
-// wss.on('connection', function connection(ws) {
-//     ws.on('message', function incoming(data){
-//         increment += 1;
-//         console.log("message No. " + increment +" recieved: " + data);
-//
-//         if(data === "please send me some restaurant data"){
-//             wss.clients.forEach(function (client) {
-//                 if (client.readyState === WebSocket.OPEN) {
-//                     console.log('sending data: ' + restaurantData);
-//
-//
-//
-//
-//                     EateryList = new Array();
-//
-//                     for (i = 0; i < restaurantData.data.results.length; i++) {
-//                         console.log("adding: " + restaurantData.data.results[i].toString());
-//                         console.log('data, photos: ' + restaurantData.data.results[i].photos[0].photo_reference);
-//                         let eatery = new EateryOption(
-//                             restaurantData.data.results[i].name,
-//                             "description would be here, if there was one",
-//                             restaurantData.data.results[i].rating, restaurantData.data.results[i].photos[0].photo_reference
-//                         );
-//                         EateryList.push(eatery);
-//                     }
-//
-//                     client.send(JSON.stringify(EateryList));
-//                 }
-//             });
-//         }
-//
-//
-//
-//     })
-// });
-//
-// server.listen(port, function () {
-//     console.log('server listening on port: ' + port);
-//
-//     //request
-//     client.placesNearby({params:{
-//             location : [50.381773,-4.133786],
-//             radius : 50,
-//             type : "restaurant",
-//             key : "AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"
-//         },
-//         timeout:1000
-//     }).then((response) => {
-//         console.log("response is: " + response.data.results[0].name);
-//         restaurantData = response;
-//
-//     }).catch((error) => {
-//         console.log("error is: " + error.response.data.error_message);
-//     });
-// });

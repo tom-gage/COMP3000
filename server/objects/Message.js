@@ -1,11 +1,11 @@
 class Message{
     ID;
-    Type;
+    type;
     Body;
 
-    constructor(ID, Type, Body) {
+    constructor(ID, type, Body) {
         this.ID = ID;
-        this.Type = Type;
+        this.type = type;
         this.Body = Body;
     }
 }

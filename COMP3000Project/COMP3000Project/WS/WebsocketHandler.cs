@@ -76,12 +76,18 @@ namespace COMP3000Project.WS
                             var msgString = Encoding.UTF8.GetString(ms.ToArray());
                             var message = JsonConvert.DeserializeObject<Message>(msgString);
 
-                            Console.WriteLine("[WS] Got a message of type " + message.Type);
+                            Console.WriteLine("[WS] Got a message of type " + message.type);
                             // Message was intended for us!
-                            switch (message.Type)
+                            switch (message.type)
                             {
                                 case "debugMessage":
-                                    Console.WriteLine("------ DEBUG MESSAGE RECEIVED ------------");
+                                    Console.WriteLine("------ MESSAGE RECEIVED ------");
+                                    Console.WriteLine(message.Body);
+                                    break;
+
+                                case "eatery options array":
+                                    Console.WriteLine("------ MESSAGE RECEIVED ------");
+                                    Console.WriteLine(message.Body);
                                     break;
 
                                 default:
@@ -122,24 +128,26 @@ namespace COMP3000Project.WS
             var buffer = new ArraySegment<Byte>(encodedData, 0, encodedData.Length);
             await ws.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
 
+            return null;
+
             //get response?
-            while (true)//this gets messages, maybe
-            {
-                WebSocketReceiveResult result;
-                //var message = new ArraySegment<byte>(new byte[4096]);
-                var message = new ArraySegment<byte>(new byte[10000]);//byte limit governs max size of message, ive slapped it up to high, should revisit it
-                do
-                {
-                    result = await ws.ReceiveAsync(message, CancellationToken.None);
-                    var messageBytes = message.Skip(message.Offset).Take(result.Count).ToArray();
-                    string serialisedMessage = Encoding.UTF8.GetString(messageBytes);
+            //while (true)//this gets messages, maybe
+            //{
+            //    WebSocketReceiveResult result;
+            //    //var message = new ArraySegment<byte>(new byte[4096]);
+            //    var message = new ArraySegment<byte>(new byte[10000]);//byte limit governs max size of message, ive slapped it up to high, should revisit it
+            //    do
+            //    {
+            //        result = await ws.ReceiveAsync(message, CancellationToken.None);
+            //        var messageBytes = message.Skip(message.Offset).Take(result.Count).ToArray();
+            //        string serialisedMessage = Encoding.UTF8.GetString(messageBytes);
 
-                    var textMessage = serialisedMessage;
+            //        var textMessage = serialisedMessage;
 
-                    return System.Text.Json.JsonSerializer.Deserialize<ObservableCollection<EateryOption>>(textMessage);
+            //        return System.Text.Json.JsonSerializer.Deserialize<ObservableCollection<EateryOption>>(textMessage);
                     
-                } while (!result.EndOfMessage);
-            }
+            //    } while (!result.EndOfMessage);
+            //}
         }
 
 
