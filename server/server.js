@@ -6,6 +6,7 @@ const http = require('http');
 const https = require('https');
 const WebSocket = require("ws");
 const { v4: uuid } = require('uuid');
+const prompt = require('prompt');
 
 const {Client} = require('@googlemaps/google-maps-services-js');
 const client = new Client({});
@@ -116,6 +117,7 @@ function createEateriesArray(eateryData){
 }
 
 server.listen(port, function () {
+    prompt.start();
     console.log('server listening on port: ' + port);
 
     // //api call

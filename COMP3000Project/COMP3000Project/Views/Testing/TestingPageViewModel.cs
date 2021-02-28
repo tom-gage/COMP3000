@@ -28,8 +28,8 @@ namespace COMP3000Project.Views.Testing
 
         //VARS
         private WebsocketHandler WSHandler;
-
         public event PropertyChangedEventHandler PropertyChanged;
+        protected INavigation Navigation => Application.Current.MainPage.Navigation;
 
         //public EateryOption eateryOption;
         public class testData
@@ -79,12 +79,15 @@ namespace COMP3000Project.Views.Testing
         public async void SendWSMessage()
         {
             //asks server for eateries
-            Location location = await getLocation();
-            TestCollection = await WSHandler.RequestEateriesList("{ \"type\": \"getEateries\", \"body\": \"\", \"latitude\": \"" + location.Latitude + "\", \"longitude\": \"" + location.Longitude + "\" }");//TEMP SHIT
+            //Location location = await getLocation();
+            //TestCollection = await WSHandler.RequestEateriesList("{ \"type\": \"getEateries\", \"body\": \"\", \"latitude\": \"" + location.Latitude + "\", \"longitude\": \"" + location.Longitude + "\" }");//TEMP SHIT
 
             //Message testMessage = new Message("testID", "testMessage", "slime man");
 
             //WSHandler.SendMessage(JsonSerializer.Serialize(testMessage));
+
+            var nextPage = new TestingPage2();
+            await Navigation.PushAsync(nextPage, true);
         }
         public async Task<Location> getLocation()
         {

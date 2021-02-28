@@ -12,6 +12,7 @@
   "dependencies": {
     "@googlemaps/google-maps-services-js": "^3.1.16",
     "express": "^4.17.1",
+    "prompt": "^1.1.0",
     "uuid": "^8.3.2",
     "ws": "^7.4.0"
   }
