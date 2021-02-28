@@ -17,44 +17,25 @@ namespace COMP3000Project.WS
 {
 
 
-    class WebsocketHandler : INotifyPropertyChanged
+    static class WebsocketHandler //: INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        //public event PropertyChangedEventHandler PropertyChanged;
 
-        private ObservableCollection<EateryOption> _MessageList;
-        public ObservableCollection<EateryOption> MessageList { get => _MessageList; set => SetProperty(ref _MessageList, value); }
+        static private ObservableCollection<EateryOption> _MessageList;
+        static public ObservableCollection<EateryOption> MessageList { get => _MessageList; set => _MessageList = value; }
+        //static public ObservableCollection<EateryOption> MessageList { get => _MessageList; set => SetProperty(ref _MessageList, value); }
 
+        static ClientWebSocket ws = new ClientWebSocket();
 
-
-        ClientWebSocket ws = new ClientWebSocket();
-
-        public async Task InitialiseConnectionAsync()
+        static public async Task InitialiseConnectionAsync()
         {
             await ws.ConnectAsync(new Uri("ws://10.0.2.2:9000"), CancellationToken.None);
 
             await HandleMessages();
 
-
-            //while (true)//this gets messages, maybe
-            //{
-            //    WebSocketReceiveResult result;
-            //    var message = new ArraySegment<byte>(new byte[4096]);
-            //    do
-            //    {
-            //        result = await ws.ReceiveAsync(message, CancellationToken.None);
-            //        var messageBytes = message.Skip(message.Offset).Take(result.Count).ToArray();
-            //        string serialisedMessage = Encoding.UTF8.GetString(messageBytes);
-
-            //        var textMessage = serialisedMessage;
-
-            //        MessageList = JsonSerializer.Deserialize<ObservableCollection<EateryOption>>(textMessage);
-            //        Console.WriteLine("");
-
-            //    } while (!result.EndOfMessage);
-            //}
         }
 
-        public async Task HandleMessages()
+        static public async Task HandleMessages()
         {
             try
             {
@@ -105,14 +86,14 @@ namespace COMP3000Project.WS
             }
         }
 
-        public async void SendMessage(string data)
+        static public async void SendMessage(string data)
         {
             var encodedData = Encoding.UTF8.GetBytes(data);
             var buffer = new ArraySegment<Byte>(encodedData, 0, encodedData.Length);
             await ws.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
         }
 
-        public async void RequestJoinSearchAsync()
+        static public async void RequestJoinSearchAsync()
         {
             var data = "requestJoinSearch";
 
@@ -121,7 +102,7 @@ namespace COMP3000Project.WS
             await ws.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
         }
 
-        public async Task<ObservableCollection<EateryOption>> RequestEateriesList(string data)
+        static public async Task<ObservableCollection<EateryOption>> RequestEateriesList(string data)
         {
             //send request
             var encodedData = Encoding.UTF8.GetBytes(data);
@@ -129,42 +110,23 @@ namespace COMP3000Project.WS
             await ws.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
 
             return null;
-
-            //get response?
-            //while (true)//this gets messages, maybe
-            //{
-            //    WebSocketReceiveResult result;
-            //    //var message = new ArraySegment<byte>(new byte[4096]);
-            //    var message = new ArraySegment<byte>(new byte[10000]);//byte limit governs max size of message, ive slapped it up to high, should revisit it
-            //    do
-            //    {
-            //        result = await ws.ReceiveAsync(message, CancellationToken.None);
-            //        var messageBytes = message.Skip(message.Offset).Take(result.Count).ToArray();
-            //        string serialisedMessage = Encoding.UTF8.GetString(messageBytes);
-
-            //        var textMessage = serialisedMessage;
-
-            //        return System.Text.Json.JsonSerializer.Deserialize<ObservableCollection<EateryOption>>(textMessage);
-                    
-            //    } while (!result.EndOfMessage);
-            //}
         }
 
 
         //BLACK MAGIC - THOU SHALT NOT TOUCH
-        void SetProperty<T>(ref T backingStore, T value, Action onChanged = null, [CallerMemberName] string propertyName = "")
-        {
-            if (EqualityComparer<T>.Default.Equals(backingStore, value))
-                return;
+        //void SetProperty<T>(ref T backingStore, T value, Action onChanged = null, [CallerMemberName] string propertyName = "")
+        //{
+        //    if (EqualityComparer<T>.Default.Equals(backingStore, value))
+        //        return;
 
-            backingStore = value;
+        //    backingStore = value;
 
-            onChanged?.Invoke();
+        //    onChanged?.Invoke();
 
-            HandlePropertyChanged(propertyName);
-        }
+        //    HandlePropertyChanged(propertyName);
+        //}
 
-        void HandlePropertyChanged(string propertyName = "") =>
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        //void HandlePropertyChanged(string propertyName = "") =>
+        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

@@ -7,6 +7,7 @@ const https = require('https');
 const WebSocket = require("ws");
 const { v4: uuid } = require('uuid');
 const prompt = require('prompt');
+const readline = require('readline');
 
 const {Client} = require('@googlemaps/google-maps-services-js');
 const client = new Client({});
@@ -116,31 +117,28 @@ function createEateriesArray(eateryData){
     return EateriesArray;
 }
 
+
+
+
 server.listen(port, function () {
-    prompt.start();
     console.log('server listening on port: ' + port);
 
-    // //api call
-    // client.placesNearby({params:{
-    //         location : [50.381773,-4.133786],
-    //         radius : 50,
-    //         type : "restaurant",
-    //         key : "AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"
-    //     },
-    //     timeout:1000
-    // }).then((response) => {
-    //     console.log("response is: " + response.data.results[0].name);
-    //     restaurantData = response;
-    //
-    // }).catch((error) => {
-    //     console.log("error is: " + error.response.data.error_message);
-    // });
+    var rl = readline.createInterface(process.stdin, process.stdout);
+    rl.setPrompt('command:');
+    rl.prompt();
+    rl.on('line', function(line) {
+        if (line === "stop") rl.close();
 
-    // console.log({
-    //     type : "getEateries",
-    //     body : "",
-    //     latitude : "",
-    //     longitude : ""
-    // })
+        if(line === 't'){
+            wss.clients.forEach(function (ws){
+                ws.send(JSON.stringify(new Message("1", "test message", "hello there")));
+            })
+        }
+
+
+        rl.prompt();
+    }).on('close',function(){
+        process.exit(0);
+    });
 });
 

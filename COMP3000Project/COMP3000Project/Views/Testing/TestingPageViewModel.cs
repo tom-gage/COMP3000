@@ -27,7 +27,7 @@ namespace COMP3000Project.Views.Testing
         public ICommand OnButtonClick { get; }
 
         //VARS
-        private WebsocketHandler WSHandler;
+        //private WebsocketHandler WSHandler;
         public event PropertyChangedEventHandler PropertyChanged;
         protected INavigation Navigation => Application.Current.MainPage.Navigation;
 
@@ -70,9 +70,10 @@ namespace COMP3000Project.Views.Testing
 
             TestCollection = new ObservableCollection<EateryOption>();
 
-            WSHandler = new WebsocketHandler();
+            //WSHandler = new WebsocketHandler();
 
-            WSHandler.InitialiseConnectionAsync();
+            //WSHandler.InitialiseConnectionAsync();
+            WebsocketHandler.InitialiseConnectionAsync();
         }
 
         //FUNCTIONS
