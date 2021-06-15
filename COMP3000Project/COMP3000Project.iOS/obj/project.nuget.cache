@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "vuAkCldgah4JqEidQN6hkFAnOpi/YkiCIhSEDBHkUW/tf5B6kLwBXrmupTaw931H/EAH5f9cpd3+J3mCqDqplw==",
+  "dgSpecHash": "NvIquu7aRKacBZjNxFWla7NnxKq2P52u8AiRbuzl9O1PPsRbx9FyhamX10Y9MIwjzOTltN0i/ws+oDfNHCgIig==",
   "success": true,
-  "projectFilePath": "C:\\Users\\btgage\\Desktop\\COMP3000\\COMP3000Project\\COMP3000Project.iOS\\COMP3000Project.iOS.csproj",
+  "projectFilePath": "C:\\Users\\btgage\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project.iOS\\COMP3000Project.iOS.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\btgage\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\5.0.0\\microsoft.bcl.asyncinterfaces.5.0.0.nupkg.sha512",
     "C:\\Users\\btgage\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
@@ -14,7 +14,7 @@
     "C:\\Users\\btgage\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\5.0.0\\system.runtime.compilerservices.unsafe.5.0.0.nupkg.sha512",
     "C:\\Users\\btgage\\.nuget\\packages\\system.text.encodings.web\\5.0.0\\system.text.encodings.web.5.0.0.nupkg.sha512",
     "C:\\Users\\btgage\\.nuget\\packages\\system.text.json\\5.0.0\\system.text.json.5.0.0.nupkg.sha512",
-    "C:\\Microsoft\\Xamarin\\NuGet\\xamarin.essentials\\1.5.3.2\\xamarin.essentials.1.5.3.2.nupkg.sha512",
+    "C:\\Users\\btgage\\.nuget\\packages\\xamarin.essentials\\1.5.3.2\\xamarin.essentials.1.5.3.2.nupkg.sha512",
     "C:\\Users\\btgage\\.nuget\\packages\\xamarin.forms\\4.8.0.1687\\xamarin.forms.4.8.0.1687.nupkg.sha512"
   ],
   "logs": []

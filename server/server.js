@@ -60,6 +60,7 @@ wss.on('connection', function connection(ws) {
                     if(ws.readyState === WebSocket.OPEN){
                         let EateryOptionsArray = createEateriesArray(eateryData)
                         let x = new Message(1, "eatery options array", JSON.stringify(EateryOptionsArray));
+                        console.log('sending eatery options array');
                         ws.send(JSON.stringify(x));
 
                     }
@@ -131,6 +132,7 @@ server.listen(port, function () {
 
         if(line === 't'){
             wss.clients.forEach(function (ws){
+                console.log('sending test message')
                 ws.send(JSON.stringify(new Message("1", "test message", "hello there")));
             })
         }

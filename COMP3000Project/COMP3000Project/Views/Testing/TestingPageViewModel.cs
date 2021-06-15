@@ -80,16 +80,19 @@ namespace COMP3000Project.Views.Testing
         public async void SendWSMessage()
         {
             //asks server for eateries
-            //Location location = await getLocation();
-            //TestCollection = await WSHandler.RequestEateriesList("{ \"type\": \"getEateries\", \"body\": \"\", \"latitude\": \"" + location.Latitude + "\", \"longitude\": \"" + location.Longitude + "\" }");//TEMP SHIT
+            Location location = await getLocation();
+            TestCollection = await WebsocketHandler.RequestEateriesList("{ \"type\": \"getEateries\", \"body\": \"\", \"latitude\": \"" + location.Latitude + "\", \"longitude\": \"" + location.Longitude + "\" }");//TEMP SHIT
+
+            TestCollection = WebsocketHandler.EateriesArray;
 
             //Message testMessage = new Message("testID", "testMessage", "slime man");
 
             //WSHandler.SendMessage(JsonSerializer.Serialize(testMessage));
 
-            var nextPage = new TestingPage2();
-            await Navigation.PushAsync(nextPage, true);
+            //var nextPage = new TestingPage2();
+            //await Navigation.PushAsync(nextPage, true);
         }
+
         public async Task<Location> getLocation()
         {
             Location location;

@@ -21,8 +21,8 @@ namespace COMP3000Project.WS
     {
         //public event PropertyChangedEventHandler PropertyChanged;
 
-        static private ObservableCollection<EateryOption> _MessageList;
-        static public ObservableCollection<EateryOption> MessageList { get => _MessageList; set => _MessageList = value; }
+        static private ObservableCollection<EateryOption> _EateriesArray;
+        static public ObservableCollection<EateryOption> EateriesArray { get => _EateriesArray; set => _EateriesArray = value; }
         //static public ObservableCollection<EateryOption> MessageList { get => _MessageList; set => SetProperty(ref _MessageList, value); }
 
         static ClientWebSocket ws = new ClientWebSocket();
@@ -67,22 +67,30 @@ namespace COMP3000Project.WS
                                     break;
 
                                 case "eatery options array":
-                                    Console.WriteLine("------ MESSAGE RECEIVED ------");
+                                    Console.WriteLine("[WS] Eatery options recieved");
                                     Console.WriteLine(message.Body);
                                     break;
 
                                 default:
+                                    
                                     break;
                             }
                         }
+                        
                         ms.Seek(0, SeekOrigin.Begin);
                         ms.Position = 0;
+                        ms.SetLength(0);
                     }
                 }
             }
             catch (InvalidOperationException)
             {
                 Console.WriteLine("[WS] Tried to receive message while already reading one.");
+            }
+            catch (Exception Ex)
+            {
+                Console.WriteLine("Exception is as follows: ");
+                Console.WriteLine(Ex);
             }
         }
 
