@@ -16,18 +16,19 @@ using System.Windows.Input;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Xamarin.Essentials;
-
+using COMP3000Project.Interfaces;
 
 namespace COMP3000Project.Views.Testing
 {
-    class TestingPageViewModel : INotifyPropertyChanged
+    class TestingPageViewModel : INotifyPropertyChanged, Subscriber
     {
         //COMMANDS
         public ICommand OnSwipeCommand { get; }
         public ICommand OnButtonClick { get; }
 
         //VARS
-        //private WebsocketHandler WSHandler;
+        WebsocketHandler WSH;
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected INavigation Navigation => Application.Current.MainPage.Navigation;
 
@@ -73,7 +74,12 @@ namespace COMP3000Project.Views.Testing
             //WSHandler = new WebsocketHandler();
 
             //WSHandler.InitialiseConnectionAsync();
-            WebsocketHandler.InitialiseConnectionAsync();
+
+            WSH = new WebsocketHandler();
+
+            WSH.InitialiseConnectionAsync();
+
+            WSH.registerSubscriber(this);
         }
 
         //FUNCTIONS
@@ -81,9 +87,11 @@ namespace COMP3000Project.Views.Testing
         {
             //asks server for eateries
             Location location = await getLocation();
-            TestCollection = await WebsocketHandler.RequestEateriesList("{ \"type\": \"getEateries\", \"body\": \"\", \"latitude\": \"" + location.Latitude + "\", \"longitude\": \"" + location.Longitude + "\" }");//TEMP SHIT
 
-            TestCollection = WebsocketHandler.EateriesArray;
+
+            await WSH.RequestEateriesList("{ \"type\": \"getEateries\", \"body\": \"\", \"latitude\": \"" + location.Latitude + "\", \"longitude\": \"" + location.Longitude + "\" }");//TEMP SHIT
+
+            //TestCollection = WSH.EateriesArray;
 
             //Message testMessage = new Message("testID", "testMessage", "slime man");
 
@@ -225,5 +233,10 @@ namespace COMP3000Project.Views.Testing
         protected void HandlePropertyChanged(string propertyName = "") =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
+        public void Update(string jsonData)
+        {
+            Console.WriteLine("INTER CLASS COMMUNICATION SUCCESSFUL, MESSAGE FOLLOWS");
+            Console.WriteLine(jsonData);
+        }
     }
 }

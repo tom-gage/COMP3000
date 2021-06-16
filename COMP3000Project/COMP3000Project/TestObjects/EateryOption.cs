@@ -8,7 +8,7 @@ using Xamarin.Forms;
 
 namespace COMP3000Project.TestObjects
 {
-    class EateryOption : INotifyPropertyChanged
+    public class EateryOption : INotifyPropertyChanged
     {
         //VARS
         public event PropertyChangedEventHandler PropertyChanged;
