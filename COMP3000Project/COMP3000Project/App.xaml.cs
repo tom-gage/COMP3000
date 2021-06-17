@@ -1,5 +1,7 @@
 ﻿using COMP3000Project.Views.MainMenu;
 using COMP3000Project.Views.Testing;
+using COMP3000Project.Views.Login;
+
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -12,7 +14,9 @@ namespace COMP3000Project
         {
             InitializeComponent();
             TestingPage testingPage = new TestingPage();
-            MainPage = new NavigationPage(testingPage);
+            LoginPage loginPage = new LoginPage();
+            
+            MainPage = new NavigationPage(loginPage);
         }
 
         protected override void OnStart()

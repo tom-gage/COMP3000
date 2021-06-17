@@ -19,7 +19,7 @@ namespace COMP3000Project.WS
 {
 
 
-    public class WebsocketHandler : Publisher//: INotifyPropertyChanged
+    public static class WebsocketHandler //: Publisher//: INotifyPropertyChanged
     {
         //magic
         //public event PropertyChangedEventHandler PropertyChanged;
@@ -27,20 +27,17 @@ namespace COMP3000Project.WS
 
 
         //VARIABLES
-        private ObservableCollection<EateryOption> _EateriesArray;
-        public ObservableCollection<EateryOption> EateriesArray { get => _EateriesArray; set => _EateriesArray = value; }
+        //private ObservableCollection<EateryOption> _EateriesArray;
+        //public ObservableCollection<EateryOption> EateriesArray { get => _EateriesArray; set => _EateriesArray = value; }
 
-        List<Subscriber> subscribers = new List<Subscriber>();
+        static List<Subscriber> subscribers = new List<Subscriber>();
 
-        ClientWebSocket ws = new ClientWebSocket();
+        static ClientWebSocket ws = new ClientWebSocket();
 
-        public WebsocketHandler()
-        {
-
-        }
 
         //FUNCTIONS
-        public async Task InitialiseConnectionAsync()
+        //initialises connection to the server
+        public static async Task InitialiseConnectionAsync()
         {
             await ws.ConnectAsync(new Uri("ws://10.0.2.2:9000"), CancellationToken.None);
 
@@ -48,7 +45,70 @@ namespace COMP3000Project.WS
 
         }
 
-        public async Task HandleMessages()
+        //asks the server to register a new user
+        public static async void RequestRegisterNewUser(string username, string password)
+        {
+            string[] UandP = { username, password };
+
+            //make request message object
+            Message request = new Message("1", "registerNewUser", "", UandP);
+
+            //convert to json for transmission
+            string jsonData = JsonConvert.SerializeObject(request);
+
+
+            //send to server
+            var encodedData = Encoding.UTF8.GetBytes(jsonData);
+            var buffer = new ArraySegment<Byte>(encodedData, 0, encodedData.Length);
+            await ws.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
+        }
+
+        public static async void SendMessage(string data)
+        {
+            var encodedData = Encoding.UTF8.GetBytes(data);
+            var buffer = new ArraySegment<Byte>(encodedData, 0, encodedData.Length);
+            await ws.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
+        }
+
+        public static async void RequestJoinSearchAsync()
+        {
+            var data = "requestJoinSearch";
+
+            var encodedData = Encoding.UTF8.GetBytes(data);
+            var buffer = new ArraySegment<Byte>(encodedData, 0, encodedData.Length);
+            await ws.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
+        }
+
+        public static async Task<ObservableCollection<EateryOption>> RequestEateriesList(string data)
+        {
+            //send request
+            var encodedData = Encoding.UTF8.GetBytes(data);
+            var buffer = new ArraySegment<Byte>(encodedData, 0, encodedData.Length);
+            await ws.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
+
+            return null;
+        }
+
+        //Publisher / Subscriber stuff, handles inter-class communication
+        public static void registerSubscriber(Subscriber subscriber)
+        {
+            subscribers.Add(subscriber);
+        }
+
+        public static void removeSubsciber(Subscriber subscriber)
+        {
+            subscribers.Remove(subscriber);
+        }
+
+        public static void updateSubscribers(string jsonData)
+        {
+            foreach(Subscriber subscriber in subscribers)
+            {
+                subscriber.Update(jsonData);
+            }
+        }
+
+        public static async Task HandleMessages()
         {
             try
             {
@@ -75,23 +135,21 @@ namespace COMP3000Project.WS
                             switch (message.type)
                             {
                                 case "debugMessage":
-                                    Console.WriteLine("------ MESSAGE RECEIVED ------");
                                     Console.WriteLine(message.Body);
                                     break;
 
                                 case "eatery options array":
-                                    Console.WriteLine("[WS] Eatery options recieved");
 
                                     updateSubscribers(message.Body);
 
                                     break;
 
                                 default:
-                                    
+
                                     break;
                             }
                         }
-                        
+
                         ms.Seek(0, SeekOrigin.Begin);
                         ms.Position = 0;
                         ms.SetLength(0);//clears the memory stream for a new message, otherwise it gets blocked up
@@ -108,53 +166,6 @@ namespace COMP3000Project.WS
                 Console.WriteLine(Ex);
             }
         }
-
-        public async void SendMessage(string data)
-        {
-            var encodedData = Encoding.UTF8.GetBytes(data);
-            var buffer = new ArraySegment<Byte>(encodedData, 0, encodedData.Length);
-            await ws.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
-        }
-
-        public async void RequestJoinSearchAsync()
-        {
-            var data = "requestJoinSearch";
-
-            var encodedData = Encoding.UTF8.GetBytes(data);
-            var buffer = new ArraySegment<Byte>(encodedData, 0, encodedData.Length);
-            await ws.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
-        }
-
-        public async Task<ObservableCollection<EateryOption>> RequestEateriesList(string data)
-        {
-            //send request
-            var encodedData = Encoding.UTF8.GetBytes(data);
-            var buffer = new ArraySegment<Byte>(encodedData, 0, encodedData.Length);
-            await ws.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
-
-            return null;
-        }
-
-        //Publisher / Subscriber stuff, handles inter-class communication
-        public void registerSubscriber(Subscriber subscriber)
-        {
-            subscribers.Add(subscriber);
-        }
-
-        public void removeSubsciber(Subscriber subscriber)
-        {
-            subscribers.Remove(subscriber);
-        }
-
-        public void updateSubscribers(string jsonData)
-        {
-            foreach(Subscriber subscriber in subscribers)
-            {
-                subscriber.Update(jsonData);
-            }
-        }
-
-
 
         //BLACK MAGIC - THOU SHALT NOT TOUCH
         //void SetProperty<T>(ref T backingStore, T value, Action onChanged = null, [CallerMemberName] string propertyName = "")

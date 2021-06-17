@@ -18,14 +18,24 @@ const wss = new WebSocket.Server({ server });
 
 const idMap = new Map();
 
+let DB = require('./DB');
 
-var restaurantData;
 
+//set up DB stuff
+DB.initialiseConnection();
+let User = DB.getUserModel();
+
+global.ACTIVE_SEARCHES = [];
+global.USERS = [];
+
+User.find({}, function (err, users) {
+    global.USERS = users;
+});
 
 
 
 wss.on('connection', function connection(ws) {
-    console.log('got connection');
+    console.log('[WS] new websocket connection established');
     ws.id = uuid();
     idMap.set(ws.id, ws);
 
@@ -35,17 +45,13 @@ wss.on('connection', function connection(ws) {
     });
 
     ws.on('message', function incoming(data){
-        console.log('got message');
+        console.log('[MSG] received message');
 
         let message = JSON.parse(data);
-        console.log(message);
-        console.log(message.type);
-
-
 
         switch(message.type) {
             case "getEateries":
-
+                console.log("[MSG] received getEateries request");
                 //make api call
                 client.placesNearby({params:{
                         location : [message.latitude, message.longitude],
@@ -60,26 +66,70 @@ wss.on('connection', function connection(ws) {
                     if(ws.readyState === WebSocket.OPEN){
                         let EateryOptionsArray = createEateriesArray(eateryData)
                         let x = new Message(1, "eatery options array", JSON.stringify(EateryOptionsArray));
-                        console.log('sending eatery options array');
                         ws.send(JSON.stringify(x));
 
                     }
                 }).catch((error) => {
-
-                    console.log("got error: " + error);
+                    console.log('[ERROR]');
+                    console.log(error);
 
                 });
                 break;
 
             case "testMessage":
-                console.log("test message received!");
+                console.log("[MSG] received debug message request, pinging back");
                 ws.send(JSON.stringify(new Message("1", "debugMessage", "hello there")));
                 break;
+
+            case "registerNewUser":
+                console.log("[MSG] received register new user request");
+                let username = message.Items[0];
+                let password = message.Items[1];
+                console.log(username);
+                console.log(password);
+
+                if(validateNewUserRegistration(username)){
+                    registerNewUser(username, password);
+                }
+                break
+
             default:
-                console.log('message received but not recognised');
+                console.log('[MSG] unrecognised message received');
         }
     })
 });
+
+function validateNewUserRegistration(username){
+    if(!USERS.find(function (user) {//if username is not taken
+        return user.username === username;
+    })){
+        return true;
+
+
+    } else {
+        console.log('[LOGIN] user registration failed');
+        return false;
+    }
+}
+
+async function registerNewUser(username, password){
+    let newUser = {
+        username : username,
+        password : password,
+    };
+
+    let UsersModel = DB.getUserModel();
+
+    await UsersModel.create(newUser, function (err) {
+        if (err) return console.log(err);
+    });
+
+    await UsersModel.find({}, function (err, users) {
+        global.USERS = users;
+    });
+
+    console.log('[LOGIN] user registration succeeded');
+}
 
 function createEateriesArray(eateryData){
     let EateriesArray = [];
@@ -111,7 +161,7 @@ function createEateriesArray(eateryData){
             EateriesArray.push(eatery);
         }
     } catch {
-        console.log('could not parse places data');
+        console.log('[ERROR] could not parse places data');
         return [];
     }
 
@@ -122,18 +172,18 @@ function createEateriesArray(eateryData){
 
 
 server.listen(port, function () {
-    console.log('server listening on port: ' + port);
+    console.log('[START] server listening on port: ' + port);
 
     var rl = readline.createInterface(process.stdin, process.stdout);
-    rl.setPrompt('command:');
+    rl.setPrompt('CMD:');
     rl.prompt();
     rl.on('line', function(line) {
         if (line === "stop") rl.close();
 
         if(line === 't'){
             wss.clients.forEach(function (ws){
-                console.log('sending test message')
-                ws.send(JSON.stringify(new Message("1", "test message", "hello there")));
+                console.log('[msg] sending debug message...')
+                ws.send(JSON.stringify(new Message("1", "debugMessage", "hello there")));
             })
         }
 

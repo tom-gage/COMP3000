@@ -27,7 +27,7 @@ namespace COMP3000Project.Views.Testing
         public ICommand OnButtonClick { get; }
 
         //VARS
-        WebsocketHandler WSH;
+        //WebsocketHandler WSH;
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected INavigation Navigation => Application.Current.MainPage.Navigation;
@@ -71,15 +71,14 @@ namespace COMP3000Project.Views.Testing
 
             TestCollection = new ObservableCollection<EateryOption>();
 
-            //WSHandler = new WebsocketHandler();
+            //WSH = new WebsocketHandler();
 
-            //WSHandler.InitialiseConnectionAsync();
+            //WSH.InitialiseConnectionAsync();
 
-            WSH = new WebsocketHandler();
+            //WSH.registerSubscriber(this);
 
-            WSH.InitialiseConnectionAsync();
-
-            WSH.registerSubscriber(this);
+            WebsocketHandler.InitialiseConnectionAsync();
+            WebsocketHandler.registerSubscriber(this);
         }
 
         //FUNCTIONS
@@ -89,13 +88,9 @@ namespace COMP3000Project.Views.Testing
             Location location = await getLocation();
 
 
-            await WSH.RequestEateriesList("{ \"type\": \"getEateries\", \"body\": \"\", \"latitude\": \"" + location.Latitude + "\", \"longitude\": \"" + location.Longitude + "\" }");//TEMP SHIT
+            await WebsocketHandler.RequestEateriesList("{ \"type\": \"getEateries\", \"body\": \"\", \"latitude\": \"" + location.Latitude + "\", \"longitude\": \"" + location.Longitude + "\" }");//TEMP SHIT
 
-            //TestCollection = WSH.EateriesArray;
-
-            //Message testMessage = new Message("testID", "testMessage", "slime man");
-
-            //WSHandler.SendMessage(JsonSerializer.Serialize(testMessage));
+            //TestCollection = WSH.EateriesArray;   
 
             //var nextPage = new TestingPage2();
             //await Navigation.PushAsync(nextPage, true);
@@ -216,6 +211,10 @@ namespace COMP3000Project.Views.Testing
             return httpClient;
         }
 
+        public void Update(string jsonData)
+        {
+            TestCollection = JsonSerializer.Deserialize<ObservableCollection<EateryOption>>(jsonData);
+        }
 
         //BLACK MAGIC - THOU SHALT NOT TOUCH
         protected void SetProperty<T>(ref T backingStore, T value, Action onChanged = null, [CallerMemberName] string propertyName = "")
@@ -233,10 +232,6 @@ namespace COMP3000Project.Views.Testing
         protected void HandlePropertyChanged(string propertyName = "") =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-        public void Update(string jsonData)
-        {
-            Console.WriteLine("INTER CLASS COMMUNICATION SUCCESSFUL, MESSAGE FOLLOWS");
-            Console.WriteLine(jsonData);
-        }
+
     }
 }

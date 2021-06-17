@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="COMP3000Project.Views.Login.LoginPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Welcome to the Login Page!"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+
+            <Entry Placeholder="username"
+                   Text="{Binding Username}"
+                   x:Name="entUsername"/>
+            
+            <Entry Placeholder="password"
+                   Text="{Binding Password}"
+                   IsPassword="True"
+                   x:Name="entPassword"/>
+
+            <Button Text="Register new user"
+                    Command="{Binding RegisterNewUser}"
+                    />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
