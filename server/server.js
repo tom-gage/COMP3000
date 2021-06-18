@@ -16,7 +16,7 @@ const port = 9000;
 const server = http.createServer(express);
 const wss = new WebSocket.Server({ server });
 
-const idMap = new Map();
+const connectionsMap = new Map();
 
 let DB = require('./DB');
 
@@ -25,8 +25,9 @@ let DB = require('./DB');
 DB.initialiseConnection();
 let User = DB.getUserModel();
 
-global.ACTIVE_SEARCHES = [];
 global.USERS = [];
+global.CONNECTED_USERS = [];
+global.ACTIVE_SEARCHES = [];
 
 User.find({}, function (err, users) {
     global.USERS = users;
@@ -36,18 +37,23 @@ User.find({}, function (err, users) {
 
 wss.on('connection', function connection(ws) {
     console.log('[WS] new websocket connection established');
+
+
     ws.id = uuid();
-    idMap.set(ws.id, ws);
+    // connectionsMap.set(ws.id, ws);
 
     ws.on('close', function() {
         // remove from the map
-        idMap.delete(ws.id);
+        connectionsMap.delete(ws);//this dont work
     });
 
     ws.on('message', function incoming(data){
         console.log('[MSG] received message');
 
         let message = JSON.parse(data);
+
+        let username = message.Items[0];
+        let password = message.Items[1];
 
         switch(message.type) {
             case "getEateries":
@@ -65,7 +71,7 @@ wss.on('connection', function connection(ws) {
 
                     if(ws.readyState === WebSocket.OPEN){
                         let EateryOptionsArray = createEateriesArray(eateryData)
-                        let x = new Message(1, "eatery options array", JSON.stringify(EateryOptionsArray));
+                        let x = new Message(1, "eateryOptionsArray", JSON.stringify(EateryOptionsArray), []);
                         ws.send(JSON.stringify(x));
 
                     }
@@ -83,8 +89,6 @@ wss.on('connection', function connection(ws) {
 
             case "registerNewUser":
                 console.log("[MSG] received register new user request");
-                let username = message.Items[0];
-                let password = message.Items[1];
                 console.log(username);
                 console.log(password);
 
@@ -93,11 +97,53 @@ wss.on('connection', function connection(ws) {
                 }
                 break
 
+            case "loginExistingUser":
+                console.log("[MSG] received login request");
+                console.log(username);
+                console.log(password);
+
+                if(validateLogin(username, password)){
+                    grantLoginRequest(ws, getUser(username));
+                }
+
+
+                break
+
             default:
                 console.log('[MSG] unrecognised message received');
         }
     })
 });
+
+function validateLogin(username, password){
+    if(username && password){
+        if(USERS.find(function (user) {//if credentials match existing user
+            return (user.username === username && user.password === password);
+        })) {
+            return true;
+        }
+        else {
+            console.log('[LOGIN] user login failed');
+            return false;
+        }
+    }
+}
+
+function grantLoginRequest(ws, user){
+    //set user's new WSID
+    //inform user that their login request is granted
+
+    connectionsMap.set(user, ws);
+
+    let MSG = new Message(1, "loginRequestGranted", "", []);
+    ws.send(JSON.stringify(MSG));
+
+    console.log('[LOGIN] user login succeeded');
+}
+
+
+
+
 
 function validateNewUserRegistration(username){
     if(!USERS.find(function (user) {//if username is not taken
@@ -130,6 +176,19 @@ async function registerNewUser(username, password){
 
     console.log('[LOGIN] user registration succeeded');
 }
+
+//helper functions
+
+function getUser(username){
+    let targetUser = null;
+    targetUser = USERS.find(function (User) {
+        return User.username.toString() === username.toString();
+    });
+
+    return targetUser;
+}
+
+
 
 function createEateriesArray(eateryData){
     let EateriesArray = [];

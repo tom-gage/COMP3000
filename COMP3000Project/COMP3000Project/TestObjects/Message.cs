@@ -4,7 +4,7 @@ using System.Text;
 
 namespace COMP3000Project.TestObjects
 {
-    class Message
+    public class Message
     {
         public string ID { get; set; }
         public string type { get; set; }

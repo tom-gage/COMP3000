@@ -8,6 +8,6 @@ namespace COMP3000Project.Interfaces
 {
     public interface Subscriber
     {
-        void Update(string jsonData);
+        void Update(Message message);
     }
 }

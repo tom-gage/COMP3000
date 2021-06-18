@@ -77,7 +77,7 @@ namespace COMP3000Project.Views.Testing
 
             //WSH.registerSubscriber(this);
 
-            WebsocketHandler.InitialiseConnectionAsync();
+            //WebsocketHandler.InitialiseConnectionAsync();
             WebsocketHandler.registerSubscriber(this);
         }
 
@@ -211,9 +211,20 @@ namespace COMP3000Project.Views.Testing
             return httpClient;
         }
 
-        public void Update(string jsonData)
+        public void Update(Message message)
         {
-            TestCollection = JsonSerializer.Deserialize<ObservableCollection<EateryOption>>(jsonData);
+            switch (message.type)
+            {
+                case "eateryOptionsArray":
+                    TestCollection = JsonSerializer.Deserialize<ObservableCollection<EateryOption>>(message.Body);
+                    break;
+
+                default:
+                    Console.WriteLine("[MSG] test page recieved unknown message");
+                    break;
+            }
+
+            
         }
 
         //BLACK MAGIC - THOU SHALT NOT TOUCH

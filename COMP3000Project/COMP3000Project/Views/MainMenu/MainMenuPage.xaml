@@ -7,36 +7,22 @@
              x:Class="COMP3000Project.Views.MainMenu.MainMenuPage"
              Title="MainPage">
     <ContentPage.Content>
-        <Grid RowSpacing="1" ColumnSpacing="1" x:Name="GridOuter">
-            <Grid.Resources>
-                <ResourceDictionary>
-                    
-                </ResourceDictionary>
-            </Grid.Resources>
+        <StackLayout>
+            <Label Text="Welcome to the main menu!"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+            <Button Text="start your search!"
+                    Command="{Binding StartSearch}"
+                    />
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.1*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="0.1*"/>
-            </Grid.ColumnDefinitions>
+            <Button Text="join a search!"
+                    Command="{Binding JoinSearch}"
+                    />
 
-            <Button Text="Start a Search!"
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    HorizontalOptions="Fill"
-                    VerticalOptions="FillAndExpand">
-            </Button>
-            <Button Text="Join a Search!"
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    HorizontalOptions="Fill"
-                    VerticalOptions="FillAndExpand">
-            </Button>
-        </Grid>
+            <Button Text="go to account settings!"
+                    Command="{Binding GoToSettings}"
+                    />
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

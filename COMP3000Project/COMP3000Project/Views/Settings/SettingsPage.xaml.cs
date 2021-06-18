@@ -7,19 +7,21 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace COMP3000Project.Views.MainMenu
+
+
+namespace COMP3000Project.Views.Settings
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MainMenuPage : ContentPage
+    public partial class SettingsPage : ContentPage
     {
-        MainMenuPageViewModel viewModel;
-        public MainMenuPage()
+        SettingsPageViewModel vm;
+        public SettingsPage()
         {
             InitializeComponent();
 
-            viewModel = new MainMenuPageViewModel();
+            vm = new SettingsPageViewModel();
 
-            BindingContext = viewModel;
+            BindingContext = vm;
         }
     }
 }

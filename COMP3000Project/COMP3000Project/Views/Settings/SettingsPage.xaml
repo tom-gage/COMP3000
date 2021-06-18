@@ -1,29 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="COMP3000Project.Views.Login.LoginPage"
-             Title="login">
+             x:Class="COMP3000Project.Views.Settings.SettingsPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to the Login Page!"
+            <Label Text="Welcome to the Settings Page!"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
 
             <Entry Placeholder="username"
                    Text="{Binding Username}"
                    x:Name="entUsername"/>
-            
-            <Entry Placeholder="password"
-                   Text="{Binding Password}"
-                   IsPassword="True"
-                   x:Name="entPassword"/>
 
-            <Button Text="Login"
-                    Command="{Binding Login}"
+            <Button Text="Change username"
+                    Command="{Binding ChangeUsername}"
                     />
 
-            <Button Text="Go to SignUp page"
-                    Command="{Binding GoToSignUpPage}"
+            <Entry Placeholder="password"
+                   Text="{Binding Password}"
+                   x:Name="entPassword"/>
+
+            <Button Text="Change password"
+                    Command="{Binding ChangePassword}"
+                    />
+
+            <Button Text="Delete Account"
+                    Command="{Binding DeleteAccount}"
                     />
         </StackLayout>
     </ContentPage.Content>

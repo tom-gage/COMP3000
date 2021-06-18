@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace COMP3000Project.Views.MainMenu
+namespace COMP3000Project.Views.SignUp
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MainMenuPage : ContentPage
+    public partial class SignUpPage : ContentPage
     {
-        MainMenuPageViewModel viewModel;
-        public MainMenuPage()
+        SignUpPageViewModel viewModel;
+        public SignUpPage()
         {
             InitializeComponent();
 
-            viewModel = new MainMenuPageViewModel();
+            viewModel = new SignUpPageViewModel();
 
             BindingContext = viewModel;
         }

@@ -7,10 +7,15 @@ using Xamarin.Forms;
 
 using COMP3000Project.ViewModel;
 using COMP3000Project.WS;
+using COMP3000Project.Views.SignUp;
+using COMP3000Project.Interfaces;
+using Newtonsoft.Json;
+using COMP3000Project.TestObjects;
+using COMP3000Project.Views.MainMenu;
 
 namespace COMP3000Project.Views.Login
 {
-    class LoginPageViewModel : ViewModelBase
+    class LoginPageViewModel : ViewModelBase, Subscriber
     {
         //VARIABLES
         private string _username;
@@ -41,7 +46,8 @@ namespace COMP3000Project.Views.Login
         }
 
         //COMMANDS
-        public ICommand RegisterNewUser { get; }
+        public ICommand Login { get; }
+        public ICommand GoToSignUpPage { get; }
 
         //CONSTRUCTOR
         public LoginPageViewModel()
@@ -49,16 +55,43 @@ namespace COMP3000Project.Views.Login
             Username = "martin";
             Password = "slime man";
 
-            RegisterNewUser = new Command(async () => await ExecuteRegisterUser());
+            //set commands
+            Login = new Command(async () => await ExecuteLogin());
+            GoToSignUpPage = new Command(async () => await ExecuteGoToSignUpPage());
+
+            WebsocketHandler.InitialiseConnectionAsync();
+            WebsocketHandler.registerSubscriber(this);
         }
 
         //FUNCTIONS
-        async Task<object> ExecuteRegisterUser()
+        async Task<object> ExecuteLogin()
         {
-            WebsocketHandler.RequestRegisterNewUser(Username, Password);
+            WebsocketHandler.RequestLoginExistingUser(Username, Password);
 
             return null;
         }
 
+        async Task ExecuteGoToSignUpPage()
+        {
+            SignUpPage nextPage = new SignUpPage();
+            await Navigation.PushAsync(nextPage, true);
+        }
+
+        public void Update(Message message)
+        {
+            switch (message.type)
+            {
+                case "loginRequestGranted":
+                    Console.WriteLine("proceeding to main menu...");
+
+                    MainMenuPage nextPage = new MainMenuPage();
+                    Navigation.PushAsync(nextPage, true);
+                    break;
+
+                default:
+                    Console.WriteLine("[MSG] loginpage recieved unknown message");
+                    break;
+            }
+        }
     }
 }

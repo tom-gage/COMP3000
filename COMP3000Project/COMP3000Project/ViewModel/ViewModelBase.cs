@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Xamarin.Forms;
 
 namespace COMP3000Project.ViewModel
 {
@@ -14,6 +15,9 @@ namespace COMP3000Project.ViewModel
 			set => SetProperty(ref _title, value);
 		}
 
+		protected INavigation Navigation => Application.Current.MainPage.Navigation;
+
+		//magic
 		protected void SetProperty<T>(ref T backingStore, T value, Action onChanged = null, [CallerMemberName] string propertyName = "")
 		{
 			if (EqualityComparer<T>.Default.Equals(backingStore, value))

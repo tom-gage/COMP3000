@@ -56,19 +56,30 @@ namespace COMP3000Project.WS
             //convert to json for transmission
             string jsonData = JsonConvert.SerializeObject(request);
 
+            //send to server
+            SendRequest(jsonData);
+        }
+
+        //asks the server to log in an existing user
+        public static async void RequestLoginExistingUser(string username, string password)
+        {
+            string[] UandP = { username, password };
+
+            //make request message object
+            Message request = new Message("1", "loginExistingUser", "", UandP);
+
+            //convert to json for transmission
+            string jsonData = JsonConvert.SerializeObject(request);
 
             //send to server
-            var encodedData = Encoding.UTF8.GetBytes(jsonData);
-            var buffer = new ArraySegment<Byte>(encodedData, 0, encodedData.Length);
-            await ws.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
+            SendRequest(jsonData);
         }
 
-        public static async void SendMessage(string data)
-        {
-            var encodedData = Encoding.UTF8.GetBytes(data);
-            var buffer = new ArraySegment<Byte>(encodedData, 0, encodedData.Length);
-            await ws.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
-        }
+
+
+
+
+
 
         public static async void RequestJoinSearchAsync()
         {
@@ -89,6 +100,15 @@ namespace COMP3000Project.WS
             return null;
         }
 
+
+        public static async void SendRequest(string jsonData)
+        {
+            var encodedData = Encoding.UTF8.GetBytes(jsonData);
+            var buffer = new ArraySegment<Byte>(encodedData, 0, encodedData.Length);
+            await ws.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
+        }
+
+
         //Publisher / Subscriber stuff, handles inter-class communication
         public static void registerSubscriber(Subscriber subscriber)
         {
@@ -100,14 +120,16 @@ namespace COMP3000Project.WS
             subscribers.Remove(subscriber);
         }
 
-        public static void updateSubscribers(string jsonData)
+        public static void updateSubscribers(Message message)
         {
             foreach(Subscriber subscriber in subscribers)
             {
-                subscriber.Update(jsonData);
+                subscriber.Update(message);
             }
         }
 
+        //this bad boy handles all incoming messages
+        //don't touch him
         public static async Task HandleMessages()
         {
             try
@@ -138,11 +160,18 @@ namespace COMP3000Project.WS
                                     Console.WriteLine(message.Body);
                                     break;
 
-                                case "eatery options array":
+                                case "eateryOptionsArray":
 
-                                    updateSubscribers(message.Body);
+                                    updateSubscribers(message);
 
                                     break;
+
+                                case "loginRequestGranted":
+
+                                    Console.WriteLine("[WS] got LoginRequestGranted !!");
+                                    updateSubscribers(message);
+                                    break;
+
 
                                 default:
 

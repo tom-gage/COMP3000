@@ -10,6 +10,7 @@ async function initialiseConnection() {
     let userSchema = mongoose.Schema({
         username:String,
         password:String,
+        current_WSID:String,
     });
 
     if(!User){//if User not initiated
