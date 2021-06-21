@@ -48,36 +48,62 @@ namespace COMP3000Project.WS
         //asks the server to register a new user
         public static async void RequestRegisterNewUser(string username, string password)
         {
-            string[] UandP = { username, password };
+            string[] messageItems = { username, password };
 
             //make request message object
-            Message request = new Message("1", "registerNewUser", "", UandP);
-
-            //convert to json for transmission
-            string jsonData = JsonConvert.SerializeObject(request);
+            Message request = new Message("1", "registerNewUser", "", messageItems);
 
             //send to server
-            SendRequest(jsonData);
+            SendRequest(request);
         }
 
         //asks the server to log in an existing user
         public static async void RequestLoginExistingUser(string username, string password)
         {
-            string[] UandP = { username, password };
+            string[] messageItems = { username, password };
 
             //make request message object
-            Message request = new Message("1", "loginExistingUser", "", UandP);
-
-            //convert to json for transmission
-            string jsonData = JsonConvert.SerializeObject(request);
+            Message request = new Message("1", "loginExistingUser", "", messageItems);
 
             //send to server
-            SendRequest(jsonData);
+            SendRequest(request);
         }
 
+        //asks the server to update the username of a user
+        public static async void RequestChangeUsername(string currentUsername, string currentPassword, string newUsername)
+        {
+            string[] messageItems = { currentUsername, currentPassword, newUsername };
 
+            //make request message object
+            Message request = new Message("1", "updateUsername", "", messageItems);
 
+            //send to server
+            SendRequest(request);
+        }
 
+        //asks the server to update the password of a user
+        public static async void RequestChangePassword(string currentUsername, string currentPassword, string newPassword)
+        {
+            string[] messageItems = { currentUsername, currentPassword, newPassword };
+
+            //make request message object
+            Message request = new Message("1", "updatePassword", "", messageItems);
+
+            //send to server
+            SendRequest(request);
+        }
+
+        //asks the server to delete a user
+        public static async void RequestDeleteUser(string currentUsername, string currentPassword)
+        {
+            string[] messageItems = { currentUsername, currentPassword };
+
+            //make request message object
+            Message request = new Message("1", "deleteUser", "", messageItems);
+
+            //send to server
+            SendRequest(request);
+        }
 
 
 
@@ -101,8 +127,9 @@ namespace COMP3000Project.WS
         }
 
 
-        public static async void SendRequest(string jsonData)
+        public static async void SendRequest(Message message)
         {
+            string jsonData = JsonConvert.SerializeObject(message);
             var encodedData = Encoding.UTF8.GetBytes(jsonData);
             var buffer = new ArraySegment<Byte>(encodedData, 0, encodedData.Length);
             await ws.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
@@ -122,10 +149,15 @@ namespace COMP3000Project.WS
 
         public static void updateSubscribers(Message message)
         {
-            foreach(Subscriber subscriber in subscribers)
+            for (int i = 0; i < subscribers.Count; i++)
             {
-                subscriber.Update(message);
+                subscribers[i].Update(message);
             }
+
+            //foreach (Subscriber subscriber in subscribers)
+            //{
+            //    subscriber.Update(message);
+            //}
         }
 
         //this bad boy handles all incoming messages
@@ -168,11 +200,27 @@ namespace COMP3000Project.WS
 
                                 case "loginRequestGranted":
 
-                                    Console.WriteLine("[WS] got LoginRequestGranted !!");
+                                    //Console.WriteLine("[WS] got LoginRequestGranted !!");
                                     updateSubscribers(message);
                                     break;
 
+                                case "usernameUpdated":
 
+                                    //Console.WriteLine("[WS] got username updated !!");
+                                    updateSubscribers(message);
+                                    break;
+
+                                case "passwordUpdated":
+
+                                    //Console.WriteLine("[WS] got password updated !!");
+                                    updateSubscribers(message);
+                                    break;
+
+                                case "userDeleted":
+
+                                    //Console.WriteLine("[WS] got password updated !!");
+                                    updateSubscribers(message);
+                                    break;
                                 default:
 
                                     break;
@@ -185,10 +233,10 @@ namespace COMP3000Project.WS
                     }
                 }
             }
-            catch (InvalidOperationException)
-            {
-                Console.WriteLine("[WS] Tried to receive message while already reading one.");
-            }
+            //catch (InvalidOperationException)
+            //{
+            //    Console.WriteLine("[WS] Tried to receive message while already reading one.");
+            //}
             catch (Exception Ex)
             {
                 Console.WriteLine("Exception is as follows: ");

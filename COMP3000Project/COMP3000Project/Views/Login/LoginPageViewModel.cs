@@ -12,6 +12,7 @@ using COMP3000Project.Interfaces;
 using Newtonsoft.Json;
 using COMP3000Project.TestObjects;
 using COMP3000Project.Views.MainMenu;
+using COMP3000Project.UserDetailsSingleton;
 
 namespace COMP3000Project.Views.Login
 {
@@ -52,12 +53,14 @@ namespace COMP3000Project.Views.Login
         //CONSTRUCTOR
         public LoginPageViewModel()
         {
-            Username = "martin";
-            Password = "slime man";
+            Username = "u";//hardcoded for now, V TEMPORARY :<<<<<
+            Password = "p";
 
             //set commands
             Login = new Command(async () => await ExecuteLogin());
             GoToSignUpPage = new Command(async () => await ExecuteGoToSignUpPage());
+
+
 
             WebsocketHandler.InitialiseConnectionAsync();
             WebsocketHandler.registerSubscriber(this);
@@ -66,6 +69,8 @@ namespace COMP3000Project.Views.Login
         //FUNCTIONS
         async Task<object> ExecuteLogin()
         {
+            UserDetails.setDetails(Username, Password);
+
             WebsocketHandler.RequestLoginExistingUser(Username, Password);
 
             return null;
@@ -82,7 +87,9 @@ namespace COMP3000Project.Views.Login
             switch (message.type)
             {
                 case "loginRequestGranted":
-                    Console.WriteLine("proceeding to main menu...");
+                    Console.WriteLine("[MSG] login page, proceeding to main menu...");
+
+                    UserDetails.setDetails(Username, Password);
 
                     MainMenuPage nextPage = new MainMenuPage();
                     Navigation.PushAsync(nextPage, true);

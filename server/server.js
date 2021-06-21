@@ -54,6 +54,8 @@ wss.on('connection', function connection(ws) {
 
         let username = message.Items[0];
         let password = message.Items[1];
+        let newUsername = message.Items[2];
+        let newPassword = message.Items[2];
 
         switch(message.type) {
             case "getEateries":
@@ -92,7 +94,7 @@ wss.on('connection', function connection(ws) {
                 console.log(username);
                 console.log(password);
 
-                if(validateNewUserRegistration(username)){
+                if(usernameNotTaken(username)){
                     registerNewUser(username, password);
                 }
                 break
@@ -102,8 +104,48 @@ wss.on('connection', function connection(ws) {
                 console.log(username);
                 console.log(password);
 
-                if(validateLogin(username, password)){
+                if(validateCredentials(username, password)){
                     grantLoginRequest(ws, getUser(username));
+                }
+
+
+                break
+
+            case "updateUsername":
+                console.log("[MSG] received update username request");
+                console.log(username);
+                console.log(password);
+                console.log(newUsername);
+
+                if(validateCredentials(username, password)){//if credentials are valid
+                    if(usernameNotTaken(newUsername)){
+                        updateUsername(username, password, newUsername);
+                    }
+                }
+                break
+
+            case "updatePassword":
+                console.log("[MSG] received update password request");
+                console.log(username);
+                console.log(password);
+                console.log(newPassword)
+
+                if(validateCredentials(username, password)){//credentials are valid
+                    //do update password
+                    //pass feedback to app
+                    updatePassword(username, password, newPassword);
+                }
+                break
+
+            case "deleteUser":
+                console.log("[MSG] received delete user request");
+                console.log(username);
+                console.log(password);
+
+                if(validateCredentials(username, password)){//credentials are valid
+                    //do delete user
+                    //pass feedback to app
+                    deleteUser(username, password);
                 }
 
 
@@ -115,7 +157,7 @@ wss.on('connection', function connection(ws) {
     })
 });
 
-function validateLogin(username, password){
+function validateCredentials(username, password){
     if(username && password){
         if(USERS.find(function (user) {//if credentials match existing user
             return (user.username === username && user.password === password);
@@ -141,11 +183,84 @@ function grantLoginRequest(ws, user){
     console.log('[LOGIN] user login succeeded');
 }
 
+function updateUsername(username, password, newUsername){
+    console.log("[LOGIN] updating username...");
 
 
+    User.updateOne(
+        {
+            username : username,
+            password : password
+        },
+        {
+            username : newUsername
+        })
+        .then((obj) => {
+            let ws = connectionsMap.get(getUser(username));
+            let MSG = new Message(1, "usernameUpdated", newUsername, []);
 
+            ws.send(JSON.stringify(MSG));
 
-function validateNewUserRegistration(username){
+            User.find({}, function (err, users) {
+                connectionsMap.delete(getUser(username));
+                global.USERS = users;
+                connectionsMap.set(getUser(newUsername), ws);
+            });
+
+            console.log("[LOGIN] username update succeeded!");
+    })
+}
+
+function updatePassword(username, password, newPassword){
+    console.log("[LOGIN] updating password...");
+
+    User.updateOne(
+        {
+            username : username,
+            password : password
+        },
+        {
+            password : newPassword
+        })
+        .then((obj) => {
+            let ws = connectionsMap.get(getUser(username));
+            let MSG = new Message(1, "passwordUpdated", newPassword, []);
+
+            ws.send(JSON.stringify(MSG));
+
+            User.find({}, function (err, users) {
+                connectionsMap.delete(getUser(username));
+                global.USERS = users;
+                connectionsMap.set(getUser(username), ws);
+            });
+
+            console.log("[LOGIN] password update succeeded!");
+        })
+}
+
+function deleteUser(username, password){
+    console.log("[LOGIN] deleting user...");
+
+    User = DB.getUserModel();
+
+    User.deleteOne({
+        username : username,
+        password : password
+    }).then((obj) => {
+        let ws = connectionsMap.get(getUser(username));
+        let MSG = new Message(1, "userDeleted", "", []);
+        ws.send(JSON.stringify(MSG));
+
+        User.find({}, function (err, users) {
+            connectionsMap.delete(getUser(username));
+            global.USERS = users;
+        });
+
+        console.log("[LOGIN] user delete succeeded!");
+    });
+}
+
+function usernameNotTaken(username){
     if(!USERS.find(function (user) {//if username is not taken
         return user.username === username;
     })){
@@ -241,7 +356,7 @@ server.listen(port, function () {
 
         if(line === 't'){
             wss.clients.forEach(function (ws){
-                console.log('[msg] sending debug message...')
+                console.log('[MSG] sending debug message...')
                 ws.send(JSON.stringify(new Message("1", "debugMessage", "hello there")));
             })
         }

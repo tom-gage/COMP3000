@@ -43,6 +43,7 @@ namespace COMP3000Project.Views.MainMenu
             GoToSettings = new Command(async () => await ExecuteGoToSettingsPage());
 
             WebsocketHandler.registerSubscriber(this);
+            //WebsocketHandler.HandleMessages();
         }
 
         //FUNCTIONS

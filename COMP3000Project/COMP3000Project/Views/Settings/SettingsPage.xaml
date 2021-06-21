@@ -8,17 +8,31 @@
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
 
-            <Entry Placeholder="username"
-                   Text="{Binding Username}"
-                   x:Name="entUsername"/>
 
+            <Label Text="Current Details \/"/>
+
+            <Entry Placeholder="Current Username"
+                   Text="{Binding CurrentUsername}"
+                   x:Name="entCurrentUsername"/>
+
+            <Entry Placeholder="Current Password"
+                   Text="{Binding CurrentPassword}"
+                   x:Name="entCurrentPassword"/>
+
+            <Label Text="New Details \/"/>
+
+            <Entry Placeholder="New Username"
+                   Text="{Binding NewUsername}"
+                   x:Name="entNewUsername"/>
+
+            <Entry Placeholder="NewPassword"
+                   Text="{Binding NewPassword}"
+                   x:Name="entNewPassword"/>
+
+            
             <Button Text="Change username"
                     Command="{Binding ChangeUsername}"
                     />
-
-            <Entry Placeholder="password"
-                   Text="{Binding Password}"
-                   x:Name="entPassword"/>
 
             <Button Text="Change password"
                     Command="{Binding ChangePassword}"
