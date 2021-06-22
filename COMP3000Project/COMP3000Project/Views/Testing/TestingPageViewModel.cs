@@ -88,12 +88,8 @@ namespace COMP3000Project.Views.Testing
             Location location = await getLocation();
 
 
-            await WebsocketHandler.RequestEateriesList("{ \"type\": \"getEateries\", \"body\": \"\", \"latitude\": \"" + location.Latitude + "\", \"longitude\": \"" + location.Longitude + "\" }");//TEMP SHIT
+            await WebsocketHandler.RequestEateriesList("{ \"type\": \"getEateries\", \"body\": \"\", \"latitude\": \"" + location.Latitude + "\", \"longitude\": \"" + location.Longitude + "\" }");//christ
 
-            //TestCollection = WSH.EateriesArray;   
-
-            //var nextPage = new TestingPage2();
-            //await Navigation.PushAsync(nextPage, true);
         }
 
         public async Task<Location> getLocation()
@@ -166,6 +162,8 @@ namespace COMP3000Project.Views.Testing
                     TestText = serialisedMessage;
 
                     TestCollection = JsonSerializer.Deserialize<ObservableCollection<EateryOption>>(TestText);
+
+                    Console.WriteLine(TestText);
 
                     //TestCollection.Add(eateryOption);
 

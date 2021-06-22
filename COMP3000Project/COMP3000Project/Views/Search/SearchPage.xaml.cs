@@ -13,11 +13,11 @@ namespace COMP3000Project.Views.Search
     public partial class SearchPage : ContentPage
     {
         SearchPageViewModel viewModel;
-        public SearchPage()
+        public SearchPage(bool StartingNewSearch, string SearchCode)
         {
             InitializeComponent();
 
-            viewModel = new SearchPageViewModel();
+            viewModel = new SearchPageViewModel(StartingNewSearch, SearchCode);
             BindingContext = viewModel;
         }
     }

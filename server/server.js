@@ -1,5 +1,6 @@
 const EateryOption = require('./objects/EateryOption');
 const Message = require('./objects/Message');
+const ActiveSearch = require('./objects/ActiveSearch');
 
 const express = require('express');
 const http = require('http');
@@ -16,7 +17,7 @@ const port = 9000;
 const server = http.createServer(express);
 const wss = new WebSocket.Server({ server });
 
-const connectionsMap = new Map();
+let connectionsMap = new Map();
 
 let DB = require('./DB');
 
@@ -52,10 +53,14 @@ wss.on('connection', function connection(ws) {
 
         let message = JSON.parse(data);
 
+        // message.Items = [0,0,0,0,0,0,0,0,0]
+
         let username = message.Items[0];
         let password = message.Items[1];
         let newUsername = message.Items[2];
         let newPassword = message.Items[2];
+        let latitude = message.Items[2];
+        let longitude = message.Items[3];
 
         switch(message.type) {
             case "getEateries":
@@ -69,12 +74,16 @@ wss.on('connection', function connection(ws) {
                         key : "AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"
                     },
                     timeout:1000
+
                 }).then((eateryData) => {
 
                     if(ws.readyState === WebSocket.OPEN){
-                        let EateryOptionsArray = createEateriesArray(eateryData)
+                        let EateryOptionsArray = createEateryOptionsArray(eateryData)
                         let x = new Message(1, "eateryOptionsArray", JSON.stringify(EateryOptionsArray), []);
                         ws.send(JSON.stringify(x));
+
+                        console.log("[PLACES] response is as follows: ");
+                        console.log(JSON.stringify(EateryOptionsArray));
 
                     }
                 }).catch((error) => {
@@ -82,6 +91,7 @@ wss.on('connection', function connection(ws) {
                     console.log(error);
 
                 });
+
                 break;
 
             case "testMessage":
@@ -148,7 +158,14 @@ wss.on('connection', function connection(ws) {
                     deleteUser(username, password);
                 }
 
+            case "startNewSearch":
+                console.log("[MSG] received start new search request");
+                console.log(message);
 
+                if(validateCredentials(username, password)){//credentials are valid
+                    //do create new search
+                    createNewActiveSearch(username, latitude, longitude);
+                }
                 break
 
             default:
@@ -156,6 +173,69 @@ wss.on('connection', function connection(ws) {
         }
     })
 });
+
+async function createNewActiveSearch(username, latitude, longitude){
+    //create an active search object, populated with a user and eatery options array
+    let eateryOptionsArray = await getEateryOptionsFromAPI(latitude, longitude);//async problems here///////////////////////////////////////////////////////////////////
+
+    console.log("got eateryOptionsArray after construction... is as follows: ");
+    console.log(JSON.stringify(eateryOptionsArray));
+
+    let newActiveSearch = new ActiveSearch(getUser(username), eateryOptionsArray);
+
+    //add the active search object to ACTIVE_SEARCHES
+    ACTIVE_SEARCHES.push(newActiveSearch);
+
+    //then pass a success message back to the user, containing the ActiveSearch object
+    let MSG = new Message(1, "newActiveSearchRequestGranted", "", [newActiveSearch.ID, newActiveSearch.EateryOptions]);
+    sendToUser(username, MSG);
+}
+
+async function getEateryOptionsFromAPI(latitude, longitude){
+    //make api call
+    console.log("making API call...");
+    console.log(latitude);
+    console.log(longitude);
+    let eateryOptionsArray = [];
+
+    client.placesNearby({params:{
+            location : [latitude, longitude],
+            // location : [50.381773,-4.133786],
+            radius : 1500,
+            type : "restaurant",
+            key : "AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"
+        },
+        timeout:1000
+
+    }).then((eateryData) => {
+        console.log("got response from api! data is as follows:");
+        console.log("OMMITTED");
+        // console.log(eateryData);
+
+        eateryOptionsArray = createEateryOptionsArray(eateryData);
+
+        console.log("constructed eateryOptionsArray is as follows: ");
+        console.log(JSON.stringify(eateryOptionsArray));
+        return eateryOptionsArray;
+
+    }).catch((error) => {
+        console.log('[ERROR]');
+        console.log(error);
+
+    });
+
+    // console.log("returning eateryOptionsArray... is as follows: ");
+    // console.log(JSON.stringify(eateryOptionsArray));
+    //
+    //
+    // return eateryOptionsArray;
+
+    // console.log('[ERROR] something went wrong');
+}
+
+
+
+
 
 function validateCredentials(username, password){
     if(username && password){
@@ -196,10 +276,8 @@ function updateUsername(username, password, newUsername){
             username : newUsername
         })
         .then((obj) => {
-            let ws = connectionsMap.get(getUser(username));
             let MSG = new Message(1, "usernameUpdated", newUsername, []);
-
-            ws.send(JSON.stringify(MSG));
+            sendToUser(username, MSG);
 
             User.find({}, function (err, users) {
                 connectionsMap.delete(getUser(username));
@@ -223,10 +301,8 @@ function updatePassword(username, password, newPassword){
             password : newPassword
         })
         .then((obj) => {
-            let ws = connectionsMap.get(getUser(username));
             let MSG = new Message(1, "passwordUpdated", newPassword, []);
-
-            ws.send(JSON.stringify(MSG));
+            sendToUser(username, MSG);
 
             User.find({}, function (err, users) {
                 connectionsMap.delete(getUser(username));
@@ -247,9 +323,8 @@ function deleteUser(username, password){
         username : username,
         password : password
     }).then((obj) => {
-        let ws = connectionsMap.get(getUser(username));
         let MSG = new Message(1, "userDeleted", "", []);
-        ws.send(JSON.stringify(MSG));
+        sendToUser(username, MSG);
 
         User.find({}, function (err, users) {
             connectionsMap.delete(getUser(username));
@@ -268,7 +343,7 @@ function usernameNotTaken(username){
 
 
     } else {
-        console.log('[LOGIN] user registration failed');
+        console.log('[LOGIN] Validation failure, username is taken!');
         return false;
     }
 }
@@ -305,7 +380,7 @@ function getUser(username){
 
 
 
-function createEateriesArray(eateryData){
+function createEateryOptionsArray(eateryData){
     let EateriesArray = [];
 
     try{
@@ -342,7 +417,12 @@ function createEateriesArray(eateryData){
     return EateriesArray;
 }
 
-
+function sendToUser(username, message){
+    let ws = connectionsMap.get(getUser(username));
+    ws.send(JSON.stringify(message));
+    console.log("[MSG] sent the following to user: " + username);
+    console.log(JSON.stringify(message));
+}
 
 
 server.listen(port, function () {

@@ -13,11 +13,11 @@
                 HorizontalOptions="CenterAndExpand" />
 
             <Button Text="start your search!"
-                    Command="{Binding StartSearch}"
+                    Command="{Binding GoToStartSearch}"
                     />
 
             <Button Text="join a search!"
-                    Command="{Binding JoinSearch}"
+                    Command="{Binding GoToJoinSearch}"
                     />
 
             <Button Text="go to account settings!"

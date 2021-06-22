@@ -69,8 +69,6 @@ namespace COMP3000Project.Views.Login
         //FUNCTIONS
         async Task<object> ExecuteLogin()
         {
-            UserDetails.setDetails(Username, Password);
-
             WebsocketHandler.RequestLoginExistingUser(Username, Password);
 
             return null;

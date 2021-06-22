@@ -10,9 +10,9 @@ namespace COMP3000Project.TestObjects
         public string type { get; set; }
         public string Body { get; set; }
 
-        public string[] Items;
+        public object[] Items;
 
-        public Message(string ID, string type, string Body, string[] Items)
+        public Message(string ID, string type, string Body, object[] Items)
         {
             this.ID = ID;
             this.type = type;

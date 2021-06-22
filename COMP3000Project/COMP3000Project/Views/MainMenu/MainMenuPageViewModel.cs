@@ -3,6 +3,8 @@ using COMP3000Project.TestObjects;
 using COMP3000Project.ViewModel;
 using COMP3000Project.Views.Settings;
 using COMP3000Project.WS;
+using COMP3000Project.Views.Search;
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -29,8 +31,8 @@ namespace COMP3000Project.Views.MainMenu
         }
 
         //COMMANDS
-        public ICommand StartSearch { get; }
-        public ICommand JoinSearch { get; }
+        public ICommand GoToStartSearch { get; }
+        public ICommand GoToJoinSearch { get; }
         public ICommand GoToSettings { get; }
 
         //CONSTRUCTOR
@@ -38,8 +40,8 @@ namespace COMP3000Project.Views.MainMenu
         {
 
             //set commands
-            StartSearch = new Command(async () => await ExecuteStartSearch());
-            JoinSearch = new Command(async () => await ExecuteJoinSearch());
+            GoToStartSearch = new Command(async () => await GoToExecuteStartSearch());
+            GoToJoinSearch = new Command(async () => await GoToExecuteJoinSearch());
             GoToSettings = new Command(async () => await ExecuteGoToSettingsPage());
 
             WebsocketHandler.registerSubscriber(this);
@@ -47,14 +49,15 @@ namespace COMP3000Project.Views.MainMenu
         }
 
         //FUNCTIONS
-        async Task<object> ExecuteStartSearch()
+        async Task<object> GoToExecuteStartSearch()
         {
             //WebsocketHandler.RequestStartNewSearch();
-
+            SearchPage nextPage = new SearchPage(true, "");
+            await Navigation.PushAsync(nextPage, true);
             return null;
         }
 
-        async Task<object> ExecuteJoinSearch()
+        async Task<object> GoToExecuteJoinSearch()
         {
             //WebsocketHandler.RequestJoinExistingSearch();
 

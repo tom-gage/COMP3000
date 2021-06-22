@@ -107,14 +107,18 @@ namespace COMP3000Project.WS
 
 
 
-        public static async void RequestJoinSearchAsync()
+        public static async void RequestStartNewSearch(string currentUsername, string currentPassword, double lattitude, double longitude)
         {
-            var data = "requestJoinSearch";
+            object[] messageItems = { currentUsername, currentPassword, lattitude, longitude };
 
-            var encodedData = Encoding.UTF8.GetBytes(data);
-            var buffer = new ArraySegment<Byte>(encodedData, 0, encodedData.Length);
-            await ws.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
+            //make request message object
+            Message request = new Message("1", "startNewSearch", "", messageItems);
+
+            //send to server
+            SendRequest(request);
         }
+
+
 
         public static async Task<ObservableCollection<EateryOption>> RequestEateriesList(string data)
         {
@@ -219,6 +223,10 @@ namespace COMP3000Project.WS
                                 case "userDeleted":
 
                                     //Console.WriteLine("[WS] got password updated !!");
+                                    updateSubscribers(message);
+                                    break;
+
+                                case "newActiveSearchRequestGranted":
                                     updateSubscribers(message);
                                     break;
                                 default:

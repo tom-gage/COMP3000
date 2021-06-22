@@ -34,6 +34,20 @@ namespace COMP3000Project.UserDetailsSingleton
             }
         }
 
+        private static string _searchID;
+
+        public static string SearchID
+        {
+            get { return _searchID; }
+            set
+            {
+                if (_searchID != value)
+                {
+                    _searchID = value;
+                }
+            }
+        }
+
         public static void setDetails(string username, string password)
         {
             Username = username;
