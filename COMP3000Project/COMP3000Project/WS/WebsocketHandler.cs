@@ -129,8 +129,19 @@ namespace COMP3000Project.WS
             SendRequest(request);
         }
 
+        public static async void RequestCastVote(string currentUsername, string currentPassword, string searchID, string eateryOptionID)
+        {
+            object[] messageItems = { currentUsername, currentPassword, searchID, eateryOptionID };
 
-        public static async Task<ObservableCollection<EateryOption>> RequestEateriesList(string data)
+            //make request message object
+            Message request = new Message("1", "castVote", "", messageItems);
+
+            //send to server
+            SendRequest(request);
+        }
+
+
+        public static async Task<ObservableCollection<EateryOption>> RequestEateriesList(string data)//depreciated, due for a cull any day now
         {
             //send request
             var encodedData = Encoding.UTF8.GetBytes(data);

@@ -59,11 +59,15 @@ wss.on('connection', function connection(ws) {
 
         let username = message.Items[0];
         let password = message.Items[1];
+
         let newUsername = message.Items[2];
         let newPassword = message.Items[2];
+
         let latitude = message.Items[2];
         let longitude = message.Items[3];
+
         let searchCode = message.Items[2];
+        let eateryOptionID = message.Items[3];
 
         switch(message.type) {
             case "getEateries":
@@ -185,11 +189,38 @@ wss.on('connection', function connection(ws) {
                 }
                 break
 
+            case "castVote":
+                console.log("[MSG] received cast vote request");
+                console.log(message);
+
+                if(validateCredentials(username, password)){//credentials are valid
+                    //do create new search
+                    castVoteInSearch(searchCode, username, eateryOptionID);
+                }
+                break
+
             default:
                 console.log('[MSG] unrecognised message received');
         }
     })
 });
+
+function castVoteInSearch(searchCode, username, eateryOptionID){
+    //get active search by searchcode
+    let search = getActiveSearch(searchCode);
+    //cast vote
+    search.castVote(username, eateryOptionID);
+
+    //if users have matched, send "you matched!" feedback
+    let match = search.checkForMatch();
+
+    if(match){
+        let MSG = new Message(1, "matched!", "", [match]);
+        sendToUser(username, MSG);
+    }
+
+    search.getVotes();
+}
 
 function joinExistingSearch(searchCode, username){
     console.log("[SEARCH] user joining search");
@@ -233,6 +264,7 @@ function createNewActiveSearch(username, latitude, longitude){
         console.log("got eateryOptionsArray after construction... is as follows: ");
         console.log("type: " + typeof (eateryOptionsArray) + " length: " + eateryOptionsArray.length);
 
+
         let newActiveSearch = new ActiveSearch(getUser(username), eateryOptionsArray);
 
         //add the active search object to ACTIVE_SEARCHES
@@ -265,14 +297,17 @@ function createEateryOptionsArray(eateryData){
             let description = "description would be here, if there was one";
             let rating = eateryData.data.results[i].rating;
             let photoRef;
+            let ID;
+
             if(eateryData.data.results[i].photos){
+                ID = eateryData.data.results[i].photos[0].photo_reference;
                 photoRef = eateryData.data.results[i].photos[0].photo_reference;
             } else {
                 photoRef = "";
             }
 
             let eatery = new EateryOption(
-                photoRef,
+                ID,
                 name,
                 description,
                 rating,
@@ -454,6 +489,11 @@ function sendToUser(username, message){
     console.log("Message type: " + message.type);
     console.log("Message body: " + message.Body);
     console.log("Message.items contains: " + message.Items.length + " object(s)");
+
+    // if(message.type === "newActiveSearchRequestGranted"){
+    //     console.log("Message.items.eateryOptions contains: ");
+    //     console.log(message.Items[1]);
+    // }
 }
 
 

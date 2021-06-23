@@ -78,12 +78,12 @@ namespace COMP3000Project.Views.Search
 
         async void ExecuteCastVote(SwipedCardEventArgs eventArgs)
         {
-            //WebsocketHandler.RequestCastVote();
+            var item = eventArgs.Item as EateryOption;
 
             switch (eventArgs.Direction.ToString())
             {
                 case "Right":
-
+                    WebsocketHandler.RequestCastVote(UserDetails.Username, UserDetails.Password, UserDetails.SearchID, item.ID);
                     break;
 
                 case "Left":
@@ -162,6 +162,7 @@ namespace COMP3000Project.Views.Search
                 case "newActiveSearchRequestGranted":
                     Console.WriteLine("[MSG] got CREATE active search request granted!");
                     Console.WriteLine("Search ID: " + message.Items[0]);
+                    UserDetails.SearchID = message.Items[0].ToString();
                     Console.WriteLine("[MSG] populating array!");
                     populateOptionsArray(message.Items[1].ToString());
                     break;
@@ -169,6 +170,7 @@ namespace COMP3000Project.Views.Search
                 case "joinSearchRequestGranted":
                     Console.WriteLine("[MSG] got JOIN active search request granted!");
                     Console.WriteLine("Search ID: " + message.Items[0]);
+                    UserDetails.SearchID = message.Items[0].ToString();
                     Console.WriteLine("[MSG] populating array!");
                     populateOptionsArray(message.Items[1].ToString());
                     break;

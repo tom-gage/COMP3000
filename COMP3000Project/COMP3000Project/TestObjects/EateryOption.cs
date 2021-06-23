@@ -13,6 +13,24 @@ namespace COMP3000Project.TestObjects
         //VARS
         public event PropertyChangedEventHandler PropertyChanged;
 
+        string _id;
+        public string ID
+        {
+            get
+            {
+                return _id;
+            }
+            set
+            {
+                if (_id == value)
+                {
+                    return;
+                }
+                _id = value;
+                HandlePropertyChanged();
+            }
+        }
+
         string _title;
         public string Title {
             get
@@ -104,12 +122,33 @@ namespace COMP3000Project.TestObjects
             }
         }
 
-        public EateryOption(string title, string description, float rating, string photoReference)
+        string[] _votes;
+
+        public string[] Votes
         {
+            get
+            {
+                return _votes;
+            }
+            set
+            {
+                if (_votes == value)
+                {
+                    return;
+                }
+                _votes = value;
+                HandlePropertyChanged();
+            }
+        }
+
+        public EateryOption(string ID, string title, string description, float rating, string photoReference, string[] Votes)
+        {
+            this.ID = ID;
             this.Title = title;
             this.Description = description;
             this.Rating = rating;
             this.PhotoReference = photoReference;
+            this.Votes = Votes;
 
             //FOR TESTING PURPOSES
             var webImage = new Image { Aspect = Aspect.AspectFit };
