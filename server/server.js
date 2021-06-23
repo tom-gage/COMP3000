@@ -176,22 +176,86 @@ wss.on('connection', function connection(ws) {
 
 async function createNewActiveSearch(username, latitude, longitude){
     //create an active search object, populated with a user and eatery options array
-    let eateryOptionsArray = await getEateryOptionsFromAPI(latitude, longitude);//async problems here///////////////////////////////////////////////////////////////////
 
-    console.log("got eateryOptionsArray after construction... is as follows: ");
-    console.log(JSON.stringify(eateryOptionsArray));
+    console.log("making API call...");
+    console.log(latitude);
+    console.log(longitude);
+    let eateryOptionsArray = [];
 
-    let newActiveSearch = new ActiveSearch(getUser(username), eateryOptionsArray);
+    client.placesNearby({params:{
+            location : [latitude, longitude],
+            // location : [50.381773,-4.133786],
+            radius : 1500,
+            type : "restaurant",
+            key : "AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"
+        },
+        timeout:1000
 
-    //add the active search object to ACTIVE_SEARCHES
-    ACTIVE_SEARCHES.push(newActiveSearch);
+    }).then((eateryData) => {
+        console.log("got response from api! data is as follows:");
+        console.log("- data here -");
+        // console.log(eateryData);
 
-    //then pass a success message back to the user, containing the ActiveSearch object
-    let MSG = new Message(1, "newActiveSearchRequestGranted", "", [newActiveSearch.ID, newActiveSearch.EateryOptions]);
-    sendToUser(username, MSG);
+        eateryOptionsArray = createEateryOptionsArray(eateryData);
+
+        console.log("got eateryOptionsArray after construction... is as follows: ");
+        console.log("type: " + typeof (eateryOptionsArray) + " length: " + eateryOptionsArray.length);
+
+        let newActiveSearch = new ActiveSearch(getUser(username), eateryOptionsArray);
+
+        //add the active search object to ACTIVE_SEARCHES
+        ACTIVE_SEARCHES.push(newActiveSearch);
+
+        //then pass a success message back to the user, containing the ActiveSearch object
+        let MSG = new Message(1, "newActiveSearchRequestGranted", "", [newActiveSearch.ID, newActiveSearch.EateryOptions]);
+        sendToUser(username, MSG);
+
+    }).catch((error) => {
+        console.log('[ERROR]');
+        console.log(error);
+
+    });
 }
 
-async function getEateryOptionsFromAPI(latitude, longitude){
+function createEateryOptionsArray(eateryData){
+    let EateriesArray = [];
+
+    try{
+        if(eateryData.data.results.length === 0){
+            return [];
+        }
+
+        for (let i = 0; i < eateryData.data.results.length; i++) {
+
+            let name = eateryData.data.results[i].name;
+            let description = "description would be here, if there was one";
+            let rating = eateryData.data.results[i].rating;
+            let photoRef;
+            if(eateryData.data.results[i].photos){
+                photoRef = eateryData.data.results[i].photos[0].photo_reference;
+            } else {
+                photoRef = "";
+            }
+
+            let eatery = new EateryOption(
+                photoRef,
+                name,
+                description,
+                rating,
+                photoRef
+            );
+
+            EateriesArray.push(eatery);
+        }
+    } catch {
+        console.log('[ERROR] could not parse places data');
+        return [];
+    }
+
+    return EateriesArray;
+}
+
+function getEateryOptionsFromAPI(latitude, longitude){
     //make api call
     console.log("making API call...");
     console.log(latitude);
@@ -209,13 +273,14 @@ async function getEateryOptionsFromAPI(latitude, longitude){
 
     }).then((eateryData) => {
         console.log("got response from api! data is as follows:");
-        console.log("OMMITTED");
+        console.log("- data here -");
         // console.log(eateryData);
 
         eateryOptionsArray = createEateryOptionsArray(eateryData);
 
         console.log("constructed eateryOptionsArray is as follows: ");
-        console.log(JSON.stringify(eateryOptionsArray));
+        console.log("- options array here -");
+        // console.log(eateryOptionsArray);
         return eateryOptionsArray;
 
     }).catch((error) => {
@@ -223,14 +288,6 @@ async function getEateryOptionsFromAPI(latitude, longitude){
         console.log(error);
 
     });
-
-    // console.log("returning eateryOptionsArray... is as follows: ");
-    // console.log(JSON.stringify(eateryOptionsArray));
-    //
-    //
-    // return eateryOptionsArray;
-
-    // console.log('[ERROR] something went wrong');
 }
 
 
@@ -380,48 +437,15 @@ function getUser(username){
 
 
 
-function createEateryOptionsArray(eateryData){
-    let EateriesArray = [];
 
-    try{
-        if(eateryData.data.results.length === 0){
-            return [];
-        }
-
-        for (let i = 0; i < eateryData.data.results.length; i++) {
-
-            let name = eateryData.data.results[i].name;
-            let description = "description would be here, if there was one";
-            let rating = eateryData.data.results[i].rating;
-            let photoRef;
-            if(eateryData.data.results[i].photos){
-                photoRef = eateryData.data.results[i].photos[0].photo_reference;
-            } else {
-                photoRef = "";
-            }
-
-            let eatery = new EateryOption(
-                name,
-                description,
-                rating,
-                photoRef
-            );
-
-            EateriesArray.push(eatery);
-        }
-    } catch {
-        console.log('[ERROR] could not parse places data');
-        return [];
-    }
-
-    return EateriesArray;
-}
 
 function sendToUser(username, message){
     let ws = connectionsMap.get(getUser(username));
     ws.send(JSON.stringify(message));
     console.log("[MSG] sent the following to user: " + username);
-    console.log(JSON.stringify(message));
+    console.log("Message type: " + message.type);
+    console.log("Message body: " + message.Body);
+    console.log("Message.items contains: " + message.Items.length + " object(s)");
 }
 
 
