@@ -118,6 +118,16 @@ namespace COMP3000Project.WS
             SendRequest(request);
         }
 
+        public static async void RequestJoinExistingSearch(string currentUsername, string currentPassword, string searchCode)
+        {
+            object[] messageItems = { currentUsername, currentPassword, searchCode };
+
+            //make request message object
+            Message request = new Message("1", "joinExistingSearch", "", messageItems);
+
+            //send to server
+            SendRequest(request);
+        }
 
 
         public static async Task<ObservableCollection<EateryOption>> RequestEateriesList(string data)
@@ -229,6 +239,11 @@ namespace COMP3000Project.WS
                                 case "newActiveSearchRequestGranted":
                                     updateSubscribers(message);
                                     break;
+
+                                case "joinSearchRequestGranted":
+                                    updateSubscribers(message);
+                                    break;
+
                                 default:
 
                                     break;

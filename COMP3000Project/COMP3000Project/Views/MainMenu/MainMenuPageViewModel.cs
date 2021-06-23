@@ -30,6 +30,19 @@ namespace COMP3000Project.Views.MainMenu
             }
         }
 
+        private string _searchCode;
+        public string SearchCode
+        {
+            get { return _searchCode; }
+            set
+            {
+                if (_searchCode != value)
+                {
+                    SetProperty(ref _searchCode, value);//informs view of change
+                }
+            }
+        }
+
         //COMMANDS
         public ICommand GoToStartSearch { get; }
         public ICommand GoToJoinSearch { get; }
@@ -51,15 +64,17 @@ namespace COMP3000Project.Views.MainMenu
         //FUNCTIONS
         async Task<object> GoToExecuteStartSearch()
         {
-            //WebsocketHandler.RequestStartNewSearch();
-            SearchPage nextPage = new SearchPage(true, "");
+            bool startingNewSearch = true;
+            SearchPage nextPage = new SearchPage(startingNewSearch, "");
             await Navigation.PushAsync(nextPage, true);
             return null;
         }
 
         async Task<object> GoToExecuteJoinSearch()
         {
-            //WebsocketHandler.RequestJoinExistingSearch();
+            bool startingNewSearch = false;
+            SearchPage nextPage = new SearchPage(startingNewSearch, SearchCode);
+            await Navigation.PushAsync(nextPage, true);
 
             return null;
         }

@@ -16,6 +16,10 @@
                     Command="{Binding GoToStartSearch}"
                     />
 
+            <Entry Placeholder="Search Code"
+                   Text="{Binding SearchCode}"
+                   x:Name="entSearchCode"/>
+
             <Button Text="join a search!"
                     Command="{Binding GoToJoinSearch}"
                     />

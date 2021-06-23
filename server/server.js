@@ -36,8 +36,10 @@ User.find({}, function (err, users) {
 
 
 
+
 wss.on('connection', function connection(ws) {
     console.log('[WS] new websocket connection established');
+
 
 
     ws.id = uuid();
@@ -61,6 +63,7 @@ wss.on('connection', function connection(ws) {
         let newPassword = message.Items[2];
         let latitude = message.Items[2];
         let longitude = message.Items[3];
+        let searchCode = message.Items[2];
 
         switch(message.type) {
             case "getEateries":
@@ -115,7 +118,11 @@ wss.on('connection', function connection(ws) {
                 console.log(password);
 
                 if(validateCredentials(username, password)){
-                    grantLoginRequest(ws, getUser(username));
+                    grantLoginRequest(ws, username);
+
+                    //test stuff
+                    grantLoginRequest(ws, "testUser");
+                    createNewActiveSearch("testUser", 37.421998333333335, -122.08400000000002);
                 }
 
 
@@ -168,14 +175,39 @@ wss.on('connection', function connection(ws) {
                 }
                 break
 
+            case "joinExistingSearch":
+                console.log("[MSG] received join existing search request");
+                console.log(message);
+
+                if(validateCredentials(username, password)){//credentials are valid
+                    //do create new search
+                    joinExistingSearch(searchCode, username);
+                }
+                break
+
             default:
                 console.log('[MSG] unrecognised message received');
         }
     })
 });
 
-async function createNewActiveSearch(username, latitude, longitude){
+function joinExistingSearch(searchCode, username){
+    console.log("[SEARCH] user joining search");
+    //get existing search in ACTIVE_SEARCHES by search code
+    let search = getActiveSearch(searchCode);
+    //get user by username
+    //add user to the search
+    search.addParticipant(getUser(username));
+
+    //send feedback to app
+    let MSG = new Message(1, "joinSearchRequestGranted", "", [search.ID, search.EateryOptions, search.Participants]);
+    sendToUser(username, MSG);
+
+}
+
+function createNewActiveSearch(username, latitude, longitude){
     //create an active search object, populated with a user and eatery options array
+    console.log("[SEARCH] creating new search");
 
     console.log("making API call...");
     console.log(latitude);
@@ -205,6 +237,8 @@ async function createNewActiveSearch(username, latitude, longitude){
 
         //add the active search object to ACTIVE_SEARCHES
         ACTIVE_SEARCHES.push(newActiveSearch);
+
+        console.log("New ActiveSearch's search code is: " + newActiveSearch.ID);
 
         //then pass a success message back to the user, containing the ActiveSearch object
         let MSG = new Message(1, "newActiveSearchRequestGranted", "", [newActiveSearch.ID, newActiveSearch.EateryOptions]);
@@ -255,40 +289,6 @@ function createEateryOptionsArray(eateryData){
     return EateriesArray;
 }
 
-function getEateryOptionsFromAPI(latitude, longitude){
-    //make api call
-    console.log("making API call...");
-    console.log(latitude);
-    console.log(longitude);
-    let eateryOptionsArray = [];
-
-    client.placesNearby({params:{
-            location : [latitude, longitude],
-            // location : [50.381773,-4.133786],
-            radius : 1500,
-            type : "restaurant",
-            key : "AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"
-        },
-        timeout:1000
-
-    }).then((eateryData) => {
-        console.log("got response from api! data is as follows:");
-        console.log("- data here -");
-        // console.log(eateryData);
-
-        eateryOptionsArray = createEateryOptionsArray(eateryData);
-
-        console.log("constructed eateryOptionsArray is as follows: ");
-        console.log("- options array here -");
-        // console.log(eateryOptionsArray);
-        return eateryOptionsArray;
-
-    }).catch((error) => {
-        console.log('[ERROR]');
-        console.log(error);
-
-    });
-}
 
 
 
@@ -308,11 +308,11 @@ function validateCredentials(username, password){
     }
 }
 
-function grantLoginRequest(ws, user){
+function grantLoginRequest(ws, username){
     //set user's new WSID
     //inform user that their login request is granted
 
-    connectionsMap.set(user, ws);
+    connectionsMap.set(getUser(username), ws);
 
     let MSG = new Message(1, "loginRequestGranted", "", []);
     ws.send(JSON.stringify(MSG));
@@ -433,6 +433,14 @@ function getUser(username){
     });
 
     return targetUser;
+}
+
+function getActiveSearch(ID) {
+    let targetSearch = null;
+    targetSearch = ACTIVE_SEARCHES.find(function (ActiveSearch, index) {
+        return ActiveSearch.ID.toString() === ID.toString();
+    });
+    return targetSearch;
 }
 
 

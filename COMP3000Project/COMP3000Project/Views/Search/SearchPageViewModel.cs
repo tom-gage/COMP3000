@@ -71,6 +71,11 @@ namespace COMP3000Project.Views.Search
             WebsocketHandler.RequestStartNewSearch(UserDetails.Username, UserDetails.Password, location.Latitude, location.Longitude);
         }
 
+        public async void JoinExistingSearch(string searchCode)
+        {
+            WebsocketHandler.RequestJoinExistingSearch(UserDetails.Username, UserDetails.Password, searchCode);
+        }
+
         async void ExecuteCastVote(SwipedCardEventArgs eventArgs)
         {
             //WebsocketHandler.RequestCastVote();
@@ -102,10 +107,7 @@ namespace COMP3000Project.Views.Search
 
 
 
-        public async void JoinExistingSearch(string searchCode)
-        {
-            //WebsocketHandler.RequestJoinExistingSearch(UserDetails.Username, UserDetails.Password, searchCode);
-        }
+
 
 
         async void populateOptionsArray(string optionsJSON)
@@ -158,7 +160,14 @@ namespace COMP3000Project.Views.Search
             switch (message.type)
             {
                 case "newActiveSearchRequestGranted":
-                    Console.WriteLine("[MSG] got create active search request granted!");
+                    Console.WriteLine("[MSG] got CREATE active search request granted!");
+                    Console.WriteLine("Search ID: " + message.Items[0]);
+                    Console.WriteLine("[MSG] populating array!");
+                    populateOptionsArray(message.Items[1].ToString());
+                    break;
+
+                case "joinSearchRequestGranted":
+                    Console.WriteLine("[MSG] got JOIN active search request granted!");
                     Console.WriteLine("Search ID: " + message.Items[0]);
                     Console.WriteLine("[MSG] populating array!");
                     populateOptionsArray(message.Items[1].ToString());
