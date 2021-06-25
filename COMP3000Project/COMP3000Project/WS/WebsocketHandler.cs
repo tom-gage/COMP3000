@@ -178,11 +178,6 @@ namespace COMP3000Project.WS
             {
                 subscribers[i].Update(message);
             }
-
-            //foreach (Subscriber subscriber in subscribers)
-            //{
-            //    subscriber.Update(message);
-            //}
         }
 
         //this bad boy handles all incoming messages
