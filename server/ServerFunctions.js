@@ -5,6 +5,10 @@ const UserObj = require('./objects/User');
 const {Client} = require('@googlemaps/google-maps-services-js');
 const client = new Client({});
 
+global.USERS = [];
+global.CONNECTED_USERS = [];
+global.ACTIVE_SEARCHES = [];
+
 let DB = require('./DB');
 let UserModel;
 
@@ -13,15 +17,20 @@ let connectionsMap;
 class ServerFunctions{
 
     constructor() {
-        //set up DB stuff
-        DB.initialiseConnection();
 
-        UserModel = DB.getUserModel();
-        UserModel.find({}, function (err, users) {
-            global.USERS = users;
+    }
+
+    async initConnection(){
+        connectionsMap = new Map();
+
+        await DB.initialiseConnection();
+
+        UserModel = await DB.getUserModel();
+        await UserModel.find({}, function (err, users) {
+                global.USERS = users;
         });
 
-        connectionsMap = new Map();
+
     }
 
 

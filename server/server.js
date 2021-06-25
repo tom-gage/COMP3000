@@ -20,11 +20,8 @@ const port = 9000;
 const server = http.createServer(express);
 const wss = new WebSocket.Server({ server });
 
-global.USERS = [];
-global.CONNECTED_USERS = [];
-global.ACTIVE_SEARCHES = [];
-
 serverFunctions = new ServerFunctions();
+serverFunctions.initConnection();
 
 wss.on('connection', function connection(ws) {
     console.log('[WS] new websocket connection established');

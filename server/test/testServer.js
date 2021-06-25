@@ -1,5 +1,5 @@
 const assert = require('chai').assert;
-const server = require('../server');
+
 const EateryOption = require('../objects/EateryOption');
 const User = require('../objects/User');
 
@@ -7,6 +7,7 @@ describe('hooks', function () {
 
     let eateryOption;
     let user;
+
 
     beforeEach(function () {
         user = new User("testUser", "password", "123")
