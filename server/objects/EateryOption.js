@@ -15,8 +15,8 @@ class EateryOption {
         this.Votes = [];
     }
 
-    recordVote(user){
-        this.Votes.push(user.Username);
+    recordVote(username){
+        this.Votes.push(username);
     }
 }
 

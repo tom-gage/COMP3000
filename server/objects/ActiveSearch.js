@@ -30,7 +30,7 @@ class ActiveSearch{
         }
     }
 
-    getVotes(){
+    showVotes(){
         //for each eatery option, get number of votes, spit it out to the console
         console.log("[VOTE] Printing votes...");
         for (let i = 0; i < this.EateryOptions.length; i++)

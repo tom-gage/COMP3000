@@ -10,23 +10,24 @@ global.CONNECTED_USERS = [];
 global.ACTIVE_SEARCHES = [];
 
 let DB = require('./DB');
-let UserModel;
+// let UserModel;
 
-let connectionsMap;
+// let connectionsMap = new Map();
 
 class ServerFunctions{
 
-    constructor() {
+    connectionsMap = new Map();
+    UserModel;
 
+    constructor() {
+        // this.connectionsMap = new Map();
     }
 
     async initConnection(){
-        connectionsMap = new Map();
-
         await DB.initialiseConnection();
 
-        UserModel = await DB.getUserModel();
-        await UserModel.find({}, function (err, users) {
+        this.UserModel = await DB.getUserModel();
+        await this.UserModel.find({}, function (err, users) {
                 global.USERS = users;
         });
 
@@ -38,17 +39,22 @@ class ServerFunctions{
         //get active search by searchcode
         let search = this.getActiveSearch(searchCode);
         //cast vote
-        search.castVote(username, eateryOptionID);
+        if(search){
+            search.castVote(username, eateryOptionID);
 
-        //if users have matched, send "you matched!" feedback
-        let match = search.checkForMatch();
+            //if users have matched, send "you matched!" feedback
+            let match = search.checkForMatch();
 
-        if(match){
-            let MSG = new Message(1, "matched!", "", [match]);
-            this.sendToUser(username, MSG);
+            if(match){
+                let MSG = new Message(1, "matched!", "", [match]);
+                this.sendToUser(username, MSG);
+            }
+
+            search.showVotes();
         }
 
-        search.getVotes();
+
+
     }
 
     joinExistingSearch(searchCode, username){
@@ -65,7 +71,7 @@ class ServerFunctions{
 
     }
 
-    createNewActiveSearch(username, latitude, longitude){
+    async createNewActiveSearch(username, latitude, longitude){
         //create an active search object, populated with a user and eatery options array
         console.log("[SEARCH] creating new search");
 
@@ -113,6 +119,9 @@ class ServerFunctions{
     }
 
     createEateryOptionsArray(eateryData){
+
+        // console.log(JSON.stringify(eateryData));
+
         let EateriesArray = [];
 
         try{
@@ -156,7 +165,7 @@ class ServerFunctions{
     validateCredentials(username, password){
         if(username && password){
             if(USERS.find(function (user) {//if credentials match existing user
-                return (user.username === username && user.password === password);
+                return (user.Username === username && user.Password === password);
             })) {
                 return true;
             }
@@ -171,25 +180,29 @@ class ServerFunctions{
         //set user's new WSID
         //inform user that their login request is granted
 
-        connectionsMap.set(this.getUser(username), ws);
+        this.connectionsMap.set(this.getUser(username), ws);
 
         let MSG = new Message(1, "loginRequestGranted", "", []);
-        ws.send(JSON.stringify(MSG));
 
-        console.log('[LOGIN] user login succeeded');
+        try{
+            ws.send(JSON.stringify(MSG));
+            console.log('[LOGIN] user login succeeded');
+        } catch {
+
+        }
     }
 
-    updateUsername(username, password, newUsername){
+    async updateUsername(username, password, newUsername){
         console.log("[LOGIN] updating username...");
 
 
-        UserModel.updateOne(
+        this.UserModel.updateOne(
             {
-                username : username,
-                password : password
+                Username : username,
+                Password : password
             },
             {
-                username : newUsername
+                Username : newUsername
             })
             .then((obj) => {
                 let MSG = new Message(1, "usernameUpdated", newUsername, []);
@@ -197,11 +210,11 @@ class ServerFunctions{
 
                 let thisClass = this;
 
-                UserModel.find({}, function (err, users) {
-                    let ws = connectionsMap.get(thisClass.getUser(username));
-                    connectionsMap.delete(thisClass.getUser(username));//wipe connections map entry for user
+                this.UserModel.find({}, function (err, users) {
+                    let ws = thisClass.connectionsMap.get(thisClass.getUser(username));
+                    thisClass.connectionsMap.delete(thisClass.getUser(username));//wipe connections map entry for user
                     global.USERS = users;
-                    connectionsMap.set(thisClass.getUser(newUsername), ws);//replace entry, username change reflected
+                    thisClass.connectionsMap.set(thisClass.getUser(newUsername), ws);//replace entry, username change reflected
                 });
 
 
@@ -210,16 +223,16 @@ class ServerFunctions{
             })
     }
 
-    updatePassword(username, password, newPassword){
+    async updatePassword(username, password, newPassword){
         console.log("[LOGIN] updating password...");
 
-        UserModel.updateOne(
+        this.UserModel.updateOne(
             {
-                username : username,
-                password : password
+                Username : username,
+                Password : password
             },
             {
-                password : newPassword
+                Password : newPassword
             })
             .then((obj) => {
                 let MSG = new Message(1, "passwordUpdated", newPassword, []);
@@ -227,33 +240,33 @@ class ServerFunctions{
 
                 let thisClass = this;
 
-                UserModel.find({}, function (err, users) {
-                    let ws = connectionsMap.get(thisClass.getUser(username));
-                    connectionsMap.delete(thisClass.getUser(username));
+                this.UserModel.find({}, function (err, users) {
+                    let ws = thisClass.connectionsMap.get(thisClass.getUser(username));
+                    thisClass.connectionsMap.delete(thisClass.getUser(username));
                     global.USERS = users;
-                    connectionsMap.set(thisClass.getUser(username), ws);
+                    thisClass.connectionsMap.set(thisClass.getUser(username), ws);
                 });
 
                 console.log("[LOGIN] password update succeeded!");
             })
     }
 
-    deleteUser(username, password){
+    async deleteUser(username, password){
         console.log("[LOGIN] deleting user...");
 
-        UserModel = DB.getUserModel();
+        // UserModel = DB.getUserModel();
 
-        UserModel.deleteOne({
-            username : username,
-            password : password
+        this.UserModel.deleteOne({
+            Username : username,
+            Password : password
         }).then((obj) => {
             let MSG = new Message(1, "userDeleted", "", []);
             this.sendToUser(username, MSG);
 
             let thisClass = this;
 
-            UserModel.find({}, function (err, users) {
-                connectionsMap.delete(thisClass.getUser(username));
+            this.UserModel.find({}, function (err, users) {
+                thisClass.connectionsMap.delete(thisClass.getUser(username));
                 global.USERS = users;
             });
 
@@ -262,6 +275,10 @@ class ServerFunctions{
     }
 
     usernameNotTaken(username){
+        console.log("BEGIN USERNAME NOT TAKEN TESTS...")
+        console.log("username is: " + username);
+        console.log("USERS IS: " + USERS);
+        console.log(USERS);
         if(!USERS.find(function (user) {//if username is not taken
             return user.username === username;
         })){
@@ -274,17 +291,17 @@ class ServerFunctions{
 
     async registerNewUser(username, password){
         let newUser = {
-            username : username,
-            password : password,
+            Username : username,
+            Password : password,
         };
 
-        let UsersModel = DB.getUserModel();
+        // let UsersModel = DB.getUserModel();
 
-        await UsersModel.create(newUser, function (err) {
+        await this.UserModel.create(newUser, function (err) {
             if (err) return console.log(err);
         });
 
-        await UsersModel.find({}, function (err, users) {
+        await this.UserModel.find({}, function (err, users) {
             global.USERS = users;
         });
 
@@ -296,7 +313,7 @@ class ServerFunctions{
     getUser(username){
         let targetUser = null;
         targetUser = USERS.find(function (User) {
-            return User.username.toString() === username.toString();
+            return User.Username.toString() === username.toString();
         });
 
         return targetUser;
@@ -314,15 +331,26 @@ class ServerFunctions{
         ws.send(JSON.stringify(new Message("1", "debugMessage", "hello there")));
     }
 
+    clearACTIVE_SEARCHES(){
+        global.ACTIVE_SEARCHES = [];
+    }
 
+    clearUSERS(){
+        global.USERS = [];
+    }
 
     sendToUser(username, message){
-        let ws = connectionsMap.get(this.getUser(username));
-        ws.send(JSON.stringify(message));
-        console.log("[MSG] sent the following to user: " + username);
-        console.log("Message type: " + message.type);
-        console.log("Message body: " + message.Body);
-        console.log("Message.items contains: " + message.Items.length + " object(s)");
+        let ws = this.connectionsMap.get(this.getUser(username));
+
+        if(ws){
+            ws.send(JSON.stringify(message));
+            console.log("[MSG] sent the following to user: " + username);
+            console.log("Message type: " + message.type);
+            console.log("Message body: " + message.Body);
+            console.log("Message.items contains: " + message.Items.length + " object(s)");
+        }
+
+
 
         // if(message.type === "newActiveSearchRequestGranted"){
         //     console.log("Message.items.eateryOptions contains: ");

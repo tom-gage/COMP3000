@@ -8,8 +8,8 @@ async function initialiseConnection() {
     let dbUrl = "mongodb+srv://barnaby:admin@cluster0.3qn4a.mongodb.net/RestaurantTinder?retryWrites=true&w=majority";//
 
     let userSchema = mongoose.Schema({
-        username:String,
-        password:String,
+        Username:String,
+        Password:String,
         current_WSID:String,
     });
 
@@ -36,8 +36,8 @@ function initialiseConnectionSynchronously() {
     let dbUrl = "mongodb+srv://barnaby:admin@cluster0.3qn4a.mongodb.net/RestaurantTinder?retryWrites=true&w=majority";//
 
     let userSchema = mongoose.Schema({
-        username:String,
-        password:String,
+        Username:String,
+        Password:String,
         current_WSID:String,
     });
 
