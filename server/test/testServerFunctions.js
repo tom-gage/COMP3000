@@ -49,17 +49,94 @@ describe('hooks', function () {
         })
     });
 
+    describe('()', function () {
+        it('should ', function () {
 
-    describe('usernameNotTaken()', function () {
-        it('should take in a valid username and return true', function () {
+            assert.equal();
+        })
+    });
+
+    describe('clearUSERS()', function () {
+        it('should clear the USERS array', function () {
+            USERS.push(user0);
+            assert.equal(USERS.length, 1);
+            serverFunctions.clearUSERS();
+            assert.equal(USERS.length, 0);
+        })
+    });
+
+    describe('clearACTIVE_SEARCHES()', function () {
+        it('should clear the ACTIVE_SEARCHES array', function () {
+            ACTIVE_SEARCHES.push(activeSearch);
+            assert.equal(ACTIVE_SEARCHES.length, 1);
+            serverFunctions.clearACTIVE_SEARCHES();
+            assert.equal(ACTIVE_SEARCHES.length, 0);
+        })
+    });
+
+    describe('getActiveSearch(), 0', function () {
+        it('should take in a valid searchID and return an ActiveSearch object from ACTIVE_SEARCHES ', function () {
+            ACTIVE_SEARCHES.push(activeSearch);
+            let actual = serverFunctions.getActiveSearch(activeSearch.ID);
+            assert.equal(actual, activeSearch);
+        })
+    });
+
+    describe('getActiveSearch(), 1', function () {
+        it('should take in an invalid searchID and return a null object ', function () {
+            ACTIVE_SEARCHES.push(activeSearch);
+            let actual = serverFunctions.getActiveSearch("nonsense");
+            assert.equal(actual, null);
+        })
+    });
+
+    describe('getUser() 0', function () {
+        it('should take in a valid username and return a user object from USERS', function () {
+            USERS.push(user0);
+            let actual = serverFunctions.getUser(user0.Username);
+            assert.equal(actual, user0);
+        })
+    });
+
+    describe('getUser() 1', function () {
+        it('should take in an invalid username and return a null object', function () {
+            USERS.push(user0);
+            let actual = serverFunctions.getUser("sass man hall from");
+            assert.equal(actual, null);
+        })
+    });
+
+    describe('registerNewUser()', function () {
+        it('should take in a username and password and register a new user', function () {
+
+            let username = "testUsername";
+            let password = "testPassword";
+
+            serverFunctions.registerNewUser(username, password);
+
+            //assert user exists
+            serverFunctions.UserModel.find({ Username : username, Password : password}).exec(function (err, result) {
+                assert.exists(result);
+
+                serverFunctions.UserModel.deleteOne({
+                    Username: username,
+                    Password: password
+                });
+            });
+        });
+    });
+
+
+    describe('usernameNotTaken(), 0', function () {
+        it('should take in a taken username and return false', function () {
             USERS.push(user0);
             let result = serverFunctions.usernameNotTaken(user0.Username);
             assert.isFalse(result);
         })
     });
 
-    describe('usernameNotTaken() 1', function () {
-        it('should take in an invalid username and return false', function () {
+    describe('usernameNotTaken(), 1', function () {
+        it('should take in a non-taken username and return true', function () {
             USERS.push(user0);
             let result = serverFunctions.usernameNotTaken("sass man");
 
@@ -74,55 +151,56 @@ describe('hooks', function () {
 
     describe('updatePassword()', function (done) {
         it('should take in a username, password and new password, then update the database', function () {
-            // //assert user exists
-            // serverFunctions.UserModel.find({ Username : "u", Password : "p"}).exec(function (err, user){
-            //     assert.equal(user.length, 1);
-            // });
-            //
-            // //do update password
-            // serverFunctions.updatePassword("u", "p", "newPassword").then(()=>{
-            //     setTimeout('', 5000);
-            //     //then assert password updated
-            //     serverFunctions.UserModel.find({ Username : "u", Password : "newPassword"}).exec(function (err, user){
-            //         console.log("LOOK HERE DUMMY " + user.length);
-            //         console.log("LOOK HERE DUMMY " + user);
-            //         assert.equal(user.length, 1);
-            //
-            //         //then reset db entry
-            //         serverFunctions.UserModel.updateOne(
-            //             {
-            //                 Username : "u"
-            //             },
-            //             {
-            //                 Username : "u",
-            //                 Password : "p"
-            //             }).then(()=>{
-            //             done();
-            //         });
-            //     });
-            //
-            //
-            // });
+            //assert user exists
+            serverFunctions.UserModel.find({ Username : "u", Password : "p"}).exec(function (err, result){
+                // assert.equal(result.length, 1);
+                assert.exists(result);
+            });
+
+            //do update password
+            serverFunctions.updatePassword("u", "p", "newPassword").then(()=>{
+
+                //then assert password updated
+                serverFunctions.UserModel.find({ Username : "u", Password : "newPassword"}).exec(function (err, result){
+
+                    // assert.equal(result.length, 1);
+                    assert.exists(result);
+
+                    //then reset db entry
+                    serverFunctions.UserModel.updateOne(
+                        {
+                            Username : "u"
+                        },
+                        {
+                            Username : "u",
+                            Password : "p"
+                        }).then(()=>{
+                        done();
+                    });
+                });
+
+
+            });
         });
     });
 
 
     describe('updateUsername()', function (done) {
         it('should take in a username, password, and a new username, then update the database', function () {
-
-            serverFunctions.UserModel.find({ Username : "u"}).exec(function (err, user){
-                console.log("LOOK HERE DUMMY " + user.length);
-                console.log("LOOK HERE DUMMY " + user);
-                assert.equal(user.length, 1);
+            serverFunctions.UserModel.find({ Username : "u"}).exec(function (err, result){
+                // console.log("LOOK HERE DUMMY " + user.length);
+                // console.log("LOOK HERE DUMMY " + user);
+                assert.exists(result);
 
                 //do update username
                 serverFunctions.updateUsername("u", "p", "newUsername").then(()=>{
 
                     //then assert username updated
-                    serverFunctions.UserModel.find({ Username : "newUsername"}).exec(function (err, user){
+                    serverFunctions.UserModel.find({ Username : "newUsername"}).exec(function (err, result){
 
 
-                        assert.equal(user.length, 1);
+                        // assert.equal(user.length, 1);
+                        assert.exists(result);
 
                         //then reset db entry
                         serverFunctions.UserModel.updateOne(
@@ -131,10 +209,6 @@ describe('hooks', function () {
                             },
                             {
                                 Username : "u"
-                            },
-                            {
-                                new : true,
-                                upsert : true
                             }).then(()=>{
                             done();
                         });
@@ -147,32 +221,37 @@ describe('hooks', function () {
 
     describe('deleteUser()', function (done) {
         it('should take in a username and password, then update the database', function () {
-            // //assert user exists
-            // serverFunctions.UserModel.find({ Username : "u", Password : "p"}).exec(function (err, user){
-            //     assert.equal(user.length, 1);
-            // });
-            //
-            // //do delete
-            // serverFunctions.deleteUser("u", "p").then(()=>{
-            //     setTimeout('', 5000);
-            //     //assert user deleted
-            //     serverFunctions.UserModel.find({ Username : "u", Password : "p"}).exec(function (err, user){
-            //         assert.equal(user.length, 0);
-            //     });
-            //     //then reset db entry
-            //     serverFunctions.UserModel.updateOne(
-            //         {
-            //             Username : "u",
-            //             Password : "p"
-            //         },
-            //         {
-            //             Username: "u",
-            //             Password: "p"
-            //         }).then(()=>{
-            //         done();
-            //     });
-            //
-            // });
+            //assert user exists
+            serverFunctions.UserModel.find({ Username : "u", Password : "p"}).exec(function (err, result){
+                // assert.equal(result.length, 1);
+                assert.exists(result);
+            });
+
+            //do delete
+            serverFunctions.deleteUser("u", "p").then(()=>{
+
+                //assert user deleted
+                serverFunctions.UserModel.find({ Username : "u", Password : "p"}).exec(function (err, result){
+                    // assert.equal(result.length, 0);
+                    assert.exists(result);
+
+                    //then reset db entry
+                    serverFunctions.UserModel.updateOne(
+                        {
+                            Username : "u",
+                            Password : "p"
+                        },
+                        {
+                            Username: "u",
+                            Password: "p"
+                        }).then(()=>{
+                        done();
+                    });
+                });
+
+
+
+            });
         });
     });
 

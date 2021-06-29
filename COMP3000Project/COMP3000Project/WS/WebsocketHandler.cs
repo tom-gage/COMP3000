@@ -250,6 +250,10 @@ namespace COMP3000Project.WS
                                     updateSubscribers(message);
                                     break;
 
+                                case "gotMatch":
+                                    updateSubscribers(message);
+                                    break;
+
                                 default:
 
                                     break;

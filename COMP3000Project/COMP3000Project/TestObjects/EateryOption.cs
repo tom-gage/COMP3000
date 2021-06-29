@@ -103,21 +103,21 @@ namespace COMP3000Project.TestObjects
             }
         }
 
-        ImageSource testImage;
+        ImageSource _eateryImage;
 
-        public ImageSource TestImage
+        public ImageSource EateryImage
         {
             get
             {
-                return testImage;
+                return _eateryImage;
             }
             set
             {
-                if(testImage == value)
+                if(_eateryImage == value)
                 {
                     return;
                 }
-                testImage = value;
+                _eateryImage = value;
                 HandlePropertyChanged();
             }
         }
@@ -154,7 +154,7 @@ namespace COMP3000Project.TestObjects
             var webImage = new Image { Aspect = Aspect.AspectFit };
             webImage.Source = ImageSource.FromUri(new Uri("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + PhotoReference + "&key=AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"));
 
-            TestImage = webImage.Source;
+            EateryImage = webImage.Source;
         }
 
 

@@ -43,14 +43,21 @@ class ServerFunctions{
             search.castVote(username, eateryOptionID);
 
             //if users have matched, send "you matched!" feedback
-            let match = search.checkForMatch();
+            // let match = search.checkForMatch();
+            //
+            // if(match){
+            //
+            //     let MSG = new Message(1, "matched!", "", [match]);
+            //     this.sendToUser(username, MSG);
+            // }
+            //
+            // search.showVotes();
 
-            if(match){
-                let MSG = new Message(1, "matched!", "", [match]);
-                this.sendToUser(username, MSG);
-            }
 
-            search.showVotes();
+            let x = search.EateryOptions[0];
+
+            let MSG = new Message(1, "gotMatch", "", [x]);
+            this.sendToUser(username, MSG);
         }
 
 
@@ -275,17 +282,17 @@ class ServerFunctions{
     }
 
     usernameNotTaken(username){
-        console.log("BEGIN USERNAME NOT TAKEN TESTS...")
-        console.log("username is: " + username);
-        console.log("USERS IS: " + USERS);
-        console.log(USERS);
-        if(!USERS.find(function (user) {//if username is not taken
-            return user.username === username;
-        })){
-            return true;
-        } else {
-            console.log('[LOGIN] Validation failure, username is taken!');
-            return false;
+        if(username){
+            if(USERS.find(function (user) {//if credentials match existing user, username is taken
+                return (user.Username === username);
+            })) {
+                console.log('[LOGIN] Validation failure, username is taken!');
+                return false;
+            }
+            else {
+
+                return true;
+            }
         }
     }
 

@@ -16,6 +16,7 @@ using Xamarin.Essentials;
 using MLToolkit.Forms.SwipeCardView.Core;
 using System.Collections.ObjectModel;
 using System.Text.Json;
+using COMP3000Project.Views.MatchDetails;
 
 namespace COMP3000Project.Views.Search
 {
@@ -173,6 +174,15 @@ namespace COMP3000Project.Views.Search
                     UserDetails.SearchID = message.Items[0].ToString();
                     Console.WriteLine("[MSG] populating array!");
                     populateOptionsArray(message.Items[1].ToString());
+                    break;
+
+                case "gotMatch":
+                    Console.WriteLine("[MSG] got match!");
+                    //navigating to match page
+                    EateryOption eateryOption = JsonSerializer.Deserialize<EateryOption>(message.Items[0].ToString());
+
+                    MatchDetailsPage nextPage = new MatchDetailsPage(eateryOption);
+                    Navigation.PushAsync(nextPage, true);
                     break;
 
                 default:

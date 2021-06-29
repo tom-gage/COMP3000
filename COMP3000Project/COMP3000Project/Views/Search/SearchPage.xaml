@@ -20,7 +20,7 @@
                 VerticalOptions="FillAndExpand">
                 <swipeCardView:SwipeCardView.ItemTemplate>
                     <DataTemplate>
-                        <Image Source="{Binding TestImage}"/>
+                        <Image Source="{Binding EateryImage}"/>
                         <!--<Label Text="{Binding Title}" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="Gray" />-->
                     </DataTemplate>
                 </swipeCardView:SwipeCardView.ItemTemplate>
