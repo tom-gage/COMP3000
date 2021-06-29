@@ -14,7 +14,7 @@ using Xamarin.Forms;
 
 namespace COMP3000Project.Views.MainMenu
 {
-    class MainMenuPageViewModel : ViewModelBase, Subscriber
+    public class MainMenuPageViewModel : ViewModelBase, Subscriber
     {
         //VARIABLES
         private string _username;
