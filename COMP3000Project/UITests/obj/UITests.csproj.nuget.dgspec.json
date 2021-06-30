@@ -1,0 +1,75 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\btgage\\Documents\\COMP3000\\COMP3000Project\\UITests\\UITests.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\btgage\\Documents\\COMP3000\\COMP3000Project\\UITests\\UITests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\btgage\\Documents\\COMP3000\\COMP3000Project\\UITests\\UITests.csproj",
+        "projectName": "UITests",
+        "projectPath": "C:\\Users\\btgage\\Documents\\COMP3000\\COMP3000Project\\UITests\\UITests.csproj",
+        "packagesPath": "C:\\Users\\btgage\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\btgage\\Documents\\COMP3000\\COMP3000Project\\UITests\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\btgage\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net461"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net461": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net461": {
+          "dependencies": {
+            "CefSharp.Common": {
+              "target": "Package",
+              "version": "[91.1.211, )"
+            },
+            "NUnit": {
+              "target": "Package",
+              "version": "[2.6.4, )"
+            },
+            "NUnit3TestAdapter": {
+              "target": "Package",
+              "version": "[3.13.0, )"
+            },
+            "Xamarin.UITest": {
+              "target": "Package",
+              "version": "[3.0.5, )"
+            }
+          }
+        }
+      },
+      "runtimes": {
+        "win": {
+          "#import": []
+        },
+        "win-x64": {
+          "#import": []
+        },
+        "win-x86": {
+          "#import": []
+        }
+      }
+    }
+  }
+}

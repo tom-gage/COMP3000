@@ -62,6 +62,23 @@ namespace COMP3000Project.Views.MainMenu
         }
 
         //FUNCTIONS
+        public bool ValidateSearchCode(string searchCode)
+        {
+            if (searchCode == null)
+            {
+                return false;
+            } else if (searchCode == "")
+            {
+                return false;
+            } else if (searchCode.Length < 1)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+
         async Task<object> GoToExecuteStartSearch()
         {
             bool startingNewSearch = true;
@@ -72,10 +89,13 @@ namespace COMP3000Project.Views.MainMenu
 
         async Task<object> GoToExecuteJoinSearch()
         {
-            bool startingNewSearch = false;
-            SearchPage nextPage = new SearchPage(startingNewSearch, SearchCode);
-            await Navigation.PushAsync(nextPage, true);
-
+            if (ValidateSearchCode(SearchCode))
+            {
+                bool startingNewSearch = false;
+                SearchPage nextPage = new SearchPage(startingNewSearch, SearchCode);
+                await Navigation.PushAsync(nextPage, true);
+                return null;
+            }
             return null;
         }
 

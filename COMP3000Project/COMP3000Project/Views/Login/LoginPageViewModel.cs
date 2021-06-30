@@ -16,7 +16,7 @@ using COMP3000Project.UserDetailsSingleton;
 
 namespace COMP3000Project.Views.Login
 {
-    class LoginPageViewModel : ViewModelBase, Subscriber
+    public class LoginPageViewModel : ViewModelBase, Subscriber
     {
         //VARIABLES
         private string _username;
@@ -67,9 +67,32 @@ namespace COMP3000Project.Views.Login
         }
 
         //FUNCTIONS
+        public bool UandPAreValid(string username, string password)
+        {
+            if (username == null || password == null)
+            {
+                return false;
+            }
+            else if (username == "" || password == "")
+            {
+                return false;
+            }
+            else if (username.Length < 1 || password.Length < 1)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         async Task<object> ExecuteLogin()
         {
-            WebsocketHandler.RequestLoginExistingUser(Username, Password);
+            if(UandPAreValid(Username, Password))
+            {
+                WebsocketHandler.RequestLoginExistingUser(Username, Password);
+                return null;
+            }
+
 
             return null;
         }

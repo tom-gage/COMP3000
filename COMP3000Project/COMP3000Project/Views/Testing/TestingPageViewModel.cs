@@ -67,7 +67,7 @@ namespace COMP3000Project.Views.Testing
         public TestingPageViewModel()
         {
             OnSwipeCommand = new Command(onSwipe);
-            OnButtonClick = new Command(SendWSMessage);
+
 
             TestCollection = new ObservableCollection<EateryOption>();
 
@@ -82,15 +82,7 @@ namespace COMP3000Project.Views.Testing
         }
 
         //FUNCTIONS
-        public async void SendWSMessage()
-        {
-            //asks server for eateries
-            Location location = await getLocation();
 
-
-            await WebsocketHandler.RequestEateriesList("{ \"type\": \"getEateries\", \"body\": \"\", \"latitude\": \"" + location.Latitude + "\", \"longitude\": \"" + location.Longitude + "\" }");//christ
-
-        }
 
         public async Task<Location> getLocation()
         {

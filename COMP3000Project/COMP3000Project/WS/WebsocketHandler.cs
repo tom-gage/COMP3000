@@ -141,17 +141,6 @@ namespace COMP3000Project.WS
         }
 
 
-        public static async Task<ObservableCollection<EateryOption>> RequestEateriesList(string data)//depreciated, due for a cull any day now
-        {
-            //send request
-            var encodedData = Encoding.UTF8.GetBytes(data);
-            var buffer = new ArraySegment<Byte>(encodedData, 0, encodedData.Length);
-            await ws.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
-
-            return null;
-        }
-
-
         public static async void SendRequest(Message message)
         {
             string jsonData = JsonConvert.SerializeObject(message);

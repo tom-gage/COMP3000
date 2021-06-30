@@ -11,12 +11,10 @@
 
             <Label Text="Current Details \/"/>
 
-            <Entry Placeholder="Current Username"
-                   Text="{Binding CurrentUsername}"
+            <Label Text="{Binding CurrentUsername}"
                    x:Name="entCurrentUsername"/>
 
-            <Entry Placeholder="Current Password"
-                   Text="{Binding CurrentPassword}"
+            <Label Text="{Binding CurrentPassword}"
                    x:Name="entCurrentPassword"/>
 
             <Label Text="New Details \/"/>

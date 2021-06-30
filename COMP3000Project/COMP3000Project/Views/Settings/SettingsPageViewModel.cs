@@ -13,7 +13,7 @@ using Xamarin.Forms;
 
 namespace COMP3000Project.Views.Settings
 {
-    class SettingsPageViewModel : ViewModelBase, Subscriber
+    public class SettingsPageViewModel : ViewModelBase, Subscriber
     {
         //VARIABLES
         private string _currentUsername;
@@ -92,16 +92,64 @@ namespace COMP3000Project.Views.Settings
         }
 
         //FUNCTIONS
+
+        public bool UsernameIsValid(string username)
+        {
+            if (username == null)
+            {
+                return false;
+            }
+            else if (username == "")
+            {
+                return false;
+            }
+            else if (username.Length < 1)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool PasswordIsValid(string password)
+        {
+            if (password == null)
+            {
+                return false;
+            }
+            else if (password == "")
+            {
+                return false;
+            }
+            else if (password.Length < 1)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         async Task<object> ExecuteChangeUsername()
         {
-            WebsocketHandler.RequestChangeUsername(CurrentUsername, CurrentPassword, NewUsername);
+            if (UsernameIsValid(NewUsername))
+            {
+                WebsocketHandler.RequestChangeUsername(CurrentUsername, CurrentPassword, NewUsername);
+
+                return null;
+            }
 
             return null;
         }
 
         async Task<object> ExecuteChangePassword()
         {
-            WebsocketHandler.RequestChangePassword(CurrentUsername, CurrentPassword, NewPassword);
+            if (PasswordIsValid(NewPassword))
+            {
+                WebsocketHandler.RequestChangePassword(CurrentUsername, CurrentPassword, NewPassword);
+
+                return null;
+            }
+
 
             return null;
         }

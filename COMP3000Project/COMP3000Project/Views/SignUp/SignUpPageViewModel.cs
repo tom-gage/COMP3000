@@ -9,7 +9,7 @@ using Xamarin.Forms;
 
 namespace COMP3000Project.Views.SignUp
 {
-    class SignUpPageViewModel : ViewModelBase
+    public class SignUpPageViewModel : ViewModelBase
     {
         //VARIABLES
         private string _username;
@@ -52,10 +52,32 @@ namespace COMP3000Project.Views.SignUp
         }
 
         //FUNCTIONS
+        public bool UandPAreValid(string username, string password)
+        {
+            if (username == null || password == null)
+            {
+                return false;
+            }
+            else if (username == "" || password == "")
+            {
+                return false;
+            }
+            else if (username.Length < 1 || password.Length < 1)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         async Task<object> ExecuteRegisterUser()
         {
-            WebsocketHandler.RequestRegisterNewUser(Username, Password);
+            if(UandPAreValid(Username, Password))
+            {
+                WebsocketHandler.RequestRegisterNewUser(Username, Password);
 
+                return null;
+            }
             return null;
         }
     }

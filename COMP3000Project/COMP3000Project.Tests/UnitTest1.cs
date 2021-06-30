@@ -12,7 +12,7 @@ namespace COMP3000Project.Tests
         [Test]
         public void Test1()
         {
-            Assert.Pass();
+
         }
     }
 }
