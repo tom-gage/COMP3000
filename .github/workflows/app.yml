@@ -8,6 +8,10 @@ on:
   
   
 
+defaults:
+  run:
+    working-directory: COMP3000Project
+
 jobs:
   build:
 
