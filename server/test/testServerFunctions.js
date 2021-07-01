@@ -15,6 +15,9 @@ describe('hooks', function () {
 
     let activeSearch;
 
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
 
     before(function (done){
@@ -41,20 +44,20 @@ describe('hooks', function () {
         serverFunctions.clearACTIVE_SEARCHES();
     });
 
+    after(function (){
+        let username = "testUsername";
+        let password = "testPassword";
 
-    describe('()', function () {
-        it('should ', function () {
-
-            assert.equal();
+        serverFunctions.UserModel.deleteOne({
+            Username: username,
+            Password: password
+        }).exec(()=>{
+            serverFunctions.closeConnection();
         })
+
+
     });
 
-    describe('()', function () {
-        it('should ', function () {
-
-            assert.equal();
-        })
-    });
 
     describe('clearUSERS()', function () {
         it('should clear the USERS array', function () {
@@ -107,7 +110,7 @@ describe('hooks', function () {
     });
 
     describe('registerNewUser()', function () {
-        it('should take in a username and password and register a new user', function () {
+        it('should take in a username and password and register a new user', function (done) {
 
             let username = "testUsername";
             let password = "testPassword";
@@ -118,10 +121,7 @@ describe('hooks', function () {
             serverFunctions.UserModel.find({ Username : username, Password : password}).exec(function (err, result) {
                 assert.exists(result);
 
-                serverFunctions.UserModel.deleteOne({
-                    Username: username,
-                    Password: password
-                });
+                done();
             });
         });
     });
@@ -149,12 +149,12 @@ describe('hooks', function () {
 
 
 
-    describe('updatePassword()', function (done) {
-        it('should take in a username, password and new password, then update the database', function () {
+    describe('updatePassword()', function () {
+        it('should take in a username, password and new password, then update the database', function (done) {
             //assert user exists
             serverFunctions.UserModel.find({ Username : "u", Password : "p"}).exec(function (err, result){
-                // assert.equal(result.length, 1);
-                assert.exists(result);
+                assert.equal(result[0].Username, "u");
+                assert.equal(result[0].Password, "p");
             });
 
             //do update password
@@ -162,9 +162,8 @@ describe('hooks', function () {
 
                 //then assert password updated
                 serverFunctions.UserModel.find({ Username : "u", Password : "newPassword"}).exec(function (err, result){
-
-                    // assert.equal(result.length, 1);
-                    assert.exists(result);
+                    assert.equal(result[0].Username, "u");
+                    assert.equal(result[0].Password, "newPassword");
 
                     //then reset db entry
                     serverFunctions.UserModel.updateOne(
@@ -185,46 +184,44 @@ describe('hooks', function () {
     });
 
 
-    describe('updateUsername()', function (done) {
-        it('should take in a username, password, and a new username, then update the database', function () {
-            serverFunctions.UserModel.find({ Username : "u"}).exec(function (err, result){
-                // console.log("LOOK HERE DUMMY " + user.length);
-                // console.log("LOOK HERE DUMMY " + user);
-                assert.exists(result);
+    describe('updateUsername()', function () {
+        it('should take in a username, password, and a new username, then update the database', function (done) {
+            serverFunctions.UserModel.find({ Username : "u"}).exec(function (err, result) {
+                assert.equal(result[0].Username, "u");
+                assert.equal(result[0].Password, "p");
+            });
 
-                //do update username
-                serverFunctions.updateUsername("u", "p", "newUsername").then(()=>{
+            //do update username
+            serverFunctions.updateUsername("u", "p", "newUsername").then(()=>{
 
-                    //then assert username updated
-                    serverFunctions.UserModel.find({ Username : "newUsername"}).exec(function (err, result){
+                //then assert username updated
+                serverFunctions.UserModel.find({ Username : "newUsername"}).exec(function (err, result){
+                    assert.equal(result[0].Username, "newUsername");
+                    assert.equal(result[0].Password, "p");
 
-
-                        // assert.equal(user.length, 1);
-                        assert.exists(result);
-
-                        //then reset db entry
-                        serverFunctions.UserModel.updateOne(
-                            {
-                                Username : "newUsername"
-                            },
-                            {
-                                Username : "u"
-                            }).then(()=>{
-                            done();
-                        });
+                    //then reset db entry
+                    serverFunctions.UserModel.updateOne(
+                        {
+                            Username : "newUsername"
+                        },
+                        {
+                            Username : "u"
+                        }).then(()=>{
+                        done();
                     });
                 });
             });
+
         });
     });
 
 
-    describe('deleteUser()', function (done) {
-        it('should take in a username and password, then update the database', function () {
+    describe('deleteUser()', function () {
+        it('should take in a username and password, then update the database', function (done) {
             //assert user exists
             serverFunctions.UserModel.find({ Username : "u", Password : "p"}).exec(function (err, result){
-                // assert.equal(result.length, 1);
-                assert.exists(result);
+                assert.equal(result[0].Username, "u");
+                assert.equal(result[0].Password, "p");
             });
 
             //do delete
@@ -232,8 +229,7 @@ describe('hooks', function () {
 
                 //assert user deleted
                 serverFunctions.UserModel.find({ Username : "u", Password : "p"}).exec(function (err, result){
-                    // assert.equal(result.length, 0);
-                    assert.exists(result);
+                    assert.equal(result[0], undefined);
 
                     //then reset db entry
                     serverFunctions.UserModel.updateOne(
@@ -244,6 +240,10 @@ describe('hooks', function () {
                         {
                             Username: "u",
                             Password: "p"
+                        },
+                        {
+                            new : true,
+                            upsert : true
                         }).then(()=>{
                         done();
                     });
@@ -338,12 +338,13 @@ describe('hooks', function () {
         })
     });
 
-    // describe('ValidateCredentials ', function () {//this is failing, investigate it
-    //     it('should take in an invalid username and a password and return false', function () {
-    //         let actual = serverFunctions.validateCredentials("", "");
-    //         assert.equal(actual, false);
-    //     })
-    // });
+    describe('ValidateCredentials(), 2', function () {//this is failing, investigate it
+        it('should take in an invalid username and a password and return false', function () {
+            USERS.push(user0);
+            let actual = serverFunctions.validateCredentials("", "");
+            assert.equal(actual, false);
+        })
+    });
 
 
 });

@@ -34,6 +34,10 @@ class ServerFunctions{
 
     }
 
+    async closeConnection(){
+        await DB.closeConnection();
+    }
+
 
     castVoteInSearch(searchCode, username, eateryOptionID){
         //get active search by searchcode
@@ -170,6 +174,10 @@ class ServerFunctions{
     }
 
     validateCredentials(username, password){
+        if(username === "" || password === ""){
+            return false;
+        }
+
         if(username && password){
             if(USERS.find(function (user) {//if credentials match existing user
                 return (user.Username === username && user.Password === password);
