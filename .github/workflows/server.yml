@@ -5,10 +5,14 @@
 name: Node.js CI
 
 on:
+  workflow_dispatch:
+  
   push:
     branches: [ master ] 
     
-    workflow_dispatch:
+defaults:
+  run:
+    working-directory: server
 
 jobs:
   test:
