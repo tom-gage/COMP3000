@@ -30,6 +30,9 @@ jobs:
       run: |
         cd ..
         ls
+        
+        
+        
   Android:
 
     runs-on: macos-latest
@@ -53,9 +56,15 @@ jobs:
         echo VIEWING COMP3000Project.Android
         cd COMP3000Project.Android
         ls
-
         
+        dotnet clean
+        dotnet build
+
         msbuild COMP3000Project.Android.csproj /verbosity:normal /t:Rebuild /p:Configuration=Debug
+        
+        
+        
+        
   iOS:
 
     runs-on: macos-latest
