@@ -40,9 +40,13 @@ jobs:
       
     - name: Android
       run: |
+        ls
         cd COMP3000Project
+        ls
         nuget restore
+        ls
         cd COMP3000Project.Android
+        ls
         msbuild COMP3000Project.Android.csproj /verbosity:normal /t:Rebuild /p:Configuration=Debug
   iOS:
 
