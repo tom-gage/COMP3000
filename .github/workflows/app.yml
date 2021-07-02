@@ -42,11 +42,15 @@ jobs:
       run: |
         ls
         cd COMP3000Project
-        ls
+        echo LS COMP3000Project
+        
+        echo nuget restoring...
         nuget restore
-        ls
+        
         cd COMP3000Project.Android
         ls
+        echo LS COMP3000Project.Android
+        
         msbuild COMP3000Project.Android.csproj /verbosity:normal /t:Rebuild /p:Configuration=Debug
   iOS:
 
