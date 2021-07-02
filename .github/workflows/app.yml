@@ -1,4 +1,4 @@
-name: .NET
+name: CI on Push
 
 on:
   workflow_dispatch:
@@ -6,33 +6,54 @@ on:
   push:
     branches: [ main ]
   
-  
-
 defaults:
   run:
     working-directory: COMP3000Project
-
-jobs:
-  build:
-
-    runs-on: windows-latest
-
-    steps:    
-    - uses: actions/checkout@v2
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 5.0.x
-    - name: Restore dependencies
-      run: dotnet restore
     
-    - name: Show what's in the directory
+jobs:
+  Practice:
+
+    runs-on: macos-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Run a one-line script
+      run: echo Hello, world!
+    - name: Run a multi-line script
+      run: |
+        echo Add other actions to build,
+        echo test, and deploy your project.
+    - name: Show what in there
       run: |
         ls
-        cd "C:\Users\runneradmin\AppData\Local\Microsoft\dotnet\sdk\5.0.301\Xamarin\Android\Xamarin.Android.CSharp.targets"
+    - name: Show what it's inside
+      run: |
+        cd ..
         ls
-        
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+  Android:
+
+    runs-on: macos-latest
+    
+    steps:
+
+    - uses: actions/checkout@v1
+      
+    - name: Android
+      run: |
+        cd COMP3000Project
+        nuget restore
+        cd COMP3000Project.Android
+        msbuild COMP3000Project.Android.csproj /verbosity:normal /t:Rebuild /p:Configuration=Debug
+  iOS:
+
+    runs-on: macos-latest
+    
+    steps:
+
+    - uses: actions/checkout@v1
+      
+    - name: iOS
+      run: |
+        cd COMP3000Project
+        nuget restore
+        msbuild COMP3000Project.iOS/Blank.iOS.csproj /verbosity:normal /t:Rebuild /p:Platform=iPhoneSimulator /p:Configuration=Debug
