@@ -29,5 +29,9 @@ jobs:
     - name: Install dependencies
       run: nuget restore COMP3000Project.sln
 
+    - name: Show what's in the directory
+      run: |
+        ls
+
     - name: Build
-      run: msbuild COMP3000Project.csproj /t:PackageForAndroid /p:Configuration=Debug
+      run: msbuild COMP3000Project.Android.csproj /t:PackageForAndroid /p:Configuration=Debug
