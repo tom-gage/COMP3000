@@ -21,10 +21,10 @@ jobs:
       run: |
         $VM_ASSETS/select-xamarin-sdk-v2.sh --mono=6.10 --android=10.2
 
-    - name: Setup .NET Core SDK 5.0.x
+    - name: Setup .NET Core SDK 5.0.203
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '5.0.x'
+        dotnet-version: '5.0.203'
 
     - name: Install dependencies
       run: nuget restore COMP3000Project.sln
