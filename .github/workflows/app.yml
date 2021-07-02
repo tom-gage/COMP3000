@@ -40,16 +40,20 @@ jobs:
       
     - name: Android
       run: |
+        #ls
+        #cd COMP3000Project
+        #echo LS COMP3000Project
+        
+        #echo nuget restoring...
+        #nuget restore
+        
+        echo VIEWING root
         ls
-        cd COMP3000Project
-        echo LS COMP3000Project
         
-        echo nuget restoring...
-        nuget restore
-        
+        echo VIEWING COMP3000Project.Android
         cd COMP3000Project.Android
         ls
-        echo LS COMP3000Project.Android
+
         
         msbuild COMP3000Project.Android.csproj /verbosity:normal /t:Rebuild /p:Configuration=Debug
   iOS:
