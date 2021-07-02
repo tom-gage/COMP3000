@@ -44,4 +44,4 @@ jobs:
       run: |
         cd COMP3000Project
         nuget restore
-        msbuild COMP3000Project.iOS/Blank.iOS.csproj /verbosity:normal /t:Rebuild /p:Platform=iPhoneSimulator /p:Configuration=Debug
+        msbuild COMP3000Project.iOS/COMP3000Project.iOS.csproj /verbosity:normal /t:Rebuild /p:Platform=iPhoneSimulator /p:Configuration=Debug
