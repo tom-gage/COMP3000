@@ -12,6 +12,8 @@ C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\bin\iPhon
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\bin\iPhone\Debug\Xamarin.Forms.Core.dll
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\bin\iPhone\Debug\Xamarin.Forms.Core.pdb
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\bin\iPhone\Debug\Xamarin.Forms.Platform.dll
+C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\bin\iPhone\Debug\Xamarin.Forms.Platform.iOS.dll
+C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\bin\iPhone\Debug\Xamarin.Forms.Platform.iOS.pdb
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\bin\iPhone\Debug\Xamarin.Forms.Xaml.dll
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\bin\iPhone\Debug\Xamarin.Forms.Xaml.pdb
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\bin\iPhone\Debug\ar\Xamarin.Forms.Platform.iOS.resources.dll
@@ -49,12 +51,10 @@ C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\bin\iPhon
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\bin\iPhone\Debug\zh-Hans\Xamarin.Forms.Platform.iOS.resources.dll
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\bin\iPhone\Debug\zh-Hant\Xamarin.Forms.Platform.iOS.resources.dll
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\bin\iPhone\Debug\COMP3000Project.dll
-C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\bin\iPhone\Debug\Xamarin.Forms.Platform.iOS.dll
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\bin\iPhone\Debug\COMP3000Project.pdb
-C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\bin\iPhone\Debug\Xamarin.Forms.Platform.iOS.pdb
-C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\obj\iPhone\Debug\ibtool\_BundleResourceWithLogicalName.items
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\obj\iPhone\Debug\actool\_PartialAppManifest.items
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\obj\iPhone\Debug\actool\_BundleResourceWithLogicalName.items
+C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\obj\iPhone\Debug\ibtool\_BundleResourceWithLogicalName.items
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\obj\iPhone\Debug\coremlc\_PartialAppManifest.items
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\obj\iPhone\Debug\coremlc\_BundleResourceWithLogicalName.items
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\obj\iPhone\Debug\optimized\
