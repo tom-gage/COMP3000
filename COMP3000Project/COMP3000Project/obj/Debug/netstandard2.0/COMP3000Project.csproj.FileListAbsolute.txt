@@ -60,3 +60,4 @@ C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project\obj\Debug\net
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project\obj\Debug\netstandard2.0\COMP3000Project.dll
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project\obj\Debug\netstandard2.0\ref\COMP3000Project.dll
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project\obj\Debug\netstandard2.0\COMP3000Project.pdb
+C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project\obj\Debug\netstandard2.0\COMP3000Project.csprojAssemblyReference.cache
