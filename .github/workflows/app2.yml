@@ -1,0 +1,39 @@
+name: .NET
+
+on:
+  workflow_dispatch:
+  
+  push:
+    branches: [ main ]
+  
+  
+
+defaults:
+  run:
+    working-directory: COMP3000Project
+
+jobs:
+  build:
+    
+    runs-on: windows-latest
+        steps:
+        - uses: actions/checkout@v1
+        - uses: nuget/setup-nuget@v1
+        - uses: microsoft/setup-msbuild@v1.0.0  
+        - name: UnitTests.Droid
+          run: |
+            nuget restore
+            cd COMP3000Project.Tests
+            msbuild COMP3000Project.Tests.csproj /verbosity:normal /t:Rebuild /p:Configuration=Release
+
+        - name: Setup VSTest.exe
+          uses: Malcolmnixon/Setup-VSTest@v3
+
+        - name: VSTest
+          run: |
+            cd COMP3000Project.Tests
+            cd bin
+            cd Release
+            cd netcoreapp3.0
+            ls
+            vstest.console MobileAccess.UnitTests.Droid.dll
