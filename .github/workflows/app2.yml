@@ -30,4 +30,4 @@ jobs:
       run: nuget restore COMP3000Project.sln
 
     - name: Build
-      run: msbuild /COMP3000Project.csproj /t:PackageForAndroid /p:Configuration=Debug
+      run: msbuild COMP3000Project.csproj /t:PackageForAndroid /p:Configuration=Debug
