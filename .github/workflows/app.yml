@@ -17,7 +17,7 @@ jobs:
 
     runs-on: windows-latest
 
-    steps:
+    steps:    
     - uses: actions/checkout@v2
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
@@ -25,6 +25,13 @@ jobs:
         dotnet-version: 5.0.x
     - name: Restore dependencies
       run: dotnet restore
+    
+    - name: Show what's in the directory
+      run: |
+        ls
+        cd "C:\Users\runneradmin\AppData\Local\Microsoft\dotnet\sdk\5.0.301\Xamarin\Android\Xamarin.Android.CSharp.targets"
+        ls
+        
     - name: Build
       run: dotnet build --no-restore
     - name: Test
