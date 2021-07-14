@@ -41,6 +41,8 @@ wss.on('connection', function connection(ws) {
 
         let message = JSON.parse(data);
 
+        console.log('message type: ' + message.type);
+
         // message.Items = [0,0,0,0,0,0,0,0,0]
 
         let username = message.Items[0];
@@ -54,6 +56,10 @@ wss.on('connection', function connection(ws) {
 
         let searchCode = message.Items[2];
         let eateryOptionID = message.Items[3];
+
+        let locationName = message.Items[2];
+        let time = message.Items[3];
+        let eateryTypes = message.Items[4];
 
         switch(message.type) {
             case "testMessage":
@@ -129,7 +135,7 @@ wss.on('connection', function connection(ws) {
 
                 if(serverFunctions.validateCredentials(username, password)){//credentials are valid
                     //do create new search
-                    serverFunctions.createNewActiveSearch(username, latitude, longitude);
+                    serverFunctions.createNewActiveSearch(username, locationName, time, eateryTypes);
                 }
                 break
 

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="COMP3000Project.Views.SearchParameters.SearchParametersPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Welcome to the search parameters page!"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+
+            <Entry Placeholder="Location"
+                   Text="{Binding SelectedLocation}"
+                   x:Name="entSearchCode"/>
+
+            <TimePicker Time="{Binding SelectedTime}" />
+
+            <CollectionView x:Name="collectionView"
+                ItemsSource="{Binding EateryTypeOptions}"
+                SelectionMode="Single"
+                SelectedItems="{Binding SelectedEateryTypeOptions}"
+                SelectedItem="{Binding SelectedEateryTypeOptions}">
+            </CollectionView>
+
+            <Button Text="Begin Search!"
+                    Command="{Binding GoToStartSearch}"
+                    />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

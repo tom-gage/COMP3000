@@ -4,6 +4,7 @@ using COMP3000Project.ViewModel;
 using COMP3000Project.Views.Settings;
 using COMP3000Project.WS;
 using COMP3000Project.Views.Search;
+using COMP3000Project.Views.SearchParameters;
 
 using System;
 using System.Collections.Generic;
@@ -81,8 +82,10 @@ namespace COMP3000Project.Views.MainMenu
 
         async Task<object> GoToExecuteStartSearch()
         {
-            bool startingNewSearch = true;
-            SearchPage nextPage = new SearchPage(startingNewSearch, "");
+            //bool startingNewSearch = true;
+            //SearchPage nextPage = new SearchPage(startingNewSearch, "");
+            SearchParametersPage nextPage = new SearchParametersPage();
+
             await Navigation.PushAsync(nextPage, true);
             return null;
         }
@@ -92,7 +95,7 @@ namespace COMP3000Project.Views.MainMenu
             if (ValidateSearchCode(SearchCode))
             {
                 bool startingNewSearch = false;
-                SearchPage nextPage = new SearchPage(startingNewSearch, SearchCode);
+                SearchPage nextPage = new SearchPage(SearchCode);
                 await Navigation.PushAsync(nextPage, true);
                 return null;
             }

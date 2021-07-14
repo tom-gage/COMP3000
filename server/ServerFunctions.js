@@ -82,51 +82,77 @@ class ServerFunctions{
 
     }
 
-    async createNewActiveSearch(username, latitude, longitude){
+    async createNewActiveSearch(username, locationName, time, eateryTypes){
         //create an active search object, populated with a user and eatery options array
         console.log("[SEARCH] creating new search");
 
-        console.log("making API call...");
-        console.log(latitude);
-        console.log(longitude);
+        console.log("making API calls with following data: ");
+
+        console.log(locationName);
+        console.log(time);
+        console.log(eateryTypes);
+
+        let selectedEateryType = eateryTypes[0];
+
         let eateryOptionsArray = [];
 
-        client.placesNearby({params:{
-                location : [latitude, longitude],
-                // location : [50.381773,-4.133786],
-                radius : 1500,
-                type : "restaurant",
+        client.geocode({params : {
+                address : locationName,
                 key : "AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"
             },
             timeout:1000
+        }).then((geoCodeResponse) => {
+            console.log('GEOCODE RESPONSE IS: ');
+            console.log(geoCodeResponse.data.results);
 
-        }).then((eateryData) => {
-            console.log("got response from api! data is as follows:");
-            console.log("- data here -");
-            // console.log(eateryData);
+            /////////////////
+            let latitude = geoCodeResponse.data.results[0].geometry.location.lat;
+            let longitude = geoCodeResponse.data.results[0].geometry.location.lng;
 
-            eateryOptionsArray = this.createEateryOptionsArray(eateryData);
+            client.placesNearby({params:{
+                    location : [latitude, longitude],
+                    // location : [50.381773,-4.133786],
+                    radius : 1500,
+                    type : selectedEateryType,
+                    key : "AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"
+                },
+                timeout:1000
 
-            console.log("got eateryOptionsArray after construction... is as follows: ");
-            console.log("type: " + typeof (eateryOptionsArray) + " length: " + eateryOptionsArray.length);
+            }).then((eateryData) => {
+                console.log("got response from api! data is as follows:");
+                console.log("- data here -");
+                // console.log(eateryData);
+
+                eateryOptionsArray = this.createEateryOptionsArray(eateryData);
+
+                console.log("got eateryOptionsArray after construction... is as follows: ");
+                console.log("type: " + typeof (eateryOptionsArray) + " length: " + eateryOptionsArray.length);
 
 
-            let newActiveSearch = new ActiveSearch(this.getUser(username), eateryOptionsArray);
+                let newActiveSearch = new ActiveSearch(this.getUser(username), eateryOptionsArray);
 
-            //add the active search object to ACTIVE_SEARCHES
-            ACTIVE_SEARCHES.push(newActiveSearch);
+                //add the active search object to ACTIVE_SEARCHES
+                ACTIVE_SEARCHES.push(newActiveSearch);
 
-            console.log("New ActiveSearch's search code is: " + newActiveSearch.ID);
+                console.log("New ActiveSearch's search code is: " + newActiveSearch.ID);
 
-            //then pass a success message back to the user, containing the ActiveSearch object
-            let MSG = new Message(1, "newActiveSearchRequestGranted", "", [newActiveSearch.ID, newActiveSearch.EateryOptions]);
-            this.sendToUser(username, MSG);
+                //then pass a success message back to the user, containing the ActiveSearch object
+                let MSG = new Message(1, "newActiveSearchRequestGranted", "", [newActiveSearch.ID, newActiveSearch.EateryOptions]);
+                this.sendToUser(username, MSG);
 
-        }).catch((error) => {
-            console.log('[ERROR]');
-            console.log(error);
+            }).catch((error) => {
+                console.log('[ERROR]');
+                console.log(error);
 
+            });
+            ////////////////////
+
+        }).catch(function (err){
+            console.log('GEOCODE REQUEST FAILED');
+            console.log(err);
         });
+
+
     }
 
     createEateryOptionsArray(eateryData){

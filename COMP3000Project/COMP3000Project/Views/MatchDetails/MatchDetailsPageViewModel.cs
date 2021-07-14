@@ -95,9 +95,9 @@ namespace COMP3000Project.Views.MatchDetails
         //FUNCTIONS
         async Task<object> GoToExecuteStartSearch()
         {
-            bool startingNewSearch = true;
-            SearchPage nextPage = new SearchPage(startingNewSearch, "");
-            await Navigation.PushAsync(nextPage, true);
+            //bool startingNewSearch = true;
+            //SearchPage nextPage = new SearchPage(startingNewSearch, "");
+            //await Navigation.PushAsync(nextPage, true);
             return null;
         }
 
