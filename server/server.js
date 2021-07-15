@@ -86,8 +86,8 @@ wss.on('connection', function connection(ws) {
                     serverFunctions.grantLoginRequest(ws, username);
 
                     //test stuff, makes it so there is a search that can be joined
-                    serverFunctions.grantLoginRequest(ws, "testUser");
-                    serverFunctions.createNewActiveSearch("testUser", 37.421998333333335, -122.08400000000002);
+                    // serverFunctions.grantLoginRequest(ws, "testUser");
+                    // serverFunctions.createNewActiveSearch("testUser", 37.421998333333335, -122.08400000000002);
                 }
                 break
 

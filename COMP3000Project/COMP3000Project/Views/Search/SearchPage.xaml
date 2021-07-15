@@ -19,8 +19,43 @@
                 LoopCards="True"
                 VerticalOptions="FillAndExpand">
                 <swipeCardView:SwipeCardView.ItemTemplate>
+
                     <DataTemplate>
-                        <Image Source="{Binding EateryImage}"/>
+                        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                            <Frame CornerRadius="30" Padding="5" Margin="10" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                <AbsoluteLayout>
+                                    <Image Source="{Binding EateryImage}" Aspect="AspectFit"  AbsoluteLayout.LayoutBounds=".5,0.5,1,1" AbsoluteLayout.LayoutFlags="All" />
+                                    <Frame x:Name="LikeFrame"  BorderColor="#63DD99" BackgroundColor="Transparent" Padding="0" CornerRadius="20" AbsoluteLayout.LayoutBounds="0.1,.1, 150, 50"
+                                         AbsoluteLayout.LayoutFlags="PositionProportional"  Rotation="-20" Opacity="0">
+                                        <Label x:Name="LikeText" Text="LIKE" TextColor="#63DD99" BackgroundColor="Transparent" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" VerticalOptions="CenterAndExpand" FontSize="32"></Label>
+                                    </Frame>
+                                    <Frame x:Name="NopeFrame" BorderColor="#FF6A4F" BackgroundColor="Transparent" Padding="0" CornerRadius="20" AbsoluteLayout.LayoutBounds="0.9,.1, 150, 50"
+                                       AbsoluteLayout.LayoutFlags="PositionProportional"  Rotation="20" Opacity="0">
+                                        <Label Text="NOPE" TextColor="#FF6A4F" BackgroundColor="Transparent" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" VerticalOptions="CenterAndExpand" FontSize="32"></Label>
+                                    </Frame>
+                                    
+                                    
+                                    
+                                    <Label FontSize="Large" FontAttributes="Bold" TextColor="Black" AbsoluteLayout.LayoutBounds="0.5, 0.97, 365, 115" AbsoluteLayout.LayoutFlags="PositionProportional" BackgroundColor="White">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding Title}"></Span>
+                                                <Span Text="&#10;"></Span>
+                                                <Span Text="{Binding Rating}"></Span>
+                                                <Span Text="&#10;"></Span>
+                                                <Span Text="{Binding OpeningTime}" TextColor="Green"></Span>
+                                            </FormattedString>
+                                            
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                    
+                                    
+                                </AbsoluteLayout>
+                            </Frame>
+                        </StackLayout>
+                        
+                        <!--<Image Source="{Binding EateryImage}"/>-->
                         <!--<Label Text="{Binding Title}" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="Gray" />-->
                     </DataTemplate>
                 </swipeCardView:SwipeCardView.ItemTemplate>

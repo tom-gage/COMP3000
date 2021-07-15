@@ -141,6 +141,43 @@ namespace COMP3000Project.TestObjects
             }
         }
 
+        string _openingTime;
+        public string OpeningTime
+        {
+            get
+            {
+                return _openingTime;
+            }
+            set
+            {
+                if (_openingTime == value)
+                {
+                    return;
+                }
+                _openingTime = value;
+                HandlePropertyChanged();
+            }
+        }
+
+        string _closingTime;
+        public string ClosingTime
+        {
+            get
+            {
+                return _closingTime;
+            }
+            set
+            {
+                if (_closingTime == value)
+                {
+                    return;
+                }
+                _closingTime = value;
+                HandlePropertyChanged();
+            }
+        }
+
+
         public EateryOption(string ID, string title, string description, float rating, string photoReference, string[] Votes)
         {
             this.ID = ID;

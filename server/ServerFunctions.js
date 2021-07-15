@@ -14,6 +14,8 @@ let DB = require('./DB');
 
 // let connectionsMap = new Map();
 
+let APIKey = "AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw";
+
 class ServerFunctions{
 
     connectionsMap = new Map();
@@ -42,26 +44,28 @@ class ServerFunctions{
     castVoteInSearch(searchCode, username, eateryOptionID){
         //get active search by searchcode
         let search = this.getActiveSearch(searchCode);
+
         //cast vote
         if(search){
             search.castVote(username, eateryOptionID);
 
             //if users have matched, send "you matched!" feedback
-            // let match = search.checkForMatch();
-            //
-            // if(match){
-            //
-            //     let MSG = new Message(1, "matched!", "", [match]);
-            //     this.sendToUser(username, MSG);
-            // }
-            //
-            // search.showVotes();
+            let match = search.checkForMatch();
+
+            if(match){
+
+                let MSG = new Message(1, "matched!", "", [match]);
+                this.sendToUser(username, MSG);
+            }
+
+            search.showVotes();
 
 
-            let x = search.EateryOptions[0];
-
-            let MSG = new Message(1, "gotMatch", "", [x]);
-            this.sendToUser(username, MSG);
+            //TEST STUFF
+            // let x = search.EateryOptions[0];
+            //
+            // let MSG = new Message(1, "gotMatch", "", [x]);
+            // this.sendToUser(username, MSG);
         }
 
 
@@ -98,10 +102,12 @@ class ServerFunctions{
 
         client.geocode({params : {
                 address : locationName,
-                key : "AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"
+                key : APIKey
             },
             timeout:1000
-        }).then((geoCodeResponse) => {
+
+
+        }).then((geoCodeResponse) => {//first, do geocode request for a location string to get coods
             console.log('GEOCODE RESPONSE IS: ');
             console.log(geoCodeResponse.data.results);
 
@@ -109,36 +115,90 @@ class ServerFunctions{
             let latitude = geoCodeResponse.data.results[0].geometry.location.lat;
             let longitude = geoCodeResponse.data.results[0].geometry.location.lng;
 
-            client.placesNearby({params:{
+            client.placesNearby({params:{//then, do place search request for places nearby the coods to get list of nearby eateries
                     location : [latitude, longitude],
                     // location : [50.381773,-4.133786],
-                    radius : 1500,
+                    radius : 2000,
                     type : selectedEateryType,
-                    key : "AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"
+                    opennow : true,
+                    key : APIKey
                 },
                 timeout:1000
 
-            }).then((eateryData) => {
-                console.log("got response from api! data is as follows:");
-                console.log("- data here -");
+
+            }).then((eateryData) => {//then, for each result, do places details search
+
+                console.log("PLACES SEARCH RESPONSE IS: ");
+                console.log("- response here -");
+                console.log(eateryData.data.results[0]);
                 // console.log(eateryData);
 
-                eateryOptionsArray = this.createEateryOptionsArray(eateryData);
+                //do place details request for each result
 
-                console.log("got eateryOptionsArray after construction... is as follows: ");
-                console.log("type: " + typeof (eateryOptionsArray) + " length: " + eateryOptionsArray.length);
+                let counter = 0;
+
+                for(let i = 0; i < eateryData.data.results.length; i++){
+
+                    client.placeDetails({ params : {
+                            place_id : eateryData.data.results[i].place_id,
+                            key : APIKey
+                        },
+                    timeout : 1000
+                    }).then((placeDetailsResponse) => {
+                        console.log("PLACE DETAILS SEARCH RESPONSE IS: ");
+                        console.log("- response here -");
+
+                        let currentDay = new Date().getDay();
+
+                        // console.log("appending following opening/ closing times to eatery data results...");
+                        // console.log(eateryData.data.results[i].openingTimeForToday);
+                        // console.log(eateryData.data.results[i].closingTimeForToday);
+
+                        eateryData.data.results[i].openingTimeForToday = placeDetailsResponse.data.result.opening_hours.periods[currentDay].open.time;
+                        eateryData.data.results[i].closingTimeForToday = placeDetailsResponse.data.result.opening_hours.periods[currentDay].close.time;
 
 
-                let newActiveSearch = new ActiveSearch(this.getUser(username), eateryOptionsArray);
 
-                //add the active search object to ACTIVE_SEARCHES
-                ACTIVE_SEARCHES.push(newActiveSearch);
+                        counter++;
 
-                console.log("New ActiveSearch's search code is: " + newActiveSearch.ID);
+                        console.log(counter + " VS " + eateryData.data.results.length);
 
-                //then pass a success message back to the user, containing the ActiveSearch object
-                let MSG = new Message(1, "newActiveSearchRequestGranted", "", [newActiveSearch.ID, newActiveSearch.EateryOptions]);
-                this.sendToUser(username, MSG);
+                        if(counter >= eateryData.data.results.length){
+                            console.log("EATERY DATA IS AS FOLLOWS...");
+                            console.log(eateryData.data);
+
+
+                            eateryOptionsArray = this.createEateryOptionsArray(eateryData);
+
+                            console.log("EATERY OPTION ARRAY CONSTRUCTED AND READY FOR TRANSMISSION...");
+                            console.log("Details, Type: " + typeof (eateryOptionsArray) + ", Length: " + eateryOptionsArray.length);
+
+
+                            let newActiveSearch = new ActiveSearch(this.getUser(username), eateryOptionsArray);
+
+                            //add the active search object to ACTIVE_SEARCHES
+                            ACTIVE_SEARCHES.push(newActiveSearch);
+
+                            // console.log("New ActiveSearch's search code is: " + newActiveSearch.ID);
+
+                            //then pass a success message back to the user, containing the ActiveSearch object
+                            let MSG = new Message(1, "newActiveSearchRequestGranted", "", [newActiveSearch.ID, newActiveSearch.EateryOptions]);
+                            this.sendToUser(username, MSG);
+                        }
+
+                    }).catch((err) => {
+                        console.log("ERROR in place details search...");
+                        console.log(err);
+
+                        counter++;
+
+                        eateryData.data.results[i].openingTimeForToday = null;
+                        eateryData.data.results[i].closingTimeForToday = null;
+                    })
+
+                }
+
+
 
             }).catch((error) => {
                 console.log('[ERROR]');
@@ -168,31 +228,41 @@ class ServerFunctions{
 
             for (let i = 0; i < eateryData.data.results.length; i++) {
 
+                let ID;
                 let name = eateryData.data.results[i].name;
                 let description = "description would be here, if there was one";
                 let rating = eateryData.data.results[i].rating;
                 let photoRef;
-                let ID;
+                let OpeningTime = eateryData.data.results[i].openingTimeForToday;
+                let ClosingTime = eateryData.data.results[i].closingTimeForToday;
+
+                console.log("opening/ closing times are...");
+                console.log(eateryData.data.results[i].openingTimeForToday);
+                console.log(eateryData.data.results[i].closingTimeForToday);
 
                 if(eateryData.data.results[i].photos){
                     ID = eateryData.data.results[i].photos[0].photo_reference;
                     photoRef = eateryData.data.results[i].photos[0].photo_reference;
-                } else {
-                    photoRef = "";
+
+                    let eatery = new EateryOption(
+                        ID,
+                        name,
+                        description,
+                        rating,
+                        photoRef,
+                        OpeningTime,
+                        ClosingTime
+
+                    );
+
+                    EateriesArray.push(eatery);
                 }
 
-                let eatery = new EateryOption(
-                    ID,
-                    name,
-                    description,
-                    rating,
-                    photoRef
-                );
 
-                EateriesArray.push(eatery);
             }
-        } catch {
+        } catch(err) {
             console.log('[ERROR] could not parse places data');
+            console.log(err);
             return [];
         }
 
