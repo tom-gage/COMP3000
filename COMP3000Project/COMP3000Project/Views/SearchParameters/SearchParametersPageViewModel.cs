@@ -46,15 +46,15 @@ namespace COMP3000Project.Views.SearchParameters
             }
         }
 
-        private object _selectedEateryOption;
-        public object SelectedEateryOption
+        private object _selectedEateryTypeOption;
+        public object SelectedEateryTypeOption
         {
-            get { return _selectedEateryOption; }
+            get { return _selectedEateryTypeOption; }
             set
             {
-                if (_selectedEateryOption != value)
+                if (_selectedEateryTypeOption != value)
                 {
-                    SetProperty(ref _selectedEateryOption, value);//informs view of change
+                    SetProperty(ref _selectedEateryTypeOption, value);//informs view of change
                 }
             }
         }
@@ -147,12 +147,14 @@ namespace COMP3000Project.Views.SearchParameters
             Console.WriteLine("BEGIN TEST:");
             Console.WriteLine(SelectedLocation);
             Console.WriteLine(SelectedTime);
-            Console.WriteLine(JsonConvert.SerializeObject(SelectedEateryOption));
-            Console.WriteLine(SelectedEateryOption);
+            Console.WriteLine(JsonConvert.SerializeObject(SelectedEateryTypeOption));
+            Console.WriteLine(SelectedEateryTypeOption);
 
-            //SearchPage nextPage = new SearchPage(SelectedLocation, SelectedTime, eateryTypeOptionsArray.ToArray());
+            string[] strArr = { SelectedEateryTypeOption.ToString() };
 
-            //await Navigation.PushAsync(nextPage, true);
+            SearchPage nextPage = new SearchPage(SelectedLocation, SelectedTime, strArr);
+
+            await Navigation.PushAsync(nextPage, true);
 
             return null;
         }

@@ -17,8 +17,9 @@
             <CollectionView x:Name="collectionView"
                 ItemsSource="{Binding EateryTypeOptions}"
                 SelectionMode="Single"
-                SelectedItems="{Binding SelectedEateryTypeOptions}"
-                SelectedItem="{Binding SelectedEateryTypeOptions}">
+                SelectedItem="{Binding SelectedEateryTypeOption}">
+                <!--SelectedItems="{Binding SelectedEateryTypeOptions}"-->
+                
             </CollectionView>
 
             <Button Text="Begin Search!"
