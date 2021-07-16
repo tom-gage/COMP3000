@@ -177,6 +177,60 @@ namespace COMP3000Project.TestObjects
             }
         }
 
+        string _timeToClosingTime;
+        public string TimeToClosingTime
+        {
+            get
+            {
+                if(_timeToClosingTime == "0")
+                {
+                    return "Open Now!";
+                }
+
+                return _timeToClosingTime + " hours to closing time (from stated arrival time).";
+            }
+            set
+            {
+                if (_timeToClosingTime == value)
+                {
+                    return;
+                }
+                _timeToClosingTime = value;
+                HandlePropertyChanged();
+            }
+        }
+
+        string _timeToCloseColourIndicator;
+        public string TimeToCloseColourIndicator
+        {
+            get
+            {
+                if (TimeToClosingTime == "0 hours to closing time (from stated arrival time).")
+                {
+                    return "Green";
+                }
+                else if (TimeToClosingTime == "1 hours to closing time (from stated arrival time).")
+                {
+                    return "Red";
+                }
+                else if (TimeToClosingTime == "2 hours to closing time (from stated arrival time).")
+                {
+                    return "Orange";
+                }
+
+
+                return "Green";
+            }
+            set
+            {
+                if (_timeToCloseColourIndicator == value)
+                {
+                    return;
+                }
+                _timeToCloseColourIndicator = value;
+                HandlePropertyChanged();
+            }
+        }
 
         public EateryOption(string ID, string title, string description, float rating, string photoReference, string[] Votes)
         {

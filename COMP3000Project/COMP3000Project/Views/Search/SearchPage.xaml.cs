@@ -13,7 +13,7 @@ namespace COMP3000Project.Views.Search
     public partial class SearchPage : ContentPage
     {
         SearchPageViewModel viewModel;
-        public SearchPage(string location, TimeSpan time, string[] eateryTypes)//start new search
+        public SearchPage(string location, string time, string[] eateryTypes)//start new search
         {
             InitializeComponent();
 

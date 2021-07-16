@@ -43,7 +43,7 @@
                                                 <Span Text="&#10;"></Span>
                                                 <Span Text="{Binding Rating}"></Span>
                                                 <Span Text="&#10;"></Span>
-                                                <Span Text="{Binding OpeningTime}" TextColor="Green"></Span>
+                                                <Span Text="{Binding TimeToClosingTime}" TextColor="{Binding TimeToCloseColourIndicator}"></Span>
                                             </FormattedString>
                                             
                                         </Label.FormattedText>

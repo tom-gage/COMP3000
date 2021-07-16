@@ -7,8 +7,9 @@ class EateryOption {
     Votes = [];
     OpeningTime;
     ClosingTime;
+    TimeToClosingTime;
 
-    constructor(ID, title, description, rating, photoReference, openingTime, closingTime) {
+    constructor(ID, title, description, rating, photoReference, openingTime, closingTime, timeToClosingTime) {
         this.ID = ID;
         this.Title = title;
         this.Description = description;
@@ -17,6 +18,7 @@ class EateryOption {
         this.Votes = [];
         this.OpeningTime = openingTime;
         this.ClosingTime = closingTime;
+        this.TimeToClosingTime = timeToClosingTime;
     }
 
     recordVote(username){

@@ -44,7 +44,7 @@ namespace COMP3000Project.Views.Search
         public ICommand CastVote { get; }
 
         //CONSTRUCTOR
-        public SearchPageViewModel(string location, TimeSpan time, string[] eateryTypes)//starting new search
+        public SearchPageViewModel(string location, string time, string[] eateryTypes)//starting new search
         {
             //set commands
             CastVote = new Command<SwipedCardEventArgs>(ExecuteCastVote);
@@ -52,6 +52,8 @@ namespace COMP3000Project.Views.Search
             //set vars
 
             EateryOptions = new ObservableCollection<EateryOption>();
+
+
 
             //subscribe to messages
             WebsocketHandler.registerSubscriber(this);
@@ -73,7 +75,7 @@ namespace COMP3000Project.Views.Search
             JoinExistingSearch(searchCode);
         }
 
-        public async void StartNewSearch(string location, TimeSpan time, string[] eateryTypes)
+        public async void StartNewSearch(string location, string time, string[] eateryTypes)
         {
             WebsocketHandler.RequestStartNewSearch(UserDetails.Username, UserDetails.Password, location, time, eateryTypes);
         }

@@ -105,7 +105,7 @@ namespace COMP3000Project.WS
             SendRequest(request);
         }
 
-        public static async void RequestStartNewSearch(string currentUsername, string currentPassword, string locationName, TimeSpan desiredTime, string[] eateryTypes)
+        public static async void RequestStartNewSearch(string currentUsername, string currentPassword, string locationName, string desiredTime, string[] eateryTypes)
         {
             object[] messageItems = { currentUsername, currentPassword, locationName, desiredTime, eateryTypes };
 

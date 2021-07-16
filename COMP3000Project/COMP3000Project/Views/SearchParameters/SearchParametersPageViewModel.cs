@@ -109,6 +109,8 @@ namespace COMP3000Project.Views.SearchParameters
             EateryTypeOptions.Add("bakery");
             EateryTypeOptions.Add("meal_delivery");
 
+            SelectedTime = DateTime.Now.TimeOfDay;
+
             //set commands
             GoToStartSearch = new Command(async () => await ExecuteGoToSearchPage());
 
@@ -137,22 +139,26 @@ namespace COMP3000Project.Views.SearchParameters
 
         async Task<object> ExecuteGoToSearchPage()
         {
-            List<string> eateryTypeOptionsArray = new List<string>();
+            //List<string> eateryTypeOptionsArray = new List<string>();
 
-            for (int i = 0; i < SelectedEateryTypeOptions.Count; i++)
+            //for (int i = 0; i < SelectedEateryTypeOptions.Count; i++)
+            //{
+            //    eateryTypeOptionsArray.Add(SelectedEateryTypeOptions[i].ToString());
+            //}
+
+            if (SelectedLocation == null)
             {
-                eateryTypeOptionsArray.Add(SelectedEateryTypeOptions[i].ToString());
+                SelectedEateryTypeOption = "plymouth, uk";
             }
 
-            Console.WriteLine("BEGIN TEST:");
-            Console.WriteLine(SelectedLocation);
-            Console.WriteLine(SelectedTime);
-            Console.WriteLine(JsonConvert.SerializeObject(SelectedEateryTypeOption));
-            Console.WriteLine(SelectedEateryTypeOption);
+            if (SelectedEateryTypeOption == null)
+            {
+                SelectedEateryTypeOption = "restaurant";
+            }
 
             string[] strArr = { SelectedEateryTypeOption.ToString() };
 
-            SearchPage nextPage = new SearchPage(SelectedLocation, SelectedTime, strArr);
+            SearchPage nextPage = new SearchPage(SelectedLocation, SelectedTime.ToString("hhmm"), strArr);
 
             await Navigation.PushAsync(nextPage, true);
 

@@ -111,7 +111,6 @@ class ServerFunctions{
             console.log('GEOCODE RESPONSE IS: ');
             console.log(geoCodeResponse.data.results);
 
-            /////////////////
             let latitude = geoCodeResponse.data.results[0].geometry.location.lat;
             let longitude = geoCodeResponse.data.results[0].geometry.location.lng;
 
@@ -120,7 +119,6 @@ class ServerFunctions{
                     // location : [50.381773,-4.133786],
                     radius : 2000,
                     type : selectedEateryType,
-                    opennow : true,
                     key : APIKey
                 },
                 timeout:1000
@@ -150,14 +148,8 @@ class ServerFunctions{
 
                         let currentDay = new Date().getDay();
 
-                        // console.log("appending following opening/ closing times to eatery data results...");
-                        // console.log(eateryData.data.results[i].openingTimeForToday);
-                        // console.log(eateryData.data.results[i].closingTimeForToday);
-
                         eateryData.data.results[i].openingTimeForToday = placeDetailsResponse.data.result.opening_hours.periods[currentDay].open.time;
                         eateryData.data.results[i].closingTimeForToday = placeDetailsResponse.data.result.opening_hours.periods[currentDay].close.time;
-
-
 
                         counter++;
 
@@ -165,10 +157,11 @@ class ServerFunctions{
 
                         if(counter >= eateryData.data.results.length){
                             console.log("EATERY DATA IS AS FOLLOWS...");
-                            console.log(eateryData.data);
+                            console.log("- data here -")
+                            // console.log(eateryData.data);
 
 
-                            eateryOptionsArray = this.createEateryOptionsArray(eateryData);
+                            eateryOptionsArray = this.createEateryOptionsArray(eateryData, time);
 
                             console.log("EATERY OPTION ARRAY CONSTRUCTED AND READY FOR TRANSMISSION...");
                             console.log("Details, Type: " + typeof (eateryOptionsArray) + ", Length: " + eateryOptionsArray.length);
@@ -205,7 +198,7 @@ class ServerFunctions{
                 console.log(error);
 
             });
-            ////////////////////
+
 
         }).catch(function (err){
             console.log('GEOCODE REQUEST FAILED');
@@ -215,7 +208,7 @@ class ServerFunctions{
 
     }
 
-    createEateryOptionsArray(eateryData){
+    createEateryOptionsArray(eateryData, desiredArrivalTime){
 
         // console.log(JSON.stringify(eateryData));
 
@@ -235,10 +228,14 @@ class ServerFunctions{
                 let photoRef;
                 let OpeningTime = eateryData.data.results[i].openingTimeForToday;
                 let ClosingTime = eateryData.data.results[i].closingTimeForToday;
+                let TimeToClosingTime = 0;
 
-                console.log("opening/ closing times are...");
-                console.log(eateryData.data.results[i].openingTimeForToday);
-                console.log(eateryData.data.results[i].closingTimeForToday);
+                if(ClosingTime !=  null){
+                    TimeToClosingTime = Number(ClosingTime.toString().slice(0, 2) - Number(desiredArrivalTime.toString().slice(0, 2)));
+                }
+
+
+
 
                 if(eateryData.data.results[i].photos){
                     ID = eateryData.data.results[i].photos[0].photo_reference;
@@ -251,11 +248,19 @@ class ServerFunctions{
                         rating,
                         photoRef,
                         OpeningTime,
-                        ClosingTime
+                        ClosingTime,
+                        TimeToClosingTime.toString()
 
                     );
 
-                    EateriesArray.push(eatery);
+                    if(ClosingTime === null){
+                        EateriesArray.push(eatery);
+                    } else if( ClosingTime > desiredArrivalTime){
+                        EateriesArray.push(eatery);
+                    }
+
+
+
                 }
 
 
