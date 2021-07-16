@@ -128,7 +128,7 @@ class ServerFunctions{
 
                 console.log("PLACES SEARCH RESPONSE IS: ");
                 console.log("- response here -");
-                console.log(eateryData.data.results[0]);
+                // console.log(eateryData.data.results[0]);
                 // console.log(eateryData);
 
                 //do place details request for each result
@@ -148,45 +148,31 @@ class ServerFunctions{
 
                         let currentDay = new Date().getDay();
 
-                        eateryData.data.results[i].openingTimeForToday = placeDetailsResponse.data.result.opening_hours.periods[currentDay].open.time;
-                        eateryData.data.results[i].closingTimeForToday = placeDetailsResponse.data.result.opening_hours.periods[currentDay].close.time;
+                        if(placeDetailsResponse.data.result.opening_hours.periods[currentDay].open.time === undefined || placeDetailsResponse.data.result.opening_hours.periods[currentDay].close.time === undefined){
+                            eateryData.data.results[i].openingTimeForToday = null;
+                            eateryData.data.results[i].closingTimeForToday = null;
+                        } else {
+                            eateryData.data.results[i].openingTimeForToday = placeDetailsResponse.data.result.opening_hours.periods[currentDay].open.time;
+                            eateryData.data.results[i].closingTimeForToday = placeDetailsResponse.data.result.opening_hours.periods[currentDay].close.time;
+                        }
 
                         counter++;
 
-                        console.log(counter + " VS " + eateryData.data.results.length);
-
                         if(counter >= eateryData.data.results.length){
-                            console.log("EATERY DATA IS AS FOLLOWS...");
-                            console.log("- data here -")
-                            // console.log(eateryData.data);
-
-
-                            eateryOptionsArray = this.createEateryOptionsArray(eateryData, time);
-
-                            console.log("EATERY OPTION ARRAY CONSTRUCTED AND READY FOR TRANSMISSION...");
-                            console.log("Details, Type: " + typeof (eateryOptionsArray) + ", Length: " + eateryOptionsArray.length);
-
-
-                            let newActiveSearch = new ActiveSearch(this.getUser(username), eateryOptionsArray);
-
-                            //add the active search object to ACTIVE_SEARCHES
-                            ACTIVE_SEARCHES.push(newActiveSearch);
-
-                            // console.log("New ActiveSearch's search code is: " + newActiveSearch.ID);
-
-                            //then pass a success message back to the user, containing the ActiveSearch object
-                            let MSG = new Message(1, "newActiveSearchRequestGranted", "", [newActiveSearch.ID, newActiveSearch.EateryOptions]);
-                            this.sendToUser(username, MSG);
+                            this.compileAndSendToUser(username, eateryOptionsArray, time);
                         }
 
                     }).catch((err) => {
-                        console.log("ERROR in place details search...");
-                        console.log(err);
+                        console.log("PLACE DETAILS SEARCH RESPONSE IS: ");
+                        console.log("- response here -");
 
                         counter++;
-
                         eateryData.data.results[i].openingTimeForToday = null;
                         eateryData.data.results[i].closingTimeForToday = null;
+
+                        if(counter >= eateryData.data.results.length){
+                            this.compileAndSendToUser(username, eateryData, time);
+                        }
                     })
 
                 }
@@ -206,6 +192,18 @@ class ServerFunctions{
         });
 
 
+    }
+
+    compileAndSendToUser(username, eateryData, time){
+        let eateryOptionsArray = this.createEateryOptionsArray(eateryData, time);
+
+        let newActiveSearch = new ActiveSearch(this.getUser(username), eateryOptionsArray);
+
+        ACTIVE_SEARCHES.push(newActiveSearch);
+
+        //then pass a success message back to the user, containing the ActiveSearch object
+        let MSG = new Message(1, "newActiveSearchRequestGranted", "", [newActiveSearch.ID, newActiveSearch.EateryOptions]);
+        this.sendToUser(username, MSG);
     }
 
     createEateryOptionsArray(eateryData, desiredArrivalTime){
