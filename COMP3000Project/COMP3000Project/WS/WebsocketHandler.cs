@@ -45,6 +45,18 @@ namespace COMP3000Project.WS
 
         }
 
+        //asks the server to get past searches
+        public static async void RequestGetPastSearches(string username, string password)
+        {
+            string[] messageItems = { username, password };
+
+            //make request message object
+            Message request = new Message("1", "getPastSearches", "", messageItems);
+
+            //send to server
+            SendRequest(request);
+        }
+
         //asks the server to register a new user
         public static async void RequestRegisterNewUser(string username, string password)
         {
@@ -249,6 +261,10 @@ namespace COMP3000Project.WS
                                     break;
 
                                 case "gotMatch":
+                                    updateSubscribers(message);
+                                    break;
+
+                                case "gotPastSearches":
                                     updateSubscribers(message);
                                     break;
 

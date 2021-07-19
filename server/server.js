@@ -67,6 +67,11 @@ wss.on('connection', function connection(ws) {
                 serverFunctions.sendTestMessage(ws);
                 break;
 
+            case "getPastSearches":
+                // console.log("[MSG] received get past searches request");
+                serverFunctions.getPastSearches(username);
+                break;
+
             case "registerNewUser":
                 console.log("[MSG] received register new user request");
                 console.log(username);

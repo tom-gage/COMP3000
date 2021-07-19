@@ -5,6 +5,7 @@ using COMP3000Project.Views.Settings;
 using COMP3000Project.WS;
 using COMP3000Project.Views.Search;
 using COMP3000Project.Views.SearchParameters;
+using COMP3000Project.UserDetailsSingleton;
 
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using System.Collections.ObjectModel;
+using System.Text.Json;
+
 
 namespace COMP3000Project.Views.MainMenu
 {
@@ -44,10 +48,27 @@ namespace COMP3000Project.Views.MainMenu
             }
         }
 
+        private PastSearch _selectedPastSearch;
+        public PastSearch SelectedPastSearch
+        {
+            get { return _selectedPastSearch; }
+            set
+            {
+                if (_selectedPastSearch != value)
+                {
+                    SetProperty(ref _selectedPastSearch, value);//informs view of change
+                }
+            }
+        }
+
+        ObservableCollection<PastSearch> _pastSearches;
+        public ObservableCollection<PastSearch> PastSearches { get => _pastSearches; set => SetProperty(ref _pastSearches, value); }
+
         //COMMANDS
         public ICommand GoToStartSearch { get; }
         public ICommand GoToJoinSearch { get; }
         public ICommand GoToSettings { get; }
+        public ICommand GoToStartPastSearch { get; }
 
         //CONSTRUCTOR
         public MainMenuPageViewModel()
@@ -57,9 +78,12 @@ namespace COMP3000Project.Views.MainMenu
             GoToStartSearch = new Command(async () => await GoToExecuteStartSearch());
             GoToJoinSearch = new Command(async () => await GoToExecuteJoinSearch());
             GoToSettings = new Command(async () => await ExecuteGoToSettingsPage());
+            GoToStartPastSearch = new Command(async () => await GoToExecuteStartPastSearch());
 
             WebsocketHandler.registerSubscriber(this);
             //WebsocketHandler.HandleMessages();
+
+            WebsocketHandler.RequestGetPastSearches(UserDetails.Username, UserDetails.Password);
         }
 
         //FUNCTIONS
@@ -77,6 +101,16 @@ namespace COMP3000Project.Views.MainMenu
             }
 
             return true;
+        }
+
+        async Task<object> GoToExecuteStartPastSearch()
+        {
+            string[] strArr = { SelectedPastSearch.EateryType };
+
+            SearchPage nextPage = new SearchPage(SelectedPastSearch.Location, SelectedPastSearch.Time, strArr);
+
+            await Navigation.PushAsync(nextPage, true);
+            return null;
         }
 
 
@@ -110,12 +144,28 @@ namespace COMP3000Project.Views.MainMenu
             return null;
         }
 
+
+        async void populatePastSearchesArray(string optionsJSON)
+        {
+            PastSearches = JsonSerializer.Deserialize<ObservableCollection<PastSearch>>(optionsJSON);
+        }
+
         public void Update(Message message)
         {
             switch (message.type)
             {
                 case "":
                     Console.WriteLine("...");
+
+                    break;
+
+                case "gotPastSearches":
+                    Console.WriteLine("[MSG] GOT PAST SEARCHES!");
+                    Console.WriteLine(message.Items[0]);
+                    populatePastSearchesArray(message.Items[0].ToString());
+                    
+                    //now populate past searches array...
+
 
                     break;
 

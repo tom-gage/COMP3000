@@ -148,7 +148,7 @@ namespace COMP3000Project.Views.SearchParameters
 
             if (SelectedLocation == null)
             {
-                SelectedEateryTypeOption = "plymouth, uk";
+                SelectedLocation = "plymouth, uk";
             }
 
             if (SelectedEateryTypeOption == null)

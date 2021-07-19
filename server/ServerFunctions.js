@@ -20,6 +20,7 @@ class ServerFunctions{
 
     connectionsMap = new Map();
     UserModel;
+    PastSearchesModel;
 
     constructor() {
         // this.connectionsMap = new Map();
@@ -28,6 +29,7 @@ class ServerFunctions{
     async initConnection(){
         await DB.initialiseConnection();
 
+        this.PastSearchesModel = await DB.getPastSearchesModel();
         this.UserModel = await DB.getUserModel();
         await this.UserModel.find({}, function (err, users) {
                 global.USERS = users;
@@ -86,7 +88,43 @@ class ServerFunctions{
 
     }
 
+    getPastSearches(username){
+        //go to database, get three most recent searches, send them back to the user
+
+        this.PastSearchesModel.find({Username : username}).sort({MonthOfSearch: -1, YearOfSearch: -1}).limit(5)
+            .then((obj) => {
+            let MSG = new Message(1, "gotPastSearches", "", [obj]);
+            this.sendToUser(username, MSG);
+        });
+    }
+
+    createNewPastSearch(username, location, time, eateryType){
+        let date = new Date();
+        let newPastSearch = {
+            Username : username,
+            Location : location,
+            Time : time,
+            EateryType : eateryType,
+            DayOfSearch : date.getDay(),
+            MonthOfSearch : date.getDate(),
+            YearOfSearch : date.getFullYear()
+        };
+
+        this.PastSearchesModel.create(newPastSearch, function (err) {
+            if (err) return console.log(err);
+        });
+
+
+        console.log('[PAST_SEARCHES] new past search created');
+
+        return null;
+    }
+
     async createNewActiveSearch(username, locationName, time, eateryTypes){
+        let selectedEateryType = eateryTypes[0];
+
+        let eateryOptionsArray = [];
+
         //create an active search object, populated with a user and eatery options array
         console.log("[SEARCH] creating new search");
 
@@ -96,9 +134,9 @@ class ServerFunctions{
         console.log(time);
         console.log(eateryTypes);
 
-        let selectedEateryType = eateryTypes[0];
+        this.createNewPastSearch(username, locationName, time, selectedEateryType);
 
-        let eateryOptionsArray = [];
+
 
         client.geocode({params : {
                 address : locationName,
@@ -143,7 +181,7 @@ class ServerFunctions{
                         },
                     timeout : 1000
                     }).then((placeDetailsResponse) => {
-                        console.log("PLACE DETAILS SEARCH RESPONSE IS: ");
+                        console.log("PLACE DETAILS SEARCH RESPONSE IS: " + counter);
                         console.log("- response here -");
 
                         let currentDay = new Date().getDay();
@@ -159,12 +197,12 @@ class ServerFunctions{
                         counter++;
 
                         if(counter >= eateryData.data.results.length){
-                            this.compileAndSendToUser(username, eateryOptionsArray, time);
+                            this.compileAndSendToUser(username, eateryData, time);
                         }
 
                     }).catch((err) => {
-                        console.log("PLACE DETAILS SEARCH RESPONSE IS: ");
-                        console.log("- response here -");
+                        console.log("PLACE DETAILS SEARCH RESPONSE IS: " + counter);
+                        console.log("- error! -");
 
                         counter++;
                         eateryData.data.results[i].openingTimeForToday = null;
@@ -266,6 +304,7 @@ class ServerFunctions{
         } catch(err) {
             console.log('[ERROR] could not parse places data');
             console.log(err);
+
             return [];
         }
 

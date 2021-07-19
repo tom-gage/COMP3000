@@ -5,6 +5,7 @@ using COMP3000Project.Views.Settings;
 using COMP3000Project.WS;
 using COMP3000Project.Views.Search;
 using COMP3000Project.UserDetailsSingleton;
+using COMP3000Project.Views.MatchDetails;
 
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ using Xamarin.Essentials;
 using MLToolkit.Forms.SwipeCardView.Core;
 using System.Collections.ObjectModel;
 using System.Text.Json;
-using COMP3000Project.Views.MatchDetails;
+
 
 namespace COMP3000Project.Views.Search
 {
