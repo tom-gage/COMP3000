@@ -14,8 +14,9 @@
             
             <swipeCardView:SwipeCardView
                 ItemsSource="{Binding EateryOptions}"
-                SwipedCommand="{Binding CastVote}"
+                SwipedCommand="{Binding Swipe}"
                 SwipedCommandParameter=""
+                
                 LoopCards="True"
                 VerticalOptions="FillAndExpand">
                 <swipeCardView:SwipeCardView.ItemTemplate>

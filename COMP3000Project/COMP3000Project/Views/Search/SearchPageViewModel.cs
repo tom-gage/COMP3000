@@ -17,7 +17,7 @@ using Xamarin.Essentials;
 using MLToolkit.Forms.SwipeCardView.Core;
 using System.Collections.ObjectModel;
 using System.Text.Json;
-
+using COMP3000Project.Views.EateryOptionDetails;
 
 namespace COMP3000Project.Views.Search
 {
@@ -42,13 +42,14 @@ namespace COMP3000Project.Views.Search
 
 
         //COMMANDS
-        public ICommand CastVote { get; }
+        public ICommand Swipe { get; }
+        public ICommand GoToEateryOptionDetailsPage { get; }
 
         //CONSTRUCTOR
         public SearchPageViewModel(string location, string time, string[] eateryTypes)//starting new search
         {
             //set commands
-            CastVote = new Command<SwipedCardEventArgs>(ExecuteCastVote);
+            Swipe = new Command<SwipedCardEventArgs>(ExecuteSwipe);
 
             //set vars
 
@@ -66,7 +67,7 @@ namespace COMP3000Project.Views.Search
         public SearchPageViewModel(string searchCode)//joining existing search
         {
             //set commands
-            CastVote = new Command<SwipedCardEventArgs>(ExecuteCastVote);
+            Swipe = new Command<SwipedCardEventArgs>(ExecuteSwipe);
 
             //set vars
             EateryOptions = new ObservableCollection<EateryOption>();
@@ -87,7 +88,7 @@ namespace COMP3000Project.Views.Search
             WebsocketHandler.RequestJoinExistingSearch(UserDetails.Username, UserDetails.Password, searchCode);
         }
 
-        async void ExecuteCastVote(SwipedCardEventArgs eventArgs)
+        async void ExecuteSwipe(SwipedCardEventArgs eventArgs)
         {
             var item = eventArgs.Item as EateryOption;
 
@@ -102,7 +103,9 @@ namespace COMP3000Project.Views.Search
                     break;
 
                 case "Up":
+                    EateryOptionDetailsPage nextPage = new EateryOptionDetailsPage(item);
 
+                    await Navigation.PushAsync(nextPage, true);
                     break;
 
                 case "Down":
@@ -114,7 +117,6 @@ namespace COMP3000Project.Views.Search
                     break;
             }
         }
-
 
 
 
