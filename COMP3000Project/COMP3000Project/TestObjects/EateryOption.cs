@@ -85,6 +85,25 @@ namespace COMP3000Project.TestObjects
             }
         }
 
+        string formattedRating;
+
+        public string FormattedRating
+        {
+            get
+            {
+                return rating.ToString() + "/5";
+            }
+            set
+            {
+                if (formattedRating == value)
+                {
+                    return;
+                }
+                formattedRating = value;
+                HandlePropertyChanged();
+            }
+        }
+
         string photoReference0;
         public string PhotoReference0
         {
@@ -420,20 +439,42 @@ namespace COMP3000Project.TestObjects
             webImage.Source = ImageSource.FromUri(new Uri("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoReference0 + "&key=AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"));
             EateryImage = webImage.Source;
 
-            //webImage.Source = ImageSource.FromUri(new Uri("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoReference0 + "&key=AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"));
-            //EateryImage0 = webImage.Source;
+            EateryImage0 = null;
+            EateryImage1 = null;
+            EateryImage2 = null;
+            EateryImage3 = null;
+            EateryImage4 = null;
 
-            //webImage.Source = ImageSource.FromUri(new Uri("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoReference1 + "&key=AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"));
-            //EateryImage1 = webImage.Source;
+            if (photoReference0 != "")
+            {
+                webImage.Source = ImageSource.FromUri(new Uri("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoReference0 + "&key=AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"));
+                EateryImage0 = webImage.Source;
+            } 
 
-            //webImage.Source = ImageSource.FromUri(new Uri("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoReference2 + "&key=AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"));
-            //EateryImage2 = webImage.Source;
+            if (photoReference1 != "")
+            {
+                webImage.Source = ImageSource.FromUri(new Uri("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoReference1 + "&key=AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"));
+                EateryImage1 = webImage.Source;
+            }
 
-            //webImage.Source = ImageSource.FromUri(new Uri("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoReference3 + "&key=AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"));
-            //EateryImage3 = webImage.Source;
+            if (photoReference2 != "")
+            {
+                webImage.Source = ImageSource.FromUri(new Uri("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoReference2 + "&key=AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"));
+                EateryImage2 = webImage.Source;
+            }
 
-            //webImage.Source = ImageSource.FromUri(new Uri("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoReference4 + "&key=AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"));
-            //EateryImage4 = webImage.Source;
+            if (photoReference3 != "")
+            {
+                webImage.Source = ImageSource.FromUri(new Uri("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoReference3 + "&key=AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"));
+                EateryImage3 = webImage.Source;
+            }
+
+            if (photoReference4 != "")
+            {
+                webImage.Source = ImageSource.FromUri(new Uri("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoReference4 + "&key=AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"));
+                EateryImage4 = webImage.Source;
+            }
+
         }
 
 

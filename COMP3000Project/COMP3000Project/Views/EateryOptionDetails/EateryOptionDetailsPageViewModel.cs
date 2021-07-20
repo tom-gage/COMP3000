@@ -21,18 +21,34 @@ namespace COMP3000Project.Views.EateryOptionDetails
     class EateryOptionDetailsPageViewModel : ViewModelBase, Subscriber
     {
         //VARIABLES
-        private string _username;
-        public string Username
+        private string eateryTitle;
+        public string EateryTitle
         {
-            get { return _username; }
+            get { return eateryTitle; }
             set
             {
-                if (_username != value)
+                if (eateryTitle != value)
                 {
-                    SetProperty(ref _username, value);//informs view of change
+                    SetProperty(ref eateryTitle, value);//informs view of change
                 }
             }
         }
+
+        private string eateryRating;
+        public string EateryRating
+        {
+            get { return eateryRating; }
+            set
+            {
+                if (eateryRating != value)
+                {
+                    SetProperty(ref eateryRating, value);//informs view of change
+                }
+            }
+        }
+
+        ObservableCollection<ImageHolder> images;
+        public ObservableCollection<ImageHolder> Images { get => images; set => SetProperty(ref images, value); }
 
         //COMMANDS
         public ICommand GoToStartSearch { get; }
@@ -45,13 +61,44 @@ namespace COMP3000Project.Views.EateryOptionDetails
             //set commands
             //GoToStartSearch = new Command(async () => await GoToExecuteStartSearch());
 
+            Images = new ObservableCollection<ImageHolder>();
+
+            EateryTitle = eateryOption.Title;
+            EateryRating = eateryOption.Rating.ToString() + "/5";
+            EateryRating = "ass";
+
+            populateImagesArray(eateryOption);
+
             WebsocketHandler.registerSubscriber(this);
         }
 
         //FUNCTIONS
-        async void populatePastSearchesArray(string optionsJSON)
+        async void populateImagesArray(EateryOption eateryOption)
         {
-            //PastSearches = JsonSerializer.Deserialize<ObservableCollection<PastSearch>>(optionsJSON);
+            if (eateryOption.EateryImage0 != null)
+            {
+                Images.Add(new ImageHolder(eateryOption.EateryImage0));
+            }
+
+            if (eateryOption.EateryImage1 != null)
+            {
+                Images.Add(new ImageHolder(eateryOption.EateryImage1));
+            }
+
+            if (eateryOption.EateryImage2 != null)
+            {
+                Images.Add(new ImageHolder(eateryOption.EateryImage2));
+            }
+
+            if (eateryOption.EateryImage3 != null)
+            {
+                Images.Add(new ImageHolder(eateryOption.EateryImage3));
+            }
+
+            if (eateryOption.EateryImage4 != null)
+            {
+                Images.Add(new ImageHolder(eateryOption.EateryImage4));
+            }
         }
 
         public void Update(Message message)
@@ -63,18 +110,9 @@ namespace COMP3000Project.Views.EateryOptionDetails
 
                     break;
 
-                case "gotPastSearches":
-                    Console.WriteLine("[MSG] GOT PAST SEARCHES!");
-                    Console.WriteLine(message.Items[0]);
-                    populatePastSearchesArray(message.Items[0].ToString());
-
-                    //now populate past searches array...
-
-
-                    break;
 
                 default:
-                    Console.WriteLine("[MSG] main menu recieved unknown message");
+                    Console.WriteLine("[MSG] eatery option details page recieved unknown message");
                     break;
             }
         }

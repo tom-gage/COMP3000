@@ -1,12 +1,76 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:swipeCardView="clr-namespace:MLToolkit.Forms.SwipeCardView;assembly=MLToolkit.Forms.SwipeCardView"
              x:Class="COMP3000Project.Views.EateryOptionDetails.EateryOptionDetailsPage">
     <ContentPage.Content>
         <StackLayout>
             <Label Text="Welcome to eatery option details page!"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
+
+            <swipeCardView:SwipeCardView
+                ItemsSource="{Binding Images}"
+                SwipedCommand="{Binding Swipe}"
+                SwipedCommandParameter=""
+                
+                LoopCards="True"
+                VerticalOptions="FillAndExpand">
+                <swipeCardView:SwipeCardView.ItemTemplate>
+
+                    <DataTemplate>
+                        <StackLayout  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                            <Frame CornerRadius="30" Padding="5" Margin="10" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                <AbsoluteLayout>
+                                    <Image Source="{Binding Image}" Aspect="AspectFit"  AbsoluteLayout.LayoutBounds=".5,0.5,1,1" AbsoluteLayout.LayoutFlags="All" />
+                                    <Frame x:Name="LikeFrame"  BorderColor="#63DD99" BackgroundColor="Transparent" Padding="0" CornerRadius="20" AbsoluteLayout.LayoutBounds="0.1,.1, 150, 50"
+                                         AbsoluteLayout.LayoutFlags="PositionProportional"  Rotation="-20" Opacity="0">
+                                        <Label x:Name="LikeText" Text="LIKE" TextColor="#63DD99" BackgroundColor="Transparent" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" VerticalOptions="CenterAndExpand" FontSize="32"></Label>
+                                    </Frame>
+                                    <Frame x:Name="NopeFrame" BorderColor="#FF6A4F" BackgroundColor="Transparent" Padding="0" CornerRadius="20" AbsoluteLayout.LayoutBounds="0.9,.1, 150, 50"
+                                       AbsoluteLayout.LayoutFlags="PositionProportional"  Rotation="20" Opacity="0">
+                                        <Label Text="NOPE" TextColor="#FF6A4F" BackgroundColor="Transparent" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" VerticalOptions="CenterAndExpand" FontSize="32"></Label>
+                                    </Frame>
+
+                                </AbsoluteLayout>
+                            </Frame>
+                        </StackLayout>
+                    </DataTemplate>
+                </swipeCardView:SwipeCardView.ItemTemplate>
+            </swipeCardView:SwipeCardView>
+
+            <Label Text="{Binding EateryTitle}" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+
+            <Label Text="{Binding FormattedRating}" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+
+            <!--<CollectionView ItemsSource="{Binding Reviews}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Row="0" 
+                                 Grid.Column="0"
+                                 Text="{Binding FormattedRating}"
+                                 FontAttributes="Bold" />
+
+                            <Label Grid.Row="1"
+                                Grid.Column="0"
+                                Text="{Binding Description}"
+                                FontAttributes="Italic"
+                                VerticalOptions="End" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>-->
+            
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

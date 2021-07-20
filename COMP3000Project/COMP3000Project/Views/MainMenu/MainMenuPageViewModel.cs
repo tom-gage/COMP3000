@@ -83,7 +83,7 @@ namespace COMP3000Project.Views.MainMenu
             WebsocketHandler.registerSubscriber(this);
             //WebsocketHandler.HandleMessages();
 
-            WebsocketHandler.RequestGetPastSearches(UserDetails.Username, UserDetails.Password);
+            //WebsocketHandler.RequestGetPastSearches(UserDetails.Username, UserDetails.Password);
         }
 
         //FUNCTIONS
