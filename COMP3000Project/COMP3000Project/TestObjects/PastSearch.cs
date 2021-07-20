@@ -49,6 +49,24 @@ namespace COMP3000Project.TestObjects
             }
         }
 
+        string _formattedLocation;
+        public string FormattedLocation
+        {
+            get
+            {
+                return "Location: "+ Location;
+            }
+            set
+            {
+                if (_formattedLocation == value)
+                {
+                    return;
+                }
+                _formattedLocation = value;
+                HandlePropertyChanged();
+            }
+        }
+
         string _time;
         public string Time
         {
@@ -67,6 +85,25 @@ namespace COMP3000Project.TestObjects
             }
         }
 
+        TimeSpan _timeSpan;
+        public TimeSpan timeSpan
+        {
+            get
+            {
+                return TimeSpan.Parse(Time[0].ToString() + Time[1].ToString() + ":" + Time[2].ToString() + Time[3].ToString());
+                //return TimeSpan.Parse(Time[0].ToString() + Time[1].ToString());
+            }
+            set
+            {
+                if (_time == value.ToString("hhmm"))
+                {
+                    return;
+                }
+                _time = value.ToString("hhmm");
+                HandlePropertyChanged();
+            }
+        }
+
         string _eateryType;
         public string EateryType
         {
@@ -81,6 +118,24 @@ namespace COMP3000Project.TestObjects
                     return;
                 }
                 _eateryType = value;
+                HandlePropertyChanged();
+            }
+        }
+
+        string _formattedEateryType;
+        public string FormattedEateryType
+        {
+            get
+            {
+                return "Eatery type: " + EateryType;
+            }
+            set
+            {
+                if (_formattedEateryType == value)
+                {
+                    return;
+                }
+                _formattedEateryType = value;
                 HandlePropertyChanged();
             }
         }

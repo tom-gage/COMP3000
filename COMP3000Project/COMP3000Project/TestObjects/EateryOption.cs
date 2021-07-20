@@ -85,20 +85,92 @@ namespace COMP3000Project.TestObjects
             }
         }
 
-        string photoReference;
-        public string PhotoReference
+        string photoReference0;
+        public string PhotoReference0
         {
             get
             {
-                return photoReference;
+                return photoReference0;
             }
             set
             {
-                if (photoReference == value)
+                if (photoReference0 == value)
                 {
                     return;
                 }
-                photoReference = value;
+                photoReference0 = value;
+                HandlePropertyChanged();
+            }
+        }
+
+        string photoReference1;
+        public string PhotoReference1
+        {
+            get
+            {
+                return photoReference1;
+            }
+            set
+            {
+                if (photoReference1 == value)
+                {
+                    return;
+                }
+                photoReference1 = value;
+                HandlePropertyChanged();
+            }
+        }
+
+        string photoReference2;
+        public string PhotoReference2
+        {
+            get
+            {
+                return photoReference2;
+            }
+            set
+            {
+                if (photoReference2 == value)
+                {
+                    return;
+                }
+                photoReference2 = value;
+                HandlePropertyChanged();
+            }
+        }
+
+        string photoReference3;
+        public string PhotoReference3
+        {
+            get
+            {
+                return photoReference3;
+            }
+            set
+            {
+                if (photoReference3 == value)
+                {
+                    return;
+                }
+                photoReference3 = value;
+                HandlePropertyChanged();
+            }
+        }
+
+        string photoReference4;
+        public string PhotoReference4
+        {
+            get
+            {
+                return photoReference4;
+            }
+            set
+            {
+                if (photoReference4 == value)
+                {
+                    return;
+                }
+                photoReference4 = value;
                 HandlePropertyChanged();
             }
         }
@@ -122,8 +194,103 @@ namespace COMP3000Project.TestObjects
             }
         }
 
-        string[] _votes;
+        ImageSource _eateryImage0;
 
+        public ImageSource EateryImage0
+        {
+            get
+            {
+                return _eateryImage0;
+            }
+            set
+            {
+                if (_eateryImage0 == value)
+                {
+                    return;
+                }
+                _eateryImage0 = value;
+                HandlePropertyChanged();
+            }
+        }
+
+        ImageSource _eateryImage1;
+
+        public ImageSource EateryImage1
+        {
+            get
+            {
+                return _eateryImage1;
+            }
+            set
+            {
+                if (_eateryImage1 == value)
+                {
+                    return;
+                }
+                _eateryImage1 = value;
+                HandlePropertyChanged();
+            }
+        }
+
+        ImageSource _eateryImage2;
+
+        public ImageSource EateryImage2
+        {
+            get
+            {
+                return _eateryImage2;
+            }
+            set
+            {
+                if (_eateryImage2 == value)
+                {
+                    return;
+                }
+                _eateryImage2 = value;
+                HandlePropertyChanged();
+            }
+        }
+
+        ImageSource _eateryImage3;
+
+        public ImageSource EateryImage3
+        {
+            get
+            {
+                return _eateryImage3;
+            }
+            set
+            {
+                if (_eateryImage3 == value)
+                {
+                    return;
+                }
+                _eateryImage3 = value;
+                HandlePropertyChanged();
+            }
+        }
+
+        ImageSource _eateryImage4;
+
+        public ImageSource EateryImage4
+        {
+            get
+            {
+                return _eateryImage4;
+            }
+            set
+            {
+                if (_eateryImage4 == value)
+                {
+                    return;
+                }
+                _eateryImage4 = value;
+                HandlePropertyChanged();
+            }
+        }
+
+
+        string[] _votes;
         public string[] Votes
         {
             get
@@ -232,24 +399,46 @@ namespace COMP3000Project.TestObjects
             }
         }
 
-        public EateryOption(string ID, string title, string description, float rating, string photoReference, string[] Votes)
+        public EateryOption(string ID, string title, string description, float rating, string photoReference0, string photoReference1, string photoReference2, string photoReference3, string photoReference4, string[] Votes)
         {
             this.ID = ID;
             this.Title = title;
             this.Description = description;
             this.Rating = rating;
-            this.PhotoReference = photoReference;
+            this.photoReference0 = photoReference0;
+            this.photoReference1 = photoReference1;
+            this.photoReference2 = photoReference2;
+            this.photoReference3 = photoReference3;
+            this.photoReference4 = photoReference4;
             this.Votes = Votes;
 
-            //FOR TESTING PURPOSES
+            ////sets the eatery image(s)
             var webImage = new Image { Aspect = Aspect.AspectFit };
-            webImage.Source = ImageSource.FromUri(new Uri("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + PhotoReference + "&key=AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"));
 
+
+            //believe me, i wanted to put this in an array but it crashed the websocket handler
+            webImage.Source = ImageSource.FromUri(new Uri("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoReference0 + "&key=AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"));
             EateryImage = webImage.Source;
+
+            //webImage.Source = ImageSource.FromUri(new Uri("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoReference0 + "&key=AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"));
+            //EateryImage0 = webImage.Source;
+
+            //webImage.Source = ImageSource.FromUri(new Uri("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoReference1 + "&key=AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"));
+            //EateryImage1 = webImage.Source;
+
+            //webImage.Source = ImageSource.FromUri(new Uri("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoReference2 + "&key=AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"));
+            //EateryImage2 = webImage.Source;
+
+            //webImage.Source = ImageSource.FromUri(new Uri("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoReference3 + "&key=AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"));
+            //EateryImage3 = webImage.Source;
+
+            //webImage.Source = ImageSource.FromUri(new Uri("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoReference4 + "&key=AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw"));
+            //EateryImage4 = webImage.Source;
         }
 
 
         //FUNCTIONS
+
         void HandlePropertyChanged([CallerMemberName] string propertyName = "")
         {
             var eventArgs = new PropertyChangedEventArgs(propertyName);

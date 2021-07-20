@@ -105,8 +105,8 @@ class ServerFunctions{
             Location : location,
             Time : time,
             EateryType : eateryType,
-            DayOfSearch : date.getDay(),
-            MonthOfSearch : date.getDate(),
+            DayOfSearch : date.getDate(),
+            MonthOfSearch : date.getMonth(),
             YearOfSearch : date.getFullYear()
         };
 
@@ -246,7 +246,7 @@ class ServerFunctions{
 
     createEateryOptionsArray(eateryData, desiredArrivalTime){
 
-        // console.log(JSON.stringify(eateryData));
+
 
         let EateriesArray = [];
 
@@ -261,7 +261,12 @@ class ServerFunctions{
                 let name = eateryData.data.results[i].name;
                 let description = "description would be here, if there was one";
                 let rating = eateryData.data.results[i].rating;
-                let photoRef;
+                let photoRef0 = "";
+                let photoRef1 = "";
+                let photoRef2 = "";
+                let photoRef3 = "";
+                let photoRef4 = "";
+                let PhotoReferences = [];
                 let OpeningTime = eateryData.data.results[i].openingTimeForToday;
                 let ClosingTime = eateryData.data.results[i].closingTimeForToday;
                 let TimeToClosingTime = 0;
@@ -275,14 +280,33 @@ class ServerFunctions{
 
                 if(eateryData.data.results[i].photos){
                     ID = eateryData.data.results[i].photos[0].photo_reference;
-                    photoRef = eateryData.data.results[i].photos[0].photo_reference;
+
+                    if(eateryData.data.results[i].photos[0]){
+                        photoRef0 = eateryData.data.results[i].photos[0].photo_reference
+                    }
+                    if(eateryData.data.results[i].photos[1]){
+                        photoRef0 = eateryData.data.results[i].photos[1].photo_reference
+                    }
+                    if(eateryData.data.results[i].photos[2]){
+                        photoRef0 = eateryData.data.results[i].photos[2].photo_reference
+                    }
+                    if(eateryData.data.results[i].photos[3]){
+                        photoRef0 = eateryData.data.results[i].photos[3].photo_reference
+                    }
+                    if(eateryData.data.results[i].photos[4]){
+                        photoRef0 = eateryData.data.results[i].photos[4].photo_reference
+                    }
 
                     let eatery = new EateryOption(
                         ID,
                         name,
                         description,
                         rating,
-                        photoRef,
+                        photoRef0,
+                        photoRef1,
+                        photoRef2,
+                        photoRef3,
+                        photoRef4,
                         OpeningTime,
                         ClosingTime,
                         TimeToClosingTime.toString()

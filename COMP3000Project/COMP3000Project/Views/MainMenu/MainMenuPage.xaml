@@ -15,7 +15,7 @@
             <CollectionView ItemsSource="{Binding PastSearches}" 
                             SelectionMode="Single" 
                             SelectionChangedCommand="{Binding GoToStartPastSearch}"
-                            SelectedItem="{Binding SelectedPastSearch}">>
+                            SelectedItem="{Binding SelectedPastSearch}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid Padding="10">
@@ -24,22 +24,28 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="200" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Image Grid.RowSpan="2"
+                            <!--<Image Grid.RowSpan="2"
                        Source="{Binding ImageUrl}"
                        Aspect="AspectFill"
                        HeightRequest="60"
-                       WidthRequest="60" />
-                            <Label Grid.Column="1"
-                       Text="{Binding Location}"
+                       WidthRequest="60" />-->
+                            
+                            <Label Grid.Column="0"
+                       Text="{Binding FormattedLocation}"
                        FontAttributes="Bold" />
-                            <Label Grid.Row="1"
-                       Grid.Column="1"
-                       Text="{Binding EateryType}"
-                       FontAttributes="Italic"
-                       VerticalOptions="End" />
+                            
+                            <Label Grid.Row="0"
+                                Grid.Column="1"
+                                Text="{Binding FormattedEateryType}"
+                                FontAttributes="Italic"
+                                VerticalOptions="End" />
+
+                            <TimePicker Grid.Column="2"
+                                Time="{Binding timeSpan}"/>
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

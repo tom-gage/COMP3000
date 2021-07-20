@@ -62,6 +62,7 @@ namespace COMP3000Project.Views.Search
             StartNewSearch(location, time, eateryTypes);
         }
 
+        //CONSTRUCTOR 2
         public SearchPageViewModel(string searchCode)//joining existing search
         {
             //set commands
@@ -123,6 +124,8 @@ namespace COMP3000Project.Views.Search
         async void populateOptionsArray(string optionsJSON)
         {
             EateryOptions = JsonSerializer.Deserialize<ObservableCollection<EateryOption>>(optionsJSON);
+
+            
         }
 
 
