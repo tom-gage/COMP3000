@@ -9,12 +9,13 @@ class EateryOption {
     PhotoReference2 = '';
     PhotoReference3 = '';
     PhotoReference4 = '';
+    Reviews = [];
     Votes = [];
     OpeningTime;
     ClosingTime;
     TimeToClosingTime;
 
-    constructor(ID, title, description, rating, photoReference0, photoReference1, photoReference2, photoReference3, photoReference4, openingTime, closingTime, timeToClosingTime) {
+    constructor(ID, title, description, rating, photoReference0, photoReference1, photoReference2, photoReference3, photoReference4, reviews, openingTime, closingTime, timeToClosingTime) {
         this.ID = ID;
         this.Title = title;
         this.Description = description;
@@ -24,6 +25,7 @@ class EateryOption {
         this.PhotoReference2 = photoReference2;
         this.PhotoReference3 = photoReference3;
         this.PhotoReference4 = photoReference4;
+        this.Reviews = reviews;
         this.Votes = [];
         this.OpeningTime = openingTime;
         this.ClosingTime = closingTime;

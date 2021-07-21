@@ -47,11 +47,31 @@ namespace COMP3000Project.Views.EateryOptionDetails
             }
         }
 
+        private string reviewsHeader;
+        public string ReviewsHeader
+        {
+            get { return reviewsHeader; }
+            set
+            {
+                if (reviewsHeader != value)
+                {
+                    SetProperty(ref reviewsHeader, value);//informs view of change
+                }
+            }
+        }
+
         ObservableCollection<ImageHolder> images;
         public ObservableCollection<ImageHolder> Images { get => images; set => SetProperty(ref images, value); }
 
+        ObservableCollection<Review> reviews;
+        public ObservableCollection<Review> Reviews { get => reviews; set => SetProperty(ref reviews, value); }
+
         //COMMANDS
-        public ICommand GoToStartSearch { get; }
+        public ICommand SortByOldest { get; }
+        public ICommand SortByYoungest { get; }
+        public ICommand SortByBest { get; }
+        public ICommand SortByWorst { get; }
+        public ICommand AddToFavourites { get; }
 
 
         //CONSTRUCTOR
@@ -59,20 +79,208 @@ namespace COMP3000Project.Views.EateryOptionDetails
         {
 
             //set commands
-            //GoToStartSearch = new Command(async () => await GoToExecuteStartSearch());
+            SortByOldest = new Command(async () => await ExecuteSortByOldest());
+            SortByYoungest = new Command(async () => await ExecuteSortByYoungest());
+            SortByBest = new Command(async () => await ExecuteSortByBest());
+            SortByWorst = new Command(async () => await ExecuteSortByWorst());
+            AddToFavourites = new Command(async () => await ExecuteAddToFavourites(eateryOption));
 
+            Reviews = sortByYoungest(eateryOption.Reviews);
             Images = new ObservableCollection<ImageHolder>();
 
+            if(Reviews.Count > 0)
+            {
+                ReviewsHeader = "Customer Reviews:";
+            } else
+            {
+                ReviewsHeader = "No reviews found!";
+            }
+
+
             EateryTitle = eateryOption.Title;
-            EateryRating = eateryOption.Rating.ToString() + "/5";
-            EateryRating = "ass";
+            EateryRating = eateryOption.FormattedRating;
 
             populateImagesArray(eateryOption);
 
             WebsocketHandler.registerSubscriber(this);
+
+
         }
 
         //FUNCTIONS
+        async Task<object> ExecuteAddToFavourites(EateryOption eateryOption)
+        {
+            WebsocketHandler.RequestAddToFavourites(UserDetails.Username, UserDetails.Password, eateryOption);
+            return null;
+        }
+
+        async Task<object> ExecuteSortByOldest()
+        {
+            Reviews = sortByOldest(Reviews);
+            return null;
+        }
+
+        async Task<object> ExecuteSortByYoungest()
+        {
+            Reviews = sortByYoungest(Reviews);
+            return null;
+        }
+
+        async Task<object> ExecuteSortByBest()
+        {
+            Reviews = sortByBest(Reviews);
+            return null;
+        }
+
+        async Task<object> ExecuteSortByWorst()
+        {
+            Reviews = sortByWorst(Reviews);
+            return null;
+        }
+
+        ObservableCollection<Review> sortByWorst(ObservableCollection<Review> reviews)
+        {
+            Review[] r = new List<Review>(reviews).ToArray();
+            reviews.Clear();
+
+            Review t;
+            Console.WriteLine("Original array :");
+            foreach (Review rr in r)
+                Console.Write(rr.TimeSinceReview + " ");
+
+            for (int p = 0; p <= r.Length - 2; p++)
+            {
+                for (int i = 0; i <= r.Length - 2; i++)
+                {
+                    if (int.Parse(r[i].Rating) > int.Parse(r[i + 1].Rating))
+                    {
+                        t = r[i + 1];
+                        r[i + 1] = r[i];
+                        r[i] = t;
+                    }
+                }
+            }
+            Console.WriteLine("\n" + "Sorted array :");
+            foreach (Review rr in r)
+            {
+                Console.Write("\n");
+                Console.Write(rr.TimeSinceReview + " ");
+
+                reviews.Add(rr);
+            }
+
+
+            return reviews;
+        }
+
+        ObservableCollection<Review> sortByBest(ObservableCollection<Review> reviews)
+        {
+            Review[] r = new List<Review>(reviews).ToArray();
+            reviews.Clear();
+
+            Review t;
+            Console.WriteLine("Original array :");
+            foreach (Review rr in r)
+                Console.Write(rr.TimeSinceReview + " ");
+
+            for (int p = 0; p <= r.Length - 2; p++)
+            {
+                for (int i = 0; i <= r.Length - 2; i++)
+                {
+                    if (int.Parse(r[i].Rating) < int.Parse(r[i + 1].Rating))
+                    {
+                        t = r[i + 1];
+                        r[i + 1] = r[i];
+                        r[i] = t;
+                    }
+                }
+            }
+            Console.WriteLine("\n" + "Sorted array :");
+            foreach (Review rr in r)
+            {
+                Console.Write("\n");
+                Console.Write(rr.TimeSinceReview + " ");
+
+                reviews.Add(rr);
+            }
+
+
+            return reviews;
+        }
+
+        ObservableCollection<Review> sortByYoungest(ObservableCollection<Review> reviews)
+        {
+            Review[] r = new List<Review>(reviews).ToArray();
+            reviews.Clear();
+
+            Review t;
+            Console.WriteLine("Original array :");
+            foreach (Review rr in r)
+                Console.Write(rr.TimeSinceReview + " ");
+
+            for (int p = 0; p <= r.Length - 2; p++)
+            {
+                for (int i = 0; i <= r.Length - 2; i++)
+                {
+                    if (r[i].TimeSinceReview < r[i + 1].TimeSinceReview)
+                    {
+                        t = r[i + 1];
+                        r[i + 1] = r[i];
+                        r[i] = t;
+                    }
+                }
+            }
+            Console.WriteLine("\n" + "Sorted array :");
+            foreach (Review rr in r)
+            {
+                Console.Write("\n");
+                Console.Write(rr.TimeSinceReview + " ");
+                
+                reviews.Add(rr);
+            }
+               
+
+            return reviews;
+        }
+
+
+
+        ObservableCollection<Review> sortByOldest(ObservableCollection<Review> reviews)
+        {
+            Review[] r = new List<Review>(reviews).ToArray();
+            reviews.Clear();
+
+            Review t;
+            Console.WriteLine("Original array :");
+            foreach (Review rr in r)
+                Console.Write(rr.TimeSinceReview + " ");
+
+            for (int p = 0; p <= r.Length - 2; p++)
+            {
+                for (int i = 0; i <= r.Length - 2; i++)
+                {
+                    if (r[i].TimeSinceReview > r[i + 1].TimeSinceReview)
+                    {
+                        t = r[i + 1];
+                        r[i + 1] = r[i];
+                        r[i] = t;
+                    }
+                }
+            }
+            Console.WriteLine("\n" + "Sorted array :");
+            foreach (Review rr in r)
+            {
+                Console.Write("\n");
+                Console.Write(rr.TimeSinceReview + " ");
+
+                reviews.Add(rr);
+            }
+
+
+            return reviews;
+        }
+
+
         async void populateImagesArray(EateryOption eateryOption)
         {
             if (eateryOption.EateryImage0 != null)
@@ -110,6 +318,12 @@ namespace COMP3000Project.Views.EateryOptionDetails
 
                     break;
 
+                case "eateryAddedToFavourites":
+                    Console.WriteLine("got eatery added to favs confirmation!");
+
+                    //do confirmation feedback...
+
+                    break;
 
                 default:
                     Console.WriteLine("[MSG] eatery option details page recieved unknown message");

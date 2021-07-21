@@ -2,6 +2,7 @@ let mongoose = require('mongoose');
 
 let User;
 let PastSearch;
+let EateryOption;
 
 async function initialiseConnection() {
     //console.log('[DB] attempting to initialise connection...');
@@ -25,12 +26,34 @@ async function initialiseConnection() {
         FullDateOfSearch : String
     });
 
+    let eateryOptionSchema = mongoose.Schema({
+        ID:String,
+        Title:String,
+        Description:String,
+        Rating :String,
+        PhotoReferences:String,
+        PhotoReference0:String,
+        PhotoReference1:String,
+        PhotoReference2:String,
+        PhotoReference3:String,
+        PhotoReference4:String,
+        Reviews: Array,
+        Votes: Array,
+        OpeningTime:String,
+        ClosingTime:String,
+        TimeToClosingTime:String,
+    });
+
     if(!User){//if User not initiated
         User = mongoose.model('Users', userSchema);//initiate user model
     }
 
     if(!PastSearch){
         PastSearch = mongoose.model('pastSearches', pastSearchSchema)
+    }
+
+    if(!EateryOption){
+        EateryOption = mongoose.model('favourites', eateryOptionSchema)
     }
 
     try{
@@ -64,9 +87,17 @@ function getPastSearchesModel() { // get user model
     return null;
 }
 
+function getEateryOptionModel() { // get user model
+    if(EateryOption){
+        return EateryOption;
+    }
+    return null;
+}
+
 module.exports = {
     initialiseConnection,
     getUserModel,
     getPastSearchesModel,
+    getEateryOptionModel,
     closeConnection
 };

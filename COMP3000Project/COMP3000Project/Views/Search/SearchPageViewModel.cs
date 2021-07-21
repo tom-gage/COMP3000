@@ -126,8 +126,6 @@ namespace COMP3000Project.Views.Search
         async void populateOptionsArray(string optionsJSON)
         {
             EateryOptions = JsonSerializer.Deserialize<ObservableCollection<EateryOption>>(optionsJSON);
-
-            
         }
 
 

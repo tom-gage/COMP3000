@@ -46,6 +46,22 @@ namespace COMP3000Project.WS
         }
 
         //asks the server to get past searches
+        public static async void RequestAddToFavourites(string username, string password, EateryOption eateryOption)
+        {
+            TransmittableEateryOption x = new TransmittableEateryOption(eateryOption.ID, eateryOption.Title, eateryOption.Description, eateryOption.Rating, eateryOption.PhotoReference0, eateryOption.PhotoReference1, eateryOption.PhotoReference2, eateryOption.PhotoReference3, eateryOption.PhotoReference4, new List<Review>(eateryOption.Reviews).ToArray(), eateryOption.Votes, eateryOption.OpeningTime, eateryOption.ClosingTime, eateryOption.TimeToClosingTime);
+
+            string y = JsonConvert.SerializeObject(x);
+            string[] messageItems = { username, password, y};
+
+            //make request message object
+            Message request = new Message("1", "addToFavourites", "", messageItems);
+
+            //send to server
+            SendRequest(request);
+        }
+
+
+        //asks the server to get past searches
         public static async void RequestGetPastSearches(string username, string password)
         {
             string[] messageItems = { username, password };
@@ -265,6 +281,10 @@ namespace COMP3000Project.WS
                                     break;
 
                                 case "gotPastSearches":
+                                    updateSubscribers(message);
+                                    break;
+
+                                case "eateryAddedToFavourites":
                                     updateSubscribers(message);
                                     break;
 

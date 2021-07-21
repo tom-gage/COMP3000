@@ -21,6 +21,7 @@ class ServerFunctions{
     connectionsMap = new Map();
     UserModel;
     PastSearchesModel;
+    EateryOptionModel;
 
     constructor() {
         // this.connectionsMap = new Map();
@@ -29,17 +30,32 @@ class ServerFunctions{
     async initConnection(){
         await DB.initialiseConnection();
 
-        this.PastSearchesModel = await DB.getPastSearchesModel();
+
         this.UserModel = await DB.getUserModel();
         await this.UserModel.find({}, function (err, users) {
                 global.USERS = users;
         });
+        this.PastSearchesModel = await DB.getPastSearchesModel();
+        this.EateryOptionModel = await DB.getEateryOptionModel();
 
 
     }
 
     async closeConnection(){
         await DB.closeConnection();
+    }
+
+    addEateryToFavourites(username, eatery){
+        let newEateryOption = JSON.parse(eatery);
+        this.EateryOptionModel.findOneAndUpdate({ID : newEateryOption.ID}, newEateryOption, {upsert : true, overwrite : true}, function (err) {
+            if (err){
+                return console.log(err);
+            } else {
+                let MSG = new Message(1, "eateryAddedToFavourites", "", []);
+                this.sendToUser(username, MSG);
+            }
+
+        });
     }
 
 
@@ -194,6 +210,10 @@ class ServerFunctions{
                             eateryData.data.results[i].closingTimeForToday = placeDetailsResponse.data.result.opening_hours.periods[currentDay].close.time;
                         }
 
+                        if(placeDetailsResponse.data.result.reviews){
+                            eateryData.data.results[i].reviews = placeDetailsResponse.data.result.reviews;
+                        }
+
                         counter++;
 
                         if(counter >= eateryData.data.results.length){
@@ -266,6 +286,7 @@ class ServerFunctions{
                 let photoRef2 = "";
                 let photoRef3 = "";
                 let photoRef4 = "";
+                let Reviews = [];
                 let PhotoReferences = [];
                 let OpeningTime = eateryData.data.results[i].openingTimeForToday;
                 let ClosingTime = eateryData.data.results[i].closingTimeForToday;
@@ -297,6 +318,18 @@ class ServerFunctions{
                         photoRef0 = eateryData.data.results[i].photos[4].photo_reference
                     }
 
+                    if(eateryData.data.results[i].reviews){
+                        for(let y = 0; y < eateryData.data.results[i].reviews.length; y++){
+                            Reviews.push({
+                                AuthorName : eateryData.data.results[i].reviews[y].author_name.toString(),
+                                Rating : eateryData.data.results[i].reviews[y].rating.toString(),
+                                RelativeTimeDescription : eateryData.data.results[i].reviews[y].relative_time_description.toString(),
+                                Text : eateryData.data.results[i].reviews[y].text.toString(),
+                                TimeSinceReview : eateryData.data.results[i].reviews[y].time
+                            })
+                        }
+                    }
+
                     let eatery = new EateryOption(
                         ID,
                         name,
@@ -307,6 +340,7 @@ class ServerFunctions{
                         photoRef2,
                         photoRef3,
                         photoRef4,
+                        Reviews,
                         OpeningTime,
                         ClosingTime,
                         TimeToClosingTime.toString()

@@ -6,6 +6,7 @@ using COMP3000Project.WS;
 using COMP3000Project.Views.Search;
 using COMP3000Project.Views.SearchParameters;
 using COMP3000Project.UserDetailsSingleton;
+using COMP3000Project.Views.FavouriteEateries;
 
 using System;
 using System.Collections.Generic;
@@ -69,6 +70,7 @@ namespace COMP3000Project.Views.MainMenu
         public ICommand GoToJoinSearch { get; }
         public ICommand GoToSettings { get; }
         public ICommand GoToStartPastSearch { get; }
+        public ICommand GoToFavourites { get; }
 
         //CONSTRUCTOR
         public MainMenuPageViewModel()
@@ -79,6 +81,7 @@ namespace COMP3000Project.Views.MainMenu
             GoToJoinSearch = new Command(async () => await GoToExecuteJoinSearch());
             GoToSettings = new Command(async () => await ExecuteGoToSettingsPage());
             GoToStartPastSearch = new Command(async () => await GoToExecuteStartPastSearch());
+            GoToFavourites = new Command(async () => await GoToFavouritesPage());
 
             WebsocketHandler.registerSubscriber(this);
             //WebsocketHandler.HandleMessages();
@@ -101,6 +104,15 @@ namespace COMP3000Project.Views.MainMenu
             }
 
             return true;
+        }
+
+        async Task<object> GoToFavouritesPage()
+        {
+
+            FavouriteEateriesPage nextPage = new FavouriteEateriesPage();
+
+            await Navigation.PushAsync(nextPage, true);
+            return null;
         }
 
         async Task<object> GoToExecuteStartPastSearch()

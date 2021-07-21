@@ -21,6 +21,7 @@ namespace COMP3000Project.Views.EateryOptionDetails
             viewModel = new EateryOptionDetailsPageViewModel(eateryOption);
 
             BindingContext = viewModel;
+
         }
     }
 }

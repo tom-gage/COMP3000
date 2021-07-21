@@ -67,6 +67,13 @@ wss.on('connection', function connection(ws) {
                 serverFunctions.sendTestMessage(ws);
                 break;
 
+            case "addToFavourites":
+                console.log("[MSG] received add to favourites request");
+                if(serverFunctions.validateCredentials(username, password)){
+                    serverFunctions.addEateryToFavourites(username, message.Items[2]);
+                }
+                break;
+
             case "getPastSearches":
                 // console.log("[MSG] received get past searches request");
                 serverFunctions.getPastSearches(username);

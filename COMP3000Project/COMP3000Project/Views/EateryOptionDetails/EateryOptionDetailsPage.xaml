@@ -4,73 +4,142 @@
              xmlns:swipeCardView="clr-namespace:MLToolkit.Forms.SwipeCardView;assembly=MLToolkit.Forms.SwipeCardView"
              x:Class="COMP3000Project.Views.EateryOptionDetails.EateryOptionDetailsPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to eatery option details page!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
 
-            <swipeCardView:SwipeCardView
-                ItemsSource="{Binding Images}"
-                SwipedCommand="{Binding Swipe}"
-                SwipedCommandParameter=""
-                
-                LoopCards="True"
-                VerticalOptions="FillAndExpand">
-                <swipeCardView:SwipeCardView.ItemTemplate>
+        <ScrollView>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="45" />
+                    <RowDefinition Height="230" />
+                    <RowDefinition Height="45" />
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-                    <DataTemplate>
-                        <StackLayout  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                            <Frame CornerRadius="30" Padding="5" Margin="10" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                                <AbsoluteLayout>
-                                    <Image Source="{Binding Image}" Aspect="AspectFit"  AbsoluteLayout.LayoutBounds=".5,0.5,1,1" AbsoluteLayout.LayoutFlags="All" />
-                                    <Frame x:Name="LikeFrame"  BorderColor="#63DD99" BackgroundColor="Transparent" Padding="0" CornerRadius="20" AbsoluteLayout.LayoutBounds="0.1,.1, 150, 50"
-                                         AbsoluteLayout.LayoutFlags="PositionProportional"  Rotation="-20" Opacity="0">
-                                        <Label x:Name="LikeText" Text="LIKE" TextColor="#63DD99" BackgroundColor="Transparent" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" VerticalOptions="CenterAndExpand" FontSize="32"></Label>
-                                    </Frame>
-                                    <Frame x:Name="NopeFrame" BorderColor="#FF6A4F" BackgroundColor="Transparent" Padding="0" CornerRadius="20" AbsoluteLayout.LayoutBounds="0.9,.1, 150, 50"
-                                       AbsoluteLayout.LayoutFlags="PositionProportional"  Rotation="20" Opacity="0">
-                                        <Label Text="NOPE" TextColor="#FF6A4F" BackgroundColor="Transparent" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" VerticalOptions="CenterAndExpand" FontSize="32"></Label>
-                                    </Frame>
+                <Label Grid.Row="0"
+                   Grid.ColumnSpan="4"
+                   Text="{Binding EateryTitle}" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
 
-                                </AbsoluteLayout>
-                            </Frame>
-                        </StackLayout>
-                    </DataTemplate>
-                </swipeCardView:SwipeCardView.ItemTemplate>
-            </swipeCardView:SwipeCardView>
 
-            <Label Text="{Binding EateryTitle}" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
 
-            <Label Text="{Binding FormattedRating}" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                <Label Grid.Row="1"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="4"
+                   Text="{Binding EateryRating}" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
 
-            <!--<CollectionView ItemsSource="{Binding Reviews}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Padding="10">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
 
-                            <Label Grid.Row="0" 
+                <Button Grid.Row="2"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="2"
+                        WidthRequest="20"
+                        HeightRequest="20"
+                    Text="Favourite"
+                    BackgroundColor="Green"
+                    Command="{Binding AddToFavourites}"></Button>
+
+                <CollectionView Grid.Row="3"
+                                Grid.Column="0"
+                            Grid.ColumnSpan="4"
+                            ItemsSource="{Binding Images}"
+                            ItemsLayout="HorizontalList">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <!--<Image Source="{Binding Image}" Aspect="Fill"  AbsoluteLayout.LayoutBounds=".5,0.5,1,1" AbsoluteLayout.LayoutFlags="All" />-->
+                                <Image Source="{Binding Image}" Aspect="Fill" />
+
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+
+
+
+                <Label Grid.Row="4"
+                   Grid.ColumnSpan="4"
+                   Text="{Binding ReviewsHeader}" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+
+                <Button Grid.Row="5"
+                    Grid.Column="0"
+                    Text="Sort by Oldest"
+                    Command="{Binding SortByOldest}"></Button>
+
+                <Button Grid.Row="5"
+                    Grid.Column="1"
+                    Text="Sort by youngest"
+                    Command="{Binding SortByYoungest}"></Button>
+
+                <Button Grid.Row="5"
+                    Grid.Column="2"
+                    Text="Sort by best"
+                    Command="{Binding SortByBest}"></Button>
+
+                <Button Grid.Row="5"
+                    Grid.Column="3"
+                    Text="Sort by worst"
+                    Command="{Binding SortByWorst}"></Button>
+
+                <CollectionView Grid.Row="6"
+                            Grid.ColumnSpan="4"
+                            ItemsSource="{Binding Reviews}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <Label Grid.Row="0" 
                                  Grid.Column="0"
+                                 Text="{Binding AuthorName}"
+                                 FontAttributes="Bold" />
+
+                                <Label Grid.Row="0"
+                                Grid.Column="1"
+                                Text="{Binding RelativeTimeDescription}"
+                                FontAttributes="Italic,Bold"
+                                />
+
+                                <Label Grid.Row="0" 
+                                 Grid.Column="2"
                                  Text="{Binding FormattedRating}"
                                  FontAttributes="Bold" />
 
-                            <Label Grid.Row="1"
-                                Grid.Column="0"
-                                Text="{Binding Description}"
+                                <Label Grid.Row="1"
+                                Grid.ColumnSpan="4"
+                                Text="{Binding Text}"
                                 FontAttributes="Italic"
                                 VerticalOptions="End" />
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>-->
-            
-            
-        </StackLayout>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+        </ScrollView>
+
+
+
+
     </ContentPage.Content>
 </ContentPage>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -307,6 +308,43 @@ namespace COMP3000Project.TestObjects
                 HandlePropertyChanged();
             }
         }
+
+        ObservableCollection<Review> reviews;
+        public ObservableCollection<Review> Reviews
+        {
+            get
+            {
+                return reviews;
+            }
+            set
+            {
+                if (reviews == value)
+                {
+                    return;
+                }
+                reviews = value;
+                HandlePropertyChanged();
+            }
+        }
+
+        //Review[] reviews;
+        //public Review[] Reviews
+        //{
+        //    get
+        //    {
+        //        return reviews;
+        //    }
+        //    set
+        //    {
+        //        if (reviews == value)
+        //        {
+        //            return;
+        //        }
+        //        reviews = value;
+        //        HandlePropertyChanged();
+        //    }
+        //}
+
 
 
         string[] _votes;
