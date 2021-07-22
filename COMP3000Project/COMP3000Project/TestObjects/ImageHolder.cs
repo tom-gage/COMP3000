@@ -8,7 +8,7 @@ using Xamarin.Forms;
 
 namespace COMP3000Project.TestObjects
 {
-    class ImageHolder : INotifyPropertyChanged
+    public class ImageHolder : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

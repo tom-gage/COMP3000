@@ -61,10 +61,27 @@ wss.on('connection', function connection(ws) {
         let time = message.Items[3];
         let eateryTypes = message.Items[4];
 
+        let eateryTitle = message.Items[2];
+        let note = message.Items[3];
+
         switch(message.type) {
             case "testMessage":
                 console.log("[MSG] received debug message request, pinging back");
                 serverFunctions.sendTestMessage(ws);
+                break;
+
+            case "updateNote":
+                console.log("[MSG] received get favourites request");
+                if(serverFunctions.validateCredentials(username, password)){
+                    serverFunctions.updateFavouriteEateryNote(username, eateryTitle, note);
+                }
+                break;
+
+            case "getFavourites":
+                console.log("[MSG] received get favourites request");
+                if(serverFunctions.validateCredentials(username, password)){
+                    serverFunctions.getFavourites(username, password);
+                }
                 break;
 
             case "addToFavourites":

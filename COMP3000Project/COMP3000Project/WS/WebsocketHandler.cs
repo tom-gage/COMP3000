@@ -45,10 +45,34 @@ namespace COMP3000Project.WS
 
         }
 
-        //asks the server to get past searches
+        //asks the server to add note to favourite
+        public static async void RequestAddNoteToFavouriteEatery(string username, string password, string eateryTitle, string note)
+        {
+            string[] messageItems = { username, password, eateryTitle, note };
+
+            //make request message object
+            Message request = new Message("1", "updateNote", "", messageItems);
+
+            //send to server
+            SendRequest(request);
+        }
+
+        //asks the server to add eatery to favs
+        public static async void RequestGetFavourites(string username, string password)
+        {
+            string[] messageItems = { username, password };
+
+            //make request message object
+            Message request = new Message("1", "getFavourites", "", messageItems);
+
+            //send to server
+            SendRequest(request);
+        }
+
+        //asks the server to add eatery to favs
         public static async void RequestAddToFavourites(string username, string password, EateryOption eateryOption)
         {
-            TransmittableEateryOption x = new TransmittableEateryOption(eateryOption.ID, eateryOption.Title, eateryOption.Description, eateryOption.Rating, eateryOption.PhotoReference0, eateryOption.PhotoReference1, eateryOption.PhotoReference2, eateryOption.PhotoReference3, eateryOption.PhotoReference4, new List<Review>(eateryOption.Reviews).ToArray(), eateryOption.Votes, eateryOption.OpeningTime, eateryOption.ClosingTime, eateryOption.TimeToClosingTime);
+            TransmittableEateryOption x = new TransmittableEateryOption(username, eateryOption.ID, eateryOption.Title, eateryOption.Description, eateryOption.Rating, eateryOption.PhotoReference0, eateryOption.PhotoReference1, eateryOption.PhotoReference2, eateryOption.PhotoReference3, eateryOption.PhotoReference4, new List<Review>(eateryOption.Reviews).ToArray(), eateryOption.Votes, eateryOption.OpeningTime, eateryOption.ClosingTime, "0");
 
             string y = JsonConvert.SerializeObject(x);
             string[] messageItems = { username, password, y};
@@ -285,6 +309,14 @@ namespace COMP3000Project.WS
                                     break;
 
                                 case "eateryAddedToFavourites":
+                                    updateSubscribers(message);
+                                    break;
+
+                                case "gotFavourites":
+                                    updateSubscribers(message);
+                                    break;
+
+                                case "noteUpdated":
                                     updateSubscribers(message);
                                     break;
 

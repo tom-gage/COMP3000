@@ -18,6 +18,7 @@ using MLToolkit.Forms.SwipeCardView.Core;
 using System.Collections.ObjectModel;
 using System.Text.Json;
 using COMP3000Project.Views.EateryOptionDetails;
+using COMP3000Project.Views.FavouriteEateryDetails;
 
 namespace COMP3000Project.Views.Search
 {
@@ -109,6 +110,9 @@ namespace COMP3000Project.Views.Search
                     break;
 
                 case "Down":
+
+
+                    
 
                     break;
 

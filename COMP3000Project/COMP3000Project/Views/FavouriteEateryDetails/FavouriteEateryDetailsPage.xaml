@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="COMP3000Project.Views.FavouriteEateryDetails.FavouriteEateryDetailsPage">
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="260" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="230" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+
+                <Label Grid.Row="0"
+                   Grid.ColumnSpan="4"
+                       BackgroundColor="Aqua"
+                   Text="{Binding EateryTitle}" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+
+
+
+                <Label Grid.Row="1"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="4"
+                       BackgroundColor="green"
+                   Text="{Binding EateryRating}" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+
+                <CollectionView Grid.Row="2"
+                                Grid.Column="0"
+                            Grid.ColumnSpan="4"
+                                BackgroundColor="yellow"
+                            ItemsSource="{Binding Images}"
+                            ItemsLayout="HorizontalList">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="10" Margin="10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="200" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <Image Source="{Binding Image}" Aspect="Fill"  AbsoluteLayout.LayoutBounds=".5,0.5,1,1" AbsoluteLayout.LayoutFlags="All" />
+                                <!--<Image Source="{Binding Image}" Aspect="Fill" />-->
+
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+
+
+                <Label Grid.Row="3"
+                       Grid.Column="0"
+                       Text="Personal notes:"
+                       FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center">
+                </Label>
+
+                <Editor Grid.Row="4"
+                        Grid.RowSpan="1"
+                       Grid.Column="0"
+                        Grid.ColumnSpan="4"
+                        BackgroundColor="LightBlue"
+                        x:Name="editor" Text="{Binding Note}" />
+
+
+                <Button Grid.Row="5"
+                        Grid.RowSpan="1"
+                       Grid.Column="0"
+                        Grid.ColumnSpan="4"
+                        Text="Save Note!"
+                    Command="{Binding SaveNote}"
+                    />
+
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

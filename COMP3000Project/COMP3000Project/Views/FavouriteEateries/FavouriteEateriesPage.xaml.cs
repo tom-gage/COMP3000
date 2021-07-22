@@ -1,4 +1,6 @@
-﻿using System;
+﻿using COMP3000Project.UserDetailsSingleton;
+using COMP3000Project.WS;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +22,16 @@ namespace COMP3000Project.Views.FavouriteEateries
             viewModel = new FavouriteEateriesViewModel();
 
             BindingContext = viewModel;
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            WebsocketHandler.RequestGetFavourites(UserDetails.Username, UserDetails.Password);
+
+
+
         }
     }
 }

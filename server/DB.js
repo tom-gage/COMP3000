@@ -27,10 +27,11 @@ async function initialiseConnection() {
     });
 
     let eateryOptionSchema = mongoose.Schema({
+        Username : String,
         ID:String,
         Title:String,
         Description:String,
-        Rating :String,
+        Rating :Number,
         PhotoReferences:String,
         PhotoReference0:String,
         PhotoReference1:String,
@@ -42,6 +43,7 @@ async function initialiseConnection() {
         OpeningTime:String,
         ClosingTime:String,
         TimeToClosingTime:String,
+        Notes:String
     });
 
     if(!User){//if User not initiated

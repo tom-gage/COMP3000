@@ -14,6 +14,42 @@ namespace COMP3000Project.TestObjects
         //VARS
         public event PropertyChangedEventHandler PropertyChanged;
 
+        string _username;
+        public string Username
+        {
+            get
+            {
+                return _username;
+            }
+            set
+            {
+                if (_username == value)
+                {
+                    return;
+                }
+                _username = value;
+                HandlePropertyChanged();
+            }
+        }
+
+        string notes;
+        public string Notes
+        {
+            get
+            {
+                return notes;
+            }
+            set
+            {
+                if (notes == value)
+                {
+                    return;
+                }
+                notes = value;
+                HandlePropertyChanged();
+            }
+        }
+
         string _id;
         public string ID
         {

@@ -45,14 +45,82 @@ class ServerFunctions{
         await DB.closeConnection();
     }
 
+    updateFavouriteEateryNote(username, eateryTitle, note){
+
+        let thisInstance = this;
+
+        this.EateryOptionModel.findOneAndUpdate({Username : username, Title : eateryTitle}, {Notes : note}, {upsert : true, overwrite : false}, function (err) {
+            if (err){
+                return console.log(err);
+            } else {
+                let MSG = new Message(1, "noteUpdated", "", []);
+                thisInstance.sendToUser(username, MSG);
+            }
+
+        });
+    }
+
+    getFavourites(username){
+        let thisInstance = this;
+
+        this.EateryOptionModel.find({Username : username})
+            .then((obj) => {
+                let favourites = this.createFavouritesArray(obj)
+
+                let MSG = new Message(1, "gotFavourites", "", [favourites]);
+                this.sendToUser(username, MSG);
+            });
+    }
+
+    createFavouritesArray(eateries){
+        let favourites = [];
+
+        if(eateries.length < 1){
+            return [];
+        }
+
+        for(let i = 0; i < eateries.length; i++){
+            let thisEatery = eateries[i];
+
+
+
+            let eatery = new EateryOption(
+                thisEatery.ID,
+                thisEatery.Title,
+                thisEatery.Description,
+                thisEatery.Rating,
+                thisEatery.PhotoReference0,
+                thisEatery.PhotoReference1,
+                thisEatery.PhotoReference2,
+                thisEatery.PhotoReference3,
+                thisEatery.PhotoReference4,
+                thisEatery.Reviews,
+                thisEatery.OpeningTime,
+                thisEatery.ClosingTime,
+                "0",
+                thisEatery.Notes
+
+            );
+
+            favourites.push(eatery);
+        }
+
+        console.log(favourites);
+        return favourites;
+    }
+
     addEateryToFavourites(username, eatery){
         let newEateryOption = JSON.parse(eatery);
-        this.EateryOptionModel.findOneAndUpdate({ID : newEateryOption.ID}, newEateryOption, {upsert : true, overwrite : true}, function (err) {
+        // newEateryOption.username = username;
+
+        let thisInstance = this;
+
+        this.EateryOptionModel.findOneAndUpdate({Title : newEateryOption.Title}, newEateryOption, {upsert : true, overwrite : true}, function (err) {
             if (err){
                 return console.log(err);
             } else {
                 let MSG = new Message(1, "eateryAddedToFavourites", "", []);
-                this.sendToUser(username, MSG);
+                thisInstance.sendToUser(username, MSG);
             }
 
         });
@@ -109,6 +177,7 @@ class ServerFunctions{
 
         this.PastSearchesModel.find({Username : username}).sort({MonthOfSearch: -1, YearOfSearch: -1}).limit(5)
             .then((obj) => {
+
             let MSG = new Message(1, "gotPastSearches", "", [obj]);
             this.sendToUser(username, MSG);
         });
@@ -291,6 +360,7 @@ class ServerFunctions{
                 let OpeningTime = eateryData.data.results[i].openingTimeForToday;
                 let ClosingTime = eateryData.data.results[i].closingTimeForToday;
                 let TimeToClosingTime = 0;
+                let Notes = "";
 
                 if(ClosingTime !=  null){
                     TimeToClosingTime = Number(ClosingTime.toString().slice(0, 2) - Number(desiredArrivalTime.toString().slice(0, 2)));
@@ -343,7 +413,8 @@ class ServerFunctions{
                         Reviews,
                         OpeningTime,
                         ClosingTime,
-                        TimeToClosingTime.toString()
+                        TimeToClosingTime.toString(),
+                        Notes
 
                     );
 

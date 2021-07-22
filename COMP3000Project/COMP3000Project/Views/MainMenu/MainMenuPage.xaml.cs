@@ -1,12 +1,5 @@
-﻿using COMP3000Project.TestObjects;
-using COMP3000Project.UserDetailsSingleton;
+﻿using COMP3000Project.UserDetailsSingleton;
 using COMP3000Project.WS;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -24,15 +17,11 @@ namespace COMP3000Project.Views.MainMenu
 
             BindingContext = viewModel;
         }
-
         protected override void OnAppearing()
         {
             base.OnAppearing();
 
             WebsocketHandler.RequestGetPastSearches(UserDetails.Username, UserDetails.Password);
-
-                
-
         }
     }
 }

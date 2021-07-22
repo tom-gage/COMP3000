@@ -9,10 +9,12 @@ using COMP3000Project.ViewModel;
 using COMP3000Project.WS;
 using COMP3000Project.Views.SignUp;
 using COMP3000Project.Interfaces;
-using Newtonsoft.Json;
+using System.Text.Json;
 using COMP3000Project.TestObjects;
-using COMP3000Project.Views.MainMenu;
+using COMP3000Project.Views.FavouriteEateryDetails;
 using COMP3000Project.UserDetailsSingleton;
+using System.Collections.ObjectModel;
+using COMP3000Project.Views.SearchParameters;
 
 namespace COMP3000Project.Views.FavouriteEateries
 {
@@ -32,15 +34,32 @@ namespace COMP3000Project.Views.FavouriteEateries
             }
         }
 
+        private EateryOption _selectedEateryOption;
+        public EateryOption SelectedEateryOption
+        {
+            get { return _selectedEateryOption; }
+            set
+            {
+                if (_selectedEateryOption != value)
+                {
+                    SetProperty(ref _selectedEateryOption, value);//informs view of change
+                }
+            }
+        }
+
+
+        ObservableCollection<EateryOption> _favourites;
+        public ObservableCollection<EateryOption> Favourites { get => _favourites; set => SetProperty(ref _favourites, value); }
 
         //COMMANDS
-        public ICommand Login { get; }
+        public ICommand GoToFavouriteEateryDetailsPage { get; }
 
         //CONSTRUCTOR
         public FavouriteEateriesViewModel()
         {
+
             //set commands
-            //Login = new Command(async () => await ExecuteLogin());
+            GoToFavouriteEateryDetailsPage = new Command(async () => await ExecuteGoToFavouriteEateryDetailsPage());
 
 
 
@@ -48,14 +67,20 @@ namespace COMP3000Project.Views.FavouriteEateries
         }
 
         //FUNCTIONS
-        public bool UandPAreValid(string username, string password)
+
+        async Task<object> ExecuteGoToFavouriteEateryDetailsPage()
         {
 
+            FavouriteEateryDetailsPage nextPage = new FavouriteEateryDetailsPage(SelectedEateryOption);
 
-            return true;
+            await Navigation.PushAsync(nextPage, true);
+            return null;
         }
 
-
+        async void populateFavouritesArray(string optionsJSON)
+        {
+            Favourites = JsonSerializer.Deserialize<ObservableCollection<EateryOption>>(optionsJSON);
+        }
 
 
         public void Update(Message message)
@@ -64,6 +89,10 @@ namespace COMP3000Project.Views.FavouriteEateries
             {
                 case "":
 
+                    break;
+
+                case "gotFavourites":
+                    populateFavouritesArray(message.Items[0].ToString());
                     break;
 
                 default:

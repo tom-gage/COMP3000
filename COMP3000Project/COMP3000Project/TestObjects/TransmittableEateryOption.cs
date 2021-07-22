@@ -11,6 +11,23 @@ namespace COMP3000Project.TestObjects
         //Review[] Reviews;
         //string[] Votes;
 
+        string _username;
+        public string Username
+        {
+            get
+            {
+                return _username;
+            }
+            set
+            {
+                if (_username == value)
+                {
+                    return;
+                }
+                _username = value;
+            }
+        }
+
         string _id;
         public string ID
         {
@@ -255,8 +272,26 @@ namespace COMP3000Project.TestObjects
             }
         }
 
-        public TransmittableEateryOption(string ID, string Title, string description, float rating, string photoReference0, string photoReference1, string photoReference2, string photoReference3, string photoReference4, Review[] reviews, string[] votes, string openingTime, string closingTime, string timeToClosingTime)
+        string notes;
+        public string Notes
         {
+            get
+            {
+                return notes;
+            }
+            set
+            {
+                if (notes == value)
+                {
+                    return;
+                }
+                notes = value;
+            }
+        }
+
+        public TransmittableEateryOption(string username, string ID, string Title, string description, float rating, string photoReference0, string photoReference1, string photoReference2, string photoReference3, string photoReference4, Review[] reviews, string[] votes, string openingTime, string closingTime, string timeToClosingTime)
+        {
+            this.Username = username;
             this.ID = ID;
             this.Title = Title;
             this.Description = description;
