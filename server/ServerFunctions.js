@@ -4,6 +4,8 @@ const ActiveSearch = require('./objects/ActiveSearch');
 const UserObj = require('./objects/User');
 const {Client} = require('@googlemaps/google-maps-services-js');
 const client = new Client({});
+const bcrypt = require("bcrypt");
+
 
 global.USERS = [];
 global.CONNECTED_USERS = [];
@@ -569,6 +571,27 @@ class ServerFunctions{
                 return true;
             }
         }
+    }
+
+    generateSaltedAndHashedPassword(plainTextPassword){
+        let saltRounds = 12;
+        bcrypt.genSalt(saltRounds, (err, salt) => {
+            bcrypt.hash(plainTextPassword, salt, (err, saltedHashedPassword) => {
+                // Now we can store the password hash in db.
+            });
+        });
+    }
+
+    comparePassword(plainTextPassword, hashedPassword){
+        bcrypt.compare(plainTextPassword, hashedPassword, function(err, result) {
+            if(result){
+                return true;
+            }
+            return false;
+            }
+        );
+
+
     }
 
     async registerNewUser(username, password){
