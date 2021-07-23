@@ -72,23 +72,34 @@ wss.on('connection', function connection(ws) {
 
             case "updateNote":
                 console.log("[MSG] received get favourites request");
-                if(serverFunctions.validateCredentials(username, password)){
-                    serverFunctions.updateFavouriteEateryNote(username, eateryTitle, note);
-                }
+                serverFunctions.validateCredentials(username, password).then((validity)=>{
+                    console.log("attempting log in, creds are: " + validity);
+                    if(validity){
+                        serverFunctions.updateFavouriteEateryNote(username, eateryTitle, note);
+                    }
+                })
                 break;
 
             case "getFavourites":
                 console.log("[MSG] received get favourites request");
-                if(serverFunctions.validateCredentials(username, password)){
-                    serverFunctions.getFavourites(username, password);
-                }
+                serverFunctions.validateCredentials(username, password).then((validity)=>{
+                    console.log("attempting log in, creds are: " + validity);
+                    if(validity){
+                        serverFunctions.getFavourites(username, password);
+                    }
+                })
                 break;
 
             case "addToFavourites":
                 console.log("[MSG] received add to favourites request");
-                if(serverFunctions.validateCredentials(username, password)){
-                    serverFunctions.addEateryToFavourites(username, message.Items[2]);
-                }
+
+                serverFunctions.validateCredentials(username, password).then((validity)=>{
+                    console.log("attempting log in, creds are: " + validity);
+                    if(validity){
+                        serverFunctions.addEateryToFavourites(username, message.Items[2]);
+                    }
+                })
+
                 break;
 
             case "getPastSearches":
@@ -111,13 +122,17 @@ wss.on('connection', function connection(ws) {
                 console.log(username);
                 console.log(password);
 
-                if(serverFunctions.validateCredentials(username, password)){
-                    serverFunctions.grantLoginRequest(ws, username);
+                serverFunctions.validateCredentials(username, password).then((validity)=>{
+                    console.log("attempting log in, creds are: " + validity);
+                    if(validity){
+                        serverFunctions.grantLoginRequest(ws, username);
 
-                    //test stuff, makes it so there is a search that can be joined
-                    // serverFunctions.grantLoginRequest(ws, "testUser");
-                    // serverFunctions.createNewActiveSearch("testUser", 37.421998333333335, -122.08400000000002);
-                }
+                        //test stuff, makes it so there is a search that can be joined
+                        // serverFunctions.grantLoginRequest(ws, "testUser");
+                        // serverFunctions.createNewActiveSearch("testUser", 37.421998333333335, -122.08400000000002);
+                    }
+                })
+
                 break
 
             case "updateUsername":
@@ -126,11 +141,14 @@ wss.on('connection', function connection(ws) {
                 console.log(password);
                 console.log(newUsername);
 
-                if(serverFunctions.validateCredentials(username, password)){//if credentials are valid
-                    if(serverFunctions.usernameNotTaken(newUsername)){
-                        serverFunctions.updateUsername(username, password, newUsername);
+                serverFunctions.validateCredentials(username, password).then((validity)=>{
+                    console.log("attempting log in, creds are: " + validity);
+                    if(validity){
+                        if(serverFunctions.usernameNotTaken(newUsername)){
+                            serverFunctions.updateUsername(username, password, newUsername);
+                        }
                     }
-                }
+                })
                 break
 
             case "updatePassword":
@@ -138,53 +156,68 @@ wss.on('connection', function connection(ws) {
                 console.log(username);
                 console.log(password);
                 console.log(newPassword)
+                serverFunctions.validateCredentials(username, password).then((validity)=>{
+                    console.log("attempting log in, creds are: " + validity);
+                    if(validity){
+                        //do update password
+                        //pass feedback to app
+                        serverFunctions.updatePassword(username, password, newPassword);
+                    }
+                })
 
-                if(serverFunctions.validateCredentials(username, password)){//credentials are valid
-                    //do update password
-                    //pass feedback to app
-                    serverFunctions.updatePassword(username, password, newPassword);
-                }
                 break
 
             case "deleteUser":
                 console.log("[MSG] received delete user request");
                 console.log(username);
                 console.log(password);
+                serverFunctions.validateCredentials(username, password).then((validity)=>{
+                    console.log("attempting log in, creds are: " + validity);
+                    if(validity){
+                        //do delete user
+                        //pass feedback to app
+                        serverFunctions.deleteUser(username, password);
+                    }
+                })
 
-                if(serverFunctions.validateCredentials(username, password)){//credentials are valid
-                    //do delete user
-                    //pass feedback to app
-                    serverFunctions.deleteUser(username, password);
-                }
                 break
 
             case "startNewSearch":
                 console.log("[MSG] received start new search request");
                 console.log(message);
+                serverFunctions.validateCredentials(username, password).then((validity)=>{
+                    console.log("attempting log in, creds are: " + validity);
+                    if(validity){
+                        //do create new search
+                        serverFunctions.createNewActiveSearch(username, locationName, time, eateryTypes);
+                    }
+                })
 
-                if(serverFunctions.validateCredentials(username, password)){//credentials are valid
-                    //do create new search
-                    serverFunctions.createNewActiveSearch(username, locationName, time, eateryTypes);
-                }
                 break
 
             case "joinExistingSearch":
                 console.log("[MSG] received join existing search request");
                 console.log(message);
 
-                if(serverFunctions.validateCredentials(username, password)){//credentials are valid
-                    //do create new search
-                    serverFunctions.joinExistingSearch(searchCode, username);
-                }
+                serverFunctions.validateCredentials(username, password).then((validity)=>{
+                    console.log("attempting log in, creds are: " + validity);
+                    if(validity){
+                        serverFunctions.joinExistingSearch(searchCode, username);
+                    }
+                })
+
                 break
 
             case "castVote":
                 console.log("[MSG] received cast vote request");
                 console.log(message);
 
-                if(serverFunctions.validateCredentials(username, password)){//credentials are valid
-                    serverFunctions.castVoteInSearch(searchCode, username, eateryOptionID);
-                }
+                serverFunctions.validateCredentials(username, password).then((validity)=>{
+                    console.log("attempting log in, creds are: " + validity);
+                    if(validity){
+                        serverFunctions.castVoteInSearch(searchCode, username, eateryOptionID);
+                    }
+                })
                 break
 
             default:

@@ -442,22 +442,28 @@ class ServerFunctions{
         return EateriesArray;
     }
 
-    validateCredentials(username, password){
-        if(username === "" || password === ""){
+    async validateCredentials(username, plainTextPassword){
+        if(username === "" || plainTextPassword === ""){
             return false;
         }
 
-        if(username && password){
-            if(USERS.find(function (user) {//if credentials match existing user
-                return (user.Username === username && user.Password === password);
-            })) {
-                return true;
-            }
-            else {
-                console.log('[LOGIN] user login failed');
-                return false;
-            }
-        }
+        let that = this;
+
+        let credentialsValidity = await new Promise((resolve, reject) => {
+            console.log(USERS);
+
+            USERS.find(function (user) {//if credentials match existing user
+                if(user.Username === username){
+                    resolve(that.comparePassword(plainTextPassword, user.Password));
+                }
+
+            });
+            // console.log("returning... " + false);
+            // resolve(false);
+        })
+
+        return credentialsValidity;
+
     }
 
     grantLoginRequest(ws, username){
@@ -479,11 +485,11 @@ class ServerFunctions{
     async updateUsername(username, password, newUsername){
         console.log("[LOGIN] updating username...");
 
+        let that = this;
 
         this.UserModel.updateOne(
             {
-                Username : username,
-                Password : password
+                Username : username
             },
             {
                 Username : newUsername
@@ -492,14 +498,17 @@ class ServerFunctions{
                 let MSG = new Message(1, "usernameUpdated", newUsername, []);
                 this.sendToUser(username, MSG);
 
-                let thisClass = this;
 
                 this.UserModel.find({}, function (err, users) {
-                    let ws = thisClass.connectionsMap.get(thisClass.getUser(username));
-                    thisClass.connectionsMap.delete(thisClass.getUser(username));//wipe connections map entry for user
+                    let ws = that.connectionsMap.get(that.getUser(username));
+                    that.connectionsMap.delete(that.getUser(username));//wipe connections map entry for user
                     global.USERS = users;
-                    thisClass.connectionsMap.set(thisClass.getUser(newUsername), ws);//replace entry, username change reflected
+                    that.connectionsMap.set(that.getUser(newUsername), ws);//replace entry, username change reflected
                 });
+
+                this.PastSearchesModel
+
+                this.EateryOptionModel
 
 
 
@@ -510,39 +519,45 @@ class ServerFunctions{
     async updatePassword(username, password, newPassword){
         console.log("[LOGIN] updating password...");
 
-        this.UserModel.updateOne(
-            {
-                Username : username,
-                Password : password
-            },
-            {
-                Password : newPassword
-            })
-            .then((obj) => {
-                let MSG = new Message(1, "passwordUpdated", newPassword, []);
-                this.sendToUser(username, MSG);
+        let that = this;
 
-                let thisClass = this;
+        await this.generateSaltedAndHashedPassword(newPassword).then(
+            async function (hashedPass){
+                that.UserModel.updateOne(
+                    {
+                        Username : username
+                    },
+                    {
+                        Password : hashedPass
+                    })
+                    .then((obj) => {
+                        let MSG = new Message(1, "passwordUpdated", newPassword, []);
+                        that.sendToUser(username, MSG);
 
-                this.UserModel.find({}, function (err, users) {
-                    let ws = thisClass.connectionsMap.get(thisClass.getUser(username));
-                    thisClass.connectionsMap.delete(thisClass.getUser(username));
-                    global.USERS = users;
-                    thisClass.connectionsMap.set(thisClass.getUser(username), ws);
-                });
+                        let thisClass = this;
 
-                console.log("[LOGIN] password update succeeded!");
-            })
+                        that.UserModel.find({}, function (err, users) {
+                            let ws = that.connectionsMap.get(that.getUser(username));
+                            that.connectionsMap.delete(that.getUser(username));
+                            global.USERS = users;
+                            that.connectionsMap.set(that.getUser(username), ws);
+                        });
+
+                        console.log("[LOGIN] password update succeeded!");
+                    })
+            }
+        )
+
+
     }
 
     async deleteUser(username, password){
         console.log("[LOGIN] deleting user...");
 
-        // UserModel = DB.getUserModel();
+        let that = this;
 
         this.UserModel.deleteOne({
-            Username : username,
-            Password : password
+            Username : username
         }).then((obj) => {
             let MSG = new Message(1, "userDeleted", "", []);
             this.sendToUser(username, MSG);
@@ -556,6 +571,7 @@ class ServerFunctions{
 
             console.log("[LOGIN] user delete succeeded!");
         });
+
     }
 
     usernameNotTaken(username){
@@ -572,45 +588,77 @@ class ServerFunctions{
             }
         }
     }
-
-    generateSaltedAndHashedPassword(plainTextPassword){
-        let saltRounds = 12;
-        bcrypt.genSalt(saltRounds, (err, salt) => {
-            bcrypt.hash(plainTextPassword, salt, (err, saltedHashedPassword) => {
-                // Now we can store the password hash in db.
-            });
-        });
-    }
-
-    comparePassword(plainTextPassword, hashedPassword){
-        bcrypt.compare(plainTextPassword, hashedPassword, function(err, result) {
-            if(result){
-                return true;
-            }
-            return false;
-            }
-        );
-
-
-    }
-
     async registerNewUser(username, password){
-        let newUser = {
-            Username : username,
-            Password : password,
-        };
+        let that = this;
+        await this.generateSaltedAndHashedPassword(password).then(
+            async function (hashedPass){
+                let newUser = {
+                    Username : username,
+                    Password : hashedPass
+                };
 
-        // let UsersModel = DB.getUserModel();
+                await that.UserModel.create(newUser, async function (err) {
+                    if(err){
+                        console.log(err);
+                    }
 
-        await this.UserModel.create(newUser, function (err) {
-            if (err) return console.log(err);
-        });
+                    await that.UserModel.find({}, function (err, users) {
+                        if(err){
+                            console.log(err);
+                        }
+                        global.USERS = users;
 
-        await this.UserModel.find({}, function (err, users) {
-            global.USERS = users;
-        });
+                        console.log(newUser);
+                        console.log(global.USERS);
 
-        console.log('[LOGIN] user registration succeeded');
+                        console.log('[LOGIN] user registration succeeded');
+
+                    });
+                });
+            }
+        )
+
+
+
+    }
+
+    async generateSaltedAndHashedPassword(plainTextPassword){
+        console.log("bcrypt begin password hashing...")
+        let saltRounds = 12;
+
+        let hashedPassword = await new Promise((resolve, reject) => {
+            bcrypt.genSalt(saltRounds, (err, salt) => {
+                bcrypt.hash(plainTextPassword, salt, (err, saltedHashedPassword) => {
+                    console.log("s&h pass is: " + saltedHashedPassword);
+                    if (err) reject(err)
+                    resolve(saltedHashedPassword)
+                });
+            });
+        })
+
+        return hashedPassword
+
+    }
+
+    async comparePassword(plainTextPassword, saltedHashedPassword){
+
+        let match = await new Promise((resolve, reject) => {
+            bcrypt.compare(plainTextPassword, saltedHashedPassword, function(err, result) {
+                    console.log("comparing passwords...")
+                    if(result){
+                        console.log("passwords match!")
+                        resolve(true);
+                    } else {
+                        console.log("passwords dont match")
+                        resolve(false);
+                    }
+
+                }
+            );
+        })
+
+        return match;
+
     }
 
 //helper functions

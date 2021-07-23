@@ -45,8 +45,8 @@ namespace COMP3000Project.Views.SignUp
         //CONSTRUCTOR
         public SignUpPageViewModel()
         {
-            Username = "martin";
-            Password = "slime man";
+            Username = "u";
+            Password = "p";
 
             RegisterNewUser = new Command(async () => await ExecuteRegisterUser());
         }
