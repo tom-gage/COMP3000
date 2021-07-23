@@ -498,17 +498,30 @@ class ServerFunctions{
                 let MSG = new Message(1, "usernameUpdated", newUsername, []);
                 this.sendToUser(username, MSG);
 
+                let thisUser = {
+                    Username : username
+                }
 
-                this.UserModel.find({}, function (err, users) {
-                    let ws = that.connectionsMap.get(that.getUser(username));
-                    that.connectionsMap.delete(that.getUser(username));//wipe connections map entry for user
-                    global.USERS = users;
-                    that.connectionsMap.set(that.getUser(newUsername), ws);//replace entry, username change reflected
-                });
+                // this.PastSearchesModel.updateMany(thisUser, { Username : newUsername}, function (err, result){
+                //     console.log(result)
+                // });
 
-                this.PastSearchesModel
+                this.PastSearchesModel.updateMany(thisUser, { Username : newUsername}, function (){
+                    that.EateryOptionModel.updateMany(thisUser, { Username : newUsername}, function (){
+                        that.UserModel.find({}, function (err, users) {
+                            let ws = that.connectionsMap.get(that.getUser(username));
+                            that.connectionsMap.delete(that.getUser(username));//wipe connections map entry for user
+                            global.USERS = users;
+                            that.connectionsMap.set(that.getUser(newUsername), ws);//replace entry, username change reflected
+                        });
+                    })
+                })
 
-                this.EateryOptionModel
+
+
+
+
+
 
 
 
