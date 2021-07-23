@@ -60,17 +60,21 @@
               "target": "Package",
               "version": "[13.0.1, )"
             },
+            "Plugin.LocalNotification": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
             "System.Text.Json": {
               "target": "Package",
               "version": "[5.0.2, )"
             },
             "Xamarin.Essentials": {
               "target": "Package",
-              "version": "[1.6.1, )"
+              "version": "[1.7.0, )"
             },
             "Xamarin.Forms": {
               "target": "Package",
-              "version": "[5.0.0.2012, )"
+              "version": "[5.0.0.2083, )"
             }
           }
         }
@@ -148,17 +152,21 @@
               "target": "Package",
               "version": "[13.0.1, )"
             },
+            "Plugin.LocalNotification": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
             "System.Text.Json": {
               "target": "Package",
               "version": "[5.0.2, )"
             },
             "Xamarin.Essentials": {
               "target": "Package",
-              "version": "[1.6.1, )"
+              "version": "[1.7.0, )"
             },
             "Xamarin.Forms": {
               "target": "Package",
-              "version": "[5.0.0.2012, )"
+              "version": "[5.0.0.2083, )"
             }
           },
           "imports": [

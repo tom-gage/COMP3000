@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using COMP3000Project.TestObjects;
 using COMP3000Project.Views.MainMenu;
 using COMP3000Project.UserDetailsSingleton;
+using Plugin.LocalNotification;
 
 namespace COMP3000Project.Views.Login
 {
@@ -57,16 +58,31 @@ namespace COMP3000Project.Views.Login
             Password = "p";
 
             //set commands
-            Login = new Command(async () => await ExecuteLogin());
+            //Login = new Command(async () => await ExecuteLogin());
             GoToSignUpPage = new Command(async () => await ExecuteGoToSignUpPage());
 
-
+            Login = new Command(() => displayNotification());
 
             WebsocketHandler.InitialiseConnectionAsync();
             WebsocketHandler.registerSubscriber(this);
         }
 
         //FUNCTIONS
+        void displayNotification()
+        {
+            var notification = new NotificationRequest
+            {
+                BadgeNumber = 0,
+                Description = "this is my notification",
+                Title = "this is the title",
+                ReturningData = "this is the returning data",
+                NotificationId = 123,
+                CategoryType = NotificationCategoryType.Progress
+            };
+
+            NotificationCenter.Current.Show(notification);
+        }
+
         public bool UandPAreValid(string username, string password)
         {
             if (username == null || password == null)

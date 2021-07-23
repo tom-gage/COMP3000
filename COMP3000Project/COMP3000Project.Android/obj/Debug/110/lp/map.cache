@@ -1,4 +1,5 @@
 FormsViewGroup.dll
+Plugin.LocalNotification.dll
 Xamarin.AndroidX.Activity.dll
 Xamarin.AndroidX.Annotation.dll
 Xamarin.AndroidX.Annotation.Experimental.dll
@@ -25,6 +26,7 @@ Xamarin.AndroidX.Lifecycle.Common.dll
 Xamarin.AndroidX.Lifecycle.LiveData.Core.dll
 Xamarin.AndroidX.Lifecycle.LiveData.dll
 Xamarin.AndroidX.Lifecycle.Runtime.dll
+Xamarin.AndroidX.Lifecycle.Service.dll
 Xamarin.AndroidX.Lifecycle.ViewModel.dll
 Xamarin.AndroidX.Lifecycle.ViewModelSavedState.dll
 Xamarin.AndroidX.Loader.dll
@@ -33,8 +35,12 @@ Xamarin.AndroidX.Media.dll
 Xamarin.AndroidX.MultiDex.dll
 Xamarin.AndroidX.Print.dll
 Xamarin.AndroidX.RecyclerView.dll
+Xamarin.AndroidX.Room.Common.dll
+Xamarin.AndroidX.Room.Runtime.dll
 Xamarin.AndroidX.SavedState.dll
 Xamarin.AndroidX.SlidingPaneLayout.dll
+Xamarin.AndroidX.Sqlite.dll
+Xamarin.AndroidX.Sqlite.Framework.dll
 Xamarin.AndroidX.SwipeRefreshLayout.dll
 Xamarin.AndroidX.Transition.dll
 Xamarin.AndroidX.VectorDrawable.Animated.dll
@@ -42,20 +48,22 @@ Xamarin.AndroidX.VectorDrawable.dll
 Xamarin.AndroidX.VersionedParcelable.dll
 Xamarin.AndroidX.ViewPager.dll
 Xamarin.AndroidX.ViewPager2.dll
+Xamarin.AndroidX.Work.Runtime.dll
 Xamarin.Essentials.dll
 Xamarin.Forms.Platform.Android.dll
 Xamarin.Forms.Platform.dll
 Xamarin.Google.Android.Material.dll
 Xamarin.Google.Guava.ListenableFuture.dll
 androidx.versionedparcelable.versionedparcelable.aar
+androidx.arch.core.core-runtime.aar
 androidx.lifecycle.lifecycle-runtime.aar
+androidx.annotation.annotation-experimental.aar
 androidx.core.core.aar
 androidx.customview.customview.aar
 androidx.viewpager.viewpager.aar
 androidx.savedstate.savedstate.aar
 androidx.recyclerview.recyclerview.aar
 androidx.lifecycle.lifecycle-viewmodel.aar
-androidx.arch.core.core-runtime.aar
 androidx.lifecycle.lifecycle-livedata-core.aar
 androidx.loader.loader.aar
 androidx.lifecycle.lifecycle-viewmodel-savedstate.aar
@@ -72,7 +80,6 @@ androidx.coordinatorlayout.coordinatorlayout.aar
 androidx.cardview.cardview.aar
 androidx.appcompat.appcompat-resources.aar
 androidx.appcompat.appcompat.aar
-androidx.annotation.annotation-experimental.aar
 com.google.android.material.material.aar
 androidx.swiperefreshlayout.swiperefreshlayout.aar
 androidx.slidingpanelayout.slidingpanelayout.aar
@@ -86,3 +93,8 @@ androidx.asynclayoutinflater.asynclayoutinflater.aar
 androidx.legacy.legacy-support-core-ui.aar
 androidx.legacy.legacy-support-v4.aar
 androidx.browser.browser.aar
+androidx.sqlite.sqlite.aar
+androidx.sqlite.sqlite-framework.aar
+androidx.room.room-runtime.aar
+androidx.lifecycle.lifecycle-service.aar
+androidx.work.work-runtime.aar

@@ -66,6 +66,18 @@
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
       },
+      "Plugin.LocalNotification/8.0.2": {
+        "type": "package",
+        "dependencies": {
+          "System.Text.Json": "5.0.2"
+        },
+        "compile": {
+          "lib/netstandard2.0/Plugin.LocalNotification.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Plugin.LocalNotification.dll": {}
+        }
+      },
       "System.Buffers/4.5.1": {
         "type": "package",
         "compile": {
@@ -150,7 +162,7 @@
           "lib/netstandard2.0/System.Threading.Tasks.Extensions.dll": {}
         }
       },
-      "Xamarin.Essentials/1.6.1": {
+      "Xamarin.Essentials/1.7.0": {
         "type": "package",
         "dependencies": {
           "System.Numerics.Vectors": "4.5.0"
@@ -162,7 +174,7 @@
           "lib/netstandard2.0/Xamarin.Essentials.dll": {}
         }
       },
-      "Xamarin.Forms/5.0.0.2012": {
+      "Xamarin.Forms/5.0.0.2083": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/Xamarin.Forms.Core.dll": {},
@@ -677,6 +689,28 @@
         "packageIcon.png"
       ]
     },
+    "Plugin.LocalNotification/8.0.2": {
+      "sha512": "X+DPB9rLbszGmB9F6j6WtPPk6R/FwL1nfAWKcv0XI2UFnGPSkAhca+7ZBjaPddXuKH2V8qIAdJ+xMreVtPnwOQ==",
+      "type": "package",
+      "path": "plugin.localnotification/8.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "icon.png",
+        "lib/monoandroid10.0/Plugin.LocalNotification.dll",
+        "lib/monoandroid10.0/Plugin.LocalNotification.xml",
+        "lib/monoandroid11.0/Plugin.LocalNotification.dll",
+        "lib/monoandroid11.0/Plugin.LocalNotification.xml",
+        "lib/netstandard2.0/Plugin.LocalNotification.dll",
+        "lib/netstandard2.0/Plugin.LocalNotification.xml",
+        "lib/netstandard2.1/Plugin.LocalNotification.dll",
+        "lib/netstandard2.1/Plugin.LocalNotification.xml",
+        "lib/xamarinios10/Plugin.LocalNotification.dll",
+        "lib/xamarinios10/Plugin.LocalNotification.xml",
+        "plugin.localnotification.8.0.2.nupkg.sha512",
+        "plugin.localnotification.nuspec"
+      ]
+    },
     "System.Buffers/4.5.1": {
       "sha512": "Rw7ijyl1qqRS0YQD/WycNst8hUUMgrMH4FCn1nNm27M4VxchZ1js3fVjQaANHO5f3sN4isvP4a+Met9Y4YomAg==",
       "type": "package",
@@ -895,10 +929,10 @@
         "version.txt"
       ]
     },
-    "Xamarin.Essentials/1.6.1": {
-      "sha512": "gG1Bp4j4bpJQ0dp9MeBJQJ9c8xULauIlhc7Cx5Qw4J2K1c+4Glq5n+gkb9Pm0UA/CevXVqLK5ZXmZkuYI52FgA==",
+    "Xamarin.Essentials/1.7.0": {
+      "sha512": "xfUJNxtfMC05VBej7fVUg6Zd9VwM2kqW9LH0tcrSA6IsBTl0EsIGkYUOz1BoKT2rseWW8o3kTi5WH/yZV4GgJw==",
       "type": "package",
-      "path": "xamarin.essentials/1.6.1",
+      "path": "xamarin.essentials/1.7.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -907,15 +941,6 @@
         "lib/monoandroid10.0/Xamarin.Essentials.dll",
         "lib/monoandroid10.0/Xamarin.Essentials.pdb",
         "lib/monoandroid10.0/Xamarin.Essentials.xml",
-        "lib/monoandroid80/Xamarin.Essentials.dll",
-        "lib/monoandroid80/Xamarin.Essentials.pdb",
-        "lib/monoandroid80/Xamarin.Essentials.xml",
-        "lib/monoandroid81/Xamarin.Essentials.dll",
-        "lib/monoandroid81/Xamarin.Essentials.pdb",
-        "lib/monoandroid81/Xamarin.Essentials.xml",
-        "lib/monoandroid90/Xamarin.Essentials.dll",
-        "lib/monoandroid90/Xamarin.Essentials.pdb",
-        "lib/monoandroid90/Xamarin.Essentials.xml",
         "lib/netstandard1.0/Xamarin.Essentials.dll",
         "lib/netstandard1.0/Xamarin.Essentials.pdb",
         "lib/netstandard1.0/Xamarin.Essentials.xml",
@@ -942,14 +967,14 @@
         "lib/xamarinwatchos10/Xamarin.Essentials.pdb",
         "lib/xamarinwatchos10/Xamarin.Essentials.xml",
         "readme.txt",
-        "xamarin.essentials.1.6.1.nupkg.sha512",
+        "xamarin.essentials.1.7.0.nupkg.sha512",
         "xamarin.essentials.nuspec"
       ]
     },
-    "Xamarin.Forms/5.0.0.2012": {
-      "sha512": "Rqc6xvWR/sf+Db5+qRCFmuYTWVp04QWRfwPto2/JHbShSy4Ed53Q2jpoFzsoloXkJA6saD236PlaWAhT6vI4gw==",
+    "Xamarin.Forms/5.0.0.2083": {
+      "sha512": "KDKdEIq8SA3zP8/qyJZ9isIsP1KRLvhxUohTM4GS4HOQkkK3FARvi/FJv91O4IJ/30ByJg88mBdKuiLMyL9Q+w==",
       "type": "package",
-      "path": "xamarin.forms/5.0.0.2012",
+      "path": "xamarin.forms/5.0.0.2083",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1158,7 +1183,7 @@
         "lib/uap10.0.16299/Xamarin.Forms.Xaml.dll",
         "lib/uap10.0.16299/Xamarin.Forms.Xaml.pdb",
         "lib/uap10.0.16299/Xamarin.Forms.Xaml.xml",
-        "xamarin.forms.5.0.0.2012.nupkg.sha512",
+        "xamarin.forms.5.0.0.2083.nupkg.sha512",
         "xamarin.forms.nuspec"
       ]
     }
@@ -1169,9 +1194,10 @@
       "Microsoft.NETCore.UniversalWindowsPlatform >= 6.2.12",
       "NETStandard.Library >= 2.0.3",
       "Newtonsoft.Json >= 13.0.1",
+      "Plugin.LocalNotification >= 8.0.2",
       "System.Text.Json >= 5.0.2",
-      "Xamarin.Essentials >= 1.6.1",
-      "Xamarin.Forms >= 5.0.0.2012"
+      "Xamarin.Essentials >= 1.7.0",
+      "Xamarin.Forms >= 5.0.0.2083"
     ]
   },
   "packageFolders": {
@@ -1241,17 +1267,21 @@
             "target": "Package",
             "version": "[13.0.1, )"
           },
+          "Plugin.LocalNotification": {
+            "target": "Package",
+            "version": "[8.0.2, )"
+          },
           "System.Text.Json": {
             "target": "Package",
             "version": "[5.0.2, )"
           },
           "Xamarin.Essentials": {
             "target": "Package",
-            "version": "[1.6.1, )"
+            "version": "[1.7.0, )"
           },
           "Xamarin.Forms": {
             "target": "Package",
-            "version": "[5.0.0.2012, )"
+            "version": "[5.0.0.2083, )"
           }
         },
         "imports": [

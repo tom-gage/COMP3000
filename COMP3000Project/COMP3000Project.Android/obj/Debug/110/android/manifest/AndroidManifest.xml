@@ -5,13 +5,16 @@
     Changes to this file may cause incorrect behavior and will be lost if
     the contents are regenerated.
 -->
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.companyname.comp3000project" android:installLocation="preferExternal" android:versionCode="1" android:versionName="1.0">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" package="com.companyname.comp3000project" android:installLocation="preferExternal" android:versionCode="1" android:versionName="1.0">
   <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="30" />
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+  <uses-permission android:name="android.permission.WAKE_LOCK" />
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
   <application android:name="android.app.Application" android:allowBackup="true" android:appComponentFactory="androidx.core.app.CoreComponentFactory" android:debuggable="true" android:extractNativeLibs="true" android:icon="@mipmap/icon" android:label="COMP3000Project.Android">
     <activity android:name="crc64186e73278a3f5c53.MainActivity" android:configChanges="orientation|screenSize" android:icon="@mipmap/icon" android:label="COMP3000Project" android:theme="@style/MainTheme">
       <intent-filter>
@@ -19,6 +22,13 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
+    <receiver android:name="crc64df999be563077fc4.BootReceiver" android:enabled="true">
+      <intent-filter>
+        <action android:name="android.intent.action.BOOT_COMPLETED" />
+        <category android:name="android.intent.category.HOME" />
+      </intent-filter>
+    </receiver>
+    <receiver android:name="Plugin.LocalNotification.NotificationActionReceiver" android:enabled="true" android:exported="false" />
     <service android:name="crc64396a3fe5f8138e3f.KeepAliveService" />
     <receiver android:name="crc64a0e0a82d0db9a07d.BatteryBroadcastReceiver" android:enabled="true" android:exported="false" android:label="Essentials Battery Broadcast Receiver" />
     <receiver android:name="crc64a0e0a82d0db9a07d.EnergySaverBroadcastReceiver" android:enabled="true" android:exported="false" android:label="Essentials Energy Saver Broadcast Receiver" />
@@ -35,6 +45,52 @@
       <intent-filter>
         <action android:name="mono.android.intent.action.SEPPUKU" />
         <category android:name="mono.android.intent.category.SEPPUKU.com.companyname.comp3000project" />
+      </intent-filter>
+    </receiver>
+    <service android:name="androidx.room.MultiInstanceInvalidationService" android:directBootAware="true" android:exported="false" />
+    <provider android:name="androidx.work.impl.WorkManagerInitializer" android:authorities="com.companyname.comp3000project.workmanager-init" android:directBootAware="false" android:exported="false" android:multiprocess="true" tools:targetApi="n" />
+    <service android:name="androidx.work.impl.background.systemalarm.SystemAlarmService" android:directBootAware="false" android:enabled="@bool/enable_system_alarm_service_default" android:exported="false" tools:targetApi="n" />
+    <service android:name="androidx.work.impl.background.systemjob.SystemJobService" android:directBootAware="false" android:enabled="@bool/enable_system_job_service_default" android:exported="true" android:permission="android.permission.BIND_JOB_SERVICE" tools:targetApi="n" />
+    <service android:name="androidx.work.impl.foreground.SystemForegroundService" android:directBootAware="false" android:enabled="@bool/enable_system_foreground_service_default" android:exported="false" tools:targetApi="n" />
+    <receiver android:name="androidx.work.impl.utils.ForceStopRunnable$BroadcastReceiver" android:directBootAware="false" android:enabled="true" android:exported="false" tools:targetApi="n" />
+    <receiver android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryChargingProxy" android:directBootAware="false" android:enabled="false" android:exported="false" tools:targetApi="n">
+      <intent-filter>
+        <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+        <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+      </intent-filter>
+    </receiver>
+    <receiver android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryNotLowProxy" android:directBootAware="false" android:enabled="false" android:exported="false" tools:targetApi="n">
+      <intent-filter>
+        <action android:name="android.intent.action.BATTERY_OKAY" />
+        <action android:name="android.intent.action.BATTERY_LOW" />
+      </intent-filter>
+    </receiver>
+    <receiver android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$StorageNotLowProxy" android:directBootAware="false" android:enabled="false" android:exported="false" tools:targetApi="n">
+      <intent-filter>
+        <action android:name="android.intent.action.DEVICE_STORAGE_LOW" />
+        <action android:name="android.intent.action.DEVICE_STORAGE_OK" />
+      </intent-filter>
+    </receiver>
+    <receiver android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$NetworkStateProxy" android:directBootAware="false" android:enabled="false" android:exported="false" tools:targetApi="n">
+      <intent-filter>
+        <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+      </intent-filter>
+    </receiver>
+    <receiver android:name="androidx.work.impl.background.systemalarm.RescheduleReceiver" android:directBootAware="false" android:enabled="false" android:exported="false" tools:targetApi="n">
+      <intent-filter>
+        <action android:name="android.intent.action.BOOT_COMPLETED" />
+        <action android:name="android.intent.action.TIME_SET" />
+        <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+      </intent-filter>
+    </receiver>
+    <receiver android:name="androidx.work.impl.background.systemalarm.ConstraintProxyUpdateReceiver" android:directBootAware="false" android:enabled="@bool/enable_system_alarm_service_default" android:exported="false" tools:targetApi="n">
+      <intent-filter>
+        <action android:name="androidx.work.impl.background.systemalarm.UpdateProxies" />
+      </intent-filter>
+    </receiver>
+    <receiver android:name="androidx.work.impl.diagnostics.DiagnosticsReceiver" android:directBootAware="false" android:enabled="true" android:exported="true" android:permission="android.permission.DUMP" tools:targetApi="n">
+      <intent-filter>
+        <action android:name="androidx.work.diagnostics.REQUEST_DIAGNOSTICS" />
       </intent-filter>
     </receiver>
   </application>

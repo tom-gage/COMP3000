@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "U48/pDxR+dlfKdHOPzwtvClcn4OAfNOTrWuukTbWCXbeeSrARg3kuyZUNzWKC4Lv5DyDsXv+jFKXLF5oRCICnQ==",
+  "dgSpecHash": "ViDIlvz4VZzIfKKXEFXeE0tXvVUKGyotSfh2FuqszwcA9zYdHLPrbDP4fQxB3Z5rf2epyqxztkBKU35Uvf/EQw==",
   "success": true,
   "projectFilePath": "C:\\Users\\btgage\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project.Tests\\COMP3000Project.Tests.csproj",
   "expectedPackageFiles": [
@@ -16,13 +16,14 @@
     "C:\\Users\\btgage\\.nuget\\packages\\nuget.frameworks\\5.0.0\\nuget.frameworks.5.0.0.nupkg.sha512",
     "C:\\Users\\btgage\\.nuget\\packages\\nunit\\3.13.2\\nunit.3.13.2.nupkg.sha512",
     "C:\\Users\\btgage\\.nuget\\packages\\nunit3testadapter\\4.0.0\\nunit3testadapter.4.0.0.nupkg.sha512",
+    "C:\\Users\\btgage\\.nuget\\packages\\plugin.localnotification\\8.0.2\\plugin.localnotification.8.0.2.nupkg.sha512",
     "C:\\Users\\btgage\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.reflection.metadata\\1.6.0\\system.reflection.metadata.1.6.0.nupkg.sha512",
     "C:\\Users\\btgage\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\5.0.0\\system.runtime.compilerservices.unsafe.5.0.0.nupkg.sha512",
     "C:\\Users\\btgage\\.nuget\\packages\\system.text.encodings.web\\5.0.1\\system.text.encodings.web.5.0.1.nupkg.sha512",
     "C:\\Users\\btgage\\.nuget\\packages\\system.text.json\\5.0.2\\system.text.json.5.0.2.nupkg.sha512",
-    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\xamarin.essentials\\1.6.1\\xamarin.essentials.1.6.1.nupkg.sha512",
-    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\xamarin.forms\\5.0.0.2012\\xamarin.forms.5.0.0.2012.nupkg.sha512"
+    "C:\\Users\\btgage\\.nuget\\packages\\xamarin.essentials\\1.7.0\\xamarin.essentials.1.7.0.nupkg.sha512",
+    "C:\\Users\\btgage\\.nuget\\packages\\xamarin.forms\\5.0.0.2083\\xamarin.forms.5.0.0.2083.nupkg.sha512"
   ],
   "logs": []
 }

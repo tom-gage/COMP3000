@@ -6,6 +6,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Plugin.LocalNotification;
 
 namespace COMP3000Project.Droid
 {
@@ -18,6 +19,9 @@ namespace COMP3000Project.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
+
+            //I added this, it makes the notifications work on android
+            NotificationCenter.CreateNotificationChannel();
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
