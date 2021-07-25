@@ -255,75 +255,76 @@ namespace COMP3000Project.WS
                             var message = JsonConvert.DeserializeObject<Message>(msgString);
 
                             Console.WriteLine("[WS] Got a message of type " + message.type);
+                            updateSubscribers(message);
                             // Message was intended for us!
-                            switch (message.type)
-                            {
-                                case "debugMessage":
-                                    Console.WriteLine(message.Body);
-                                    break;
+                            //switch (message.type)
+                            //{
+                            //    case "debugMessage":
+                            //        Console.WriteLine(message.Body);
+                            //        break;
 
-                                case "eateryOptionsArray":
+                            //    case "eateryOptionsArray":
 
-                                    updateSubscribers(message);
+                            //        updateSubscribers(message);
 
-                                    break;
+                            //        break;
 
-                                case "loginRequestGranted":
+                            //    case "loginRequestGranted":
 
-                                    //Console.WriteLine("[WS] got LoginRequestGranted !!");
-                                    updateSubscribers(message);
-                                    break;
+                            //        //Console.WriteLine("[WS] got LoginRequestGranted !!");
+                            //        updateSubscribers(message);
+                            //        break;
 
-                                case "usernameUpdated":
+                            //    case "usernameUpdated":
 
-                                    //Console.WriteLine("[WS] got username updated !!");
-                                    updateSubscribers(message);
-                                    break;
+                            //        //Console.WriteLine("[WS] got username updated !!");
+                            //        updateSubscribers(message);
+                            //        break;
 
-                                case "passwordUpdated":
+                            //    case "passwordUpdated":
 
-                                    //Console.WriteLine("[WS] got password updated !!");
-                                    updateSubscribers(message);
-                                    break;
+                            //        //Console.WriteLine("[WS] got password updated !!");
+                            //        updateSubscribers(message);
+                            //        break;
 
-                                case "userDeleted":
+                            //    case "userDeleted":
 
-                                    //Console.WriteLine("[WS] got password updated !!");
-                                    updateSubscribers(message);
-                                    break;
+                            //        //Console.WriteLine("[WS] got password updated !!");
+                            //        updateSubscribers(message);
+                            //        break;
 
-                                case "newActiveSearchRequestGranted":
-                                    updateSubscribers(message);
-                                    break;
+                            //    case "newActiveSearchRequestGranted":
+                            //        updateSubscribers(message);
+                            //        break;
 
-                                case "joinSearchRequestGranted":
-                                    updateSubscribers(message);
-                                    break;
+                            //    case "joinSearchRequestGranted":
+                            //        updateSubscribers(message);
+                            //        break;
 
-                                case "gotMatch":
-                                    updateSubscribers(message);
-                                    break;
+                            //    case "gotMatch":
+                            //        updateSubscribers(message);
+                            //        break;
 
-                                case "gotPastSearches":
-                                    updateSubscribers(message);
-                                    break;
+                            //    case "gotPastSearches":
+                            //        updateSubscribers(message);
+                            //        break;
 
-                                case "eateryAddedToFavourites":
-                                    updateSubscribers(message);
-                                    break;
+                            //    case "eateryAddedToFavourites":
+                            //        updateSubscribers(message);
+                            //        break;
 
-                                case "gotFavourites":
-                                    updateSubscribers(message);
-                                    break;
+                            //    case "gotFavourites":
+                            //        updateSubscribers(message);
+                            //        break;
 
-                                case "noteUpdated":
-                                    updateSubscribers(message);
-                                    break;
+                            //    case "noteUpdated":
+                            //        updateSubscribers(message);
+                            //        break;
 
-                                default:
+                            //    default:
 
-                                    break;
-                            }
+                            //        break;
+                            //}
                         }
 
                         ms.Seek(0, SeekOrigin.Begin);

@@ -16,7 +16,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
 using System.Text.Json;
-
+using COMP3000Project.Views.JoinSearchParameters;
 
 namespace COMP3000Project.Views.MainMenu
 {
@@ -77,10 +77,10 @@ namespace COMP3000Project.Views.MainMenu
         {
 
             //set commands
-            GoToStartSearch = new Command(async () => await GoToExecuteStartSearch());
-            GoToJoinSearch = new Command(async () => await GoToExecuteJoinSearch());
+            GoToStartSearch = new Command(async () => await ExecuteGoToStartSearch());
+            GoToJoinSearch = new Command(async () => await ExecuteGoToJoinSearch());
             GoToSettings = new Command(async () => await ExecuteGoToSettingsPage());
-            GoToStartPastSearch = new Command(async () => await GoToExecuteStartPastSearch());
+            GoToStartPastSearch = new Command(async () => await ExecuteGoToStartPastSearch());
             GoToFavourites = new Command(async () => await GoToFavouritesPage());
 
             WebsocketHandler.registerSubscriber(this);
@@ -90,21 +90,7 @@ namespace COMP3000Project.Views.MainMenu
         }
 
         //FUNCTIONS
-        public bool ValidateSearchCode(string searchCode)
-        {
-            if (searchCode == null)
-            {
-                return false;
-            } else if (searchCode == "")
-            {
-                return false;
-            } else if (searchCode.Length < 1)
-            {
-                return false;
-            }
 
-            return true;
-        }
 
         async Task<object> GoToFavouritesPage()
         {
@@ -115,7 +101,7 @@ namespace COMP3000Project.Views.MainMenu
             return null;
         }
 
-        async Task<object> GoToExecuteStartPastSearch()
+        async Task<object> ExecuteGoToStartPastSearch()
         {
             string[] strArr = { SelectedPastSearch.EateryType };
 
@@ -126,7 +112,7 @@ namespace COMP3000Project.Views.MainMenu
         }
 
 
-        async Task<object> GoToExecuteStartSearch()
+        async Task<object> ExecuteGoToStartSearch()
         {
             //bool startingNewSearch = true;
             //SearchPage nextPage = new SearchPage(startingNewSearch, "");
@@ -136,16 +122,14 @@ namespace COMP3000Project.Views.MainMenu
             return null;
         }
 
-        async Task<object> GoToExecuteJoinSearch()
+        async Task<object> ExecuteGoToJoinSearch()
         {
-            if (ValidateSearchCode(SearchCode))
-            {
-                bool startingNewSearch = false;
-                SearchPage nextPage = new SearchPage(SearchCode);
-                await Navigation.PushAsync(nextPage, true);
-                return null;
-            }
+
+            JoinSearchParametersPage nextPage = new JoinSearchParametersPage();
+
+            await Navigation.PushAsync(nextPage, true);
             return null;
+
         }
 
         async Task<object> ExecuteGoToSettingsPage()

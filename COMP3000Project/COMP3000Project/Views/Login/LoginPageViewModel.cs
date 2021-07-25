@@ -34,7 +34,6 @@ namespace COMP3000Project.Views.Login
         }
 
         private string _password;
-
         public string Password
         {
             get { return _password; }
@@ -43,6 +42,45 @@ namespace COMP3000Project.Views.Login
                 if (_password != value)
                 {
                     SetProperty(ref _password, value);//informs view of change
+                }
+            }
+        }
+
+        private string feedbackText;
+        public string FeedbackText
+        {
+            get { return feedbackText; }
+            set
+            {
+                if (feedbackText != value)
+                {
+                    SetProperty(ref feedbackText, value);//informs view of change
+                }
+            }
+        }
+
+        private string feedbackTextColour;
+        public string FeedbackTextColour
+        {
+            get { return feedbackTextColour; }
+            set
+            {
+                if (feedbackTextColour != value)
+                {
+                    SetProperty(ref feedbackTextColour, value);//informs view of change
+                }
+            }
+        }
+
+        private bool feedbackTextIsVisible;
+        public bool FeedbackTextIsVisible
+        {
+            get { return feedbackTextIsVisible; }
+            set
+            {
+                if (feedbackTextIsVisible != value)
+                {
+                    SetProperty(ref feedbackTextIsVisible, value);//informs view of change
                 }
             }
         }
@@ -58,10 +96,13 @@ namespace COMP3000Project.Views.Login
             Password = "p";
 
             //set commands
-            //Login = new Command(async () => await ExecuteLogin());
+            Login = new Command(async () => await ExecuteLogin());
             GoToSignUpPage = new Command(async () => await ExecuteGoToSignUpPage());
 
-            Login = new Command(() => displayNotification());
+            FeedbackText = "";
+            FeedbackTextColour = "Green";
+            FeedbackTextIsVisible = false;
+
 
             WebsocketHandler.InitialiseConnectionAsync();
             WebsocketHandler.registerSubscriber(this);
@@ -105,6 +146,7 @@ namespace COMP3000Project.Views.Login
         {
             if(UandPAreValid(Username, Password))
             {
+                showLoginInProgress();
                 WebsocketHandler.RequestLoginExistingUser(Username, Password);
                 return null;
             }
@@ -119,17 +161,48 @@ namespace COMP3000Project.Views.Login
             await Navigation.PushAsync(nextPage, true);
         }
 
+        public void hideLoginFeedbackText()
+        {
+            FeedbackTextIsVisible = false;
+        }
+        void showLoginSuccess()
+        {
+            FeedbackText = "Login successful!";
+            FeedbackTextColour = "Green";
+            FeedbackTextIsVisible = true;
+        }
+        void showLoginInProgress()
+        {
+            FeedbackText = "Processing...";
+            FeedbackTextColour = "Orange";
+            FeedbackTextIsVisible = true;
+        }
+        void showLoginRejected()
+        {
+            FeedbackText = "Login rejected!";
+            FeedbackTextColour = "Red";
+            FeedbackTextIsVisible = true;
+        }
+
+
         public void Update(Message message)
         {
             switch (message.type)
             {
                 case "loginRequestGranted":
                     Console.WriteLine("[MSG] login page, proceeding to main menu...");
+                    showLoginSuccess();
 
                     UserDetails.setDetails(Username, Password);
 
                     MainMenuPage nextPage = new MainMenuPage();
                     Navigation.PushAsync(nextPage, true);
+                    break;
+
+                case "loginRequestRejected":
+                    Console.WriteLine("[MSG] login page, login rejected...");
+                    showLoginRejected();
+
                     break;
 
                 default:

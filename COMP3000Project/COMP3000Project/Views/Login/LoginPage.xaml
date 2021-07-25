@@ -9,6 +9,12 @@
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
 
+            <Label Text="{Binding FeedbackText}"
+                   TextColor="{Binding FeedbackTextColour}"
+                   IsVisible="{Binding FeedbackTextIsVisible}"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+
             <Entry Placeholder="username"
                    Text="{Binding Username}"
                    x:Name="entUsername"/>

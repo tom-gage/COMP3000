@@ -20,5 +20,10 @@ namespace COMP3000Project.Views.SearchParameters
             viewModel = new SearchParametersPageViewModel();
             BindingContext = viewModel;
         }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+        }
     }
 }

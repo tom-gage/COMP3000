@@ -65,7 +65,22 @@ namespace COMP3000Project.Views.Search
         }
 
         //CONSTRUCTOR 2
-        public SearchPageViewModel(string searchCode)//joining existing search
+        //public SearchPageViewModel(string searchCode)//joining existing search
+        //{
+        //    //set commands
+        //    Swipe = new Command<SwipedCardEventArgs>(ExecuteSwipe);
+
+        //    //set vars
+        //    EateryOptions = new ObservableCollection<EateryOption>();
+
+        //    //subscribe to messages
+        //    WebsocketHandler.registerSubscriber(this);
+
+        //    JoinExistingSearch(searchCode);
+        //}
+
+        //CONSTRUCTOR 3
+        public SearchPageViewModel(string eateryOptionsJson)//joining existing search
         {
             //set commands
             Swipe = new Command<SwipedCardEventArgs>(ExecuteSwipe);
@@ -76,7 +91,7 @@ namespace COMP3000Project.Views.Search
             //subscribe to messages
             WebsocketHandler.registerSubscriber(this);
 
-            JoinExistingSearch(searchCode);
+            populateOptionsArray(eateryOptionsJson);
         }
 
         public async void StartNewSearch(string location, string time, string[] eateryTypes)

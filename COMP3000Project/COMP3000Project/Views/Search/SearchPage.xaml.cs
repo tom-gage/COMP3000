@@ -28,5 +28,7 @@ namespace COMP3000Project.Views.Search
             viewModel = new SearchPageViewModel(SearchCode);
             BindingContext = viewModel;
         }
+
+
     }
 }

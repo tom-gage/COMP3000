@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="COMP3000Project.Views.JoinSearchParameters.JoinSearchParametersPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Welcome to Xamarin.Forms!"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+
+            <Label Text="{Binding FeedbackText}"
+                   TextColor="{Binding FeedbackTextColour}"
+                   IsVisible="{Binding FeedbackTextIsVisible}"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+
+            <Entry Placeholder="Search Code"
+                   Text="{Binding SearchCode}"
+                   x:Name="entSearchCode"/>
+
+            <Button Text="join a search!"
+                    Command="{Binding JoinSearch}"
+                    />
+            
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

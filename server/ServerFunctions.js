@@ -164,13 +164,22 @@ class ServerFunctions{
         console.log("[SEARCH] user joining search");
         //get existing search in ACTIVE_SEARCHES by search code
         let search = this.getActiveSearch(searchCode);
-        //get user by username
-        //add user to the search
-        search.addParticipant(this.getUser(username));
 
-        //send feedback to app
-        let MSG = new Message(1, "joinSearchRequestGranted", "", [search.ID, search.EateryOptions, search.Participants]);
-        this.sendToUser(username, MSG);
+        if(search){
+            //if search is valid
+            //get user by username
+            //add user to the search
+            search.addParticipant(this.getUser(username));
+
+            //send feedback to app
+            let MSG = new Message(1, "joinSearchRequestGranted", searchCode, [search.ID, search.EateryOptions, search.Participants]);
+            this.sendToUser(username, MSG);
+        } else {
+            //else, reject request
+            let MSG = new Message(1, "joinSearchRequestRejected", searchCode, []);
+            this.sendToUser(username, MSG);
+        }
+
 
     }
 
@@ -458,8 +467,8 @@ class ServerFunctions{
                 }
 
             });
-            // console.log("returning... " + false);
-            // resolve(false);
+             console.log("returning... " + false);
+             resolve(false);
         })
 
         return credentialsValidity;
@@ -481,6 +490,18 @@ class ServerFunctions{
 
         }
     }
+
+        rejectLoginRequest(ws){
+            //inform user that their login request is granted
+            let MSG = new Message(1, "loginRequestRejected", "", []);
+
+            try{
+                ws.send(JSON.stringify(MSG));
+                console.log('[LOGIN] user login rejected');
+            } catch {
+
+            }
+        }
 
     async updateUsername(username, password, newUsername){
         console.log("[LOGIN] updating username...");
