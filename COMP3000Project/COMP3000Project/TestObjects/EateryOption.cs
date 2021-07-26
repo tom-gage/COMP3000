@@ -492,6 +492,45 @@ namespace COMP3000Project.TestObjects
             }
         }
 
+        string address;
+        public string Address
+        {
+            get
+            {
+                return address;
+            }
+            set
+            {
+                if (address == value)
+                {
+                    return;
+                }
+                address = value;
+                HandlePropertyChanged();
+            }
+        }
+
+
+        string phoneNumber;
+        public string PhoneNumber
+        {
+            get
+            {
+                return phoneNumber;
+            }
+            set
+            {
+                if (phoneNumber == value)
+                {
+                    return;
+                }
+                phoneNumber = value;
+                HandlePropertyChanged();
+            }
+        }
+
+
+
         public EateryOption(string ID, string title, string description, float rating, string photoReference0, string photoReference1, string photoReference2, string photoReference3, string photoReference4, string[] Votes)
         {
             this.ID = ID;

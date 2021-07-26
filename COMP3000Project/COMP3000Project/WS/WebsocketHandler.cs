@@ -45,6 +45,19 @@ namespace COMP3000Project.WS
 
         }
 
+        //asks the server to delete favourite eatery
+        public static async void RequestDeleteFavouriteEatery(string username, string password, string eateryTitle)
+        {
+            string[] messageItems = { username, password, eateryTitle };
+
+            //make request message object
+            Message request = new Message("1", "deleteFavouriteEatery", "", messageItems);
+
+            //send to server
+            SendRequest(request);
+        }
+
+
         //asks the server to add note to favourite
         public static async void RequestAddNoteToFavouriteEatery(string username, string password, string eateryTitle, string note)
         {
@@ -56,6 +69,8 @@ namespace COMP3000Project.WS
             //send to server
             SendRequest(request);
         }
+
+
 
         //asks the server to add eatery to favs
         public static async void RequestGetFavourites(string username, string password)
@@ -256,75 +271,6 @@ namespace COMP3000Project.WS
 
                             Console.WriteLine("[WS] Got a message of type " + message.type);
                             updateSubscribers(message);
-                            // Message was intended for us!
-                            //switch (message.type)
-                            //{
-                            //    case "debugMessage":
-                            //        Console.WriteLine(message.Body);
-                            //        break;
-
-                            //    case "eateryOptionsArray":
-
-                            //        updateSubscribers(message);
-
-                            //        break;
-
-                            //    case "loginRequestGranted":
-
-                            //        //Console.WriteLine("[WS] got LoginRequestGranted !!");
-                            //        updateSubscribers(message);
-                            //        break;
-
-                            //    case "usernameUpdated":
-
-                            //        //Console.WriteLine("[WS] got username updated !!");
-                            //        updateSubscribers(message);
-                            //        break;
-
-                            //    case "passwordUpdated":
-
-                            //        //Console.WriteLine("[WS] got password updated !!");
-                            //        updateSubscribers(message);
-                            //        break;
-
-                            //    case "userDeleted":
-
-                            //        //Console.WriteLine("[WS] got password updated !!");
-                            //        updateSubscribers(message);
-                            //        break;
-
-                            //    case "newActiveSearchRequestGranted":
-                            //        updateSubscribers(message);
-                            //        break;
-
-                            //    case "joinSearchRequestGranted":
-                            //        updateSubscribers(message);
-                            //        break;
-
-                            //    case "gotMatch":
-                            //        updateSubscribers(message);
-                            //        break;
-
-                            //    case "gotPastSearches":
-                            //        updateSubscribers(message);
-                            //        break;
-
-                            //    case "eateryAddedToFavourites":
-                            //        updateSubscribers(message);
-                            //        break;
-
-                            //    case "gotFavourites":
-                            //        updateSubscribers(message);
-                            //        break;
-
-                            //    case "noteUpdated":
-                            //        updateSubscribers(message);
-                            //        break;
-
-                            //    default:
-
-                            //        break;
-                            //}
                         }
 
                         ms.Seek(0, SeekOrigin.Begin);

@@ -10,11 +10,16 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
-                    <RowDefinition Height="45" />
-                    <RowDefinition Height="230" />
-                    <RowDefinition Height="45" />
-                    <RowDefinition Height="60" />
-                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -34,21 +39,36 @@
                    Grid.ColumnSpan="4"
                    Text="{Binding EateryRating}" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
 
+                
+                
+                <Label Grid.Row="2"
+                   Grid.ColumnSpan="4"
+                   Text="{Binding EateryAddress}" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
 
-                <Button Grid.Row="2"
+
+
+                <Label Grid.Row="3"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="4"
+                   Text="{Binding EateryPhoneNumber}" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+
+
+                <Button Grid.Row="4"
                         Grid.Column="1"
                         Grid.ColumnSpan="2"
-                        WidthRequest="20"
-                        HeightRequest="20"
+                        WidthRequest="50"
+                        HeightRequest="50"
                     Text="Favourite"
                     BackgroundColor="Green"
                     Command="{Binding AddToFavourites}"></Button>
 
-                <CollectionView Grid.Row="3"
+                <CollectionView Grid.Row="5"
                                 Grid.Column="0"
                             Grid.ColumnSpan="4"
                             ItemsSource="{Binding Images}"
-                            ItemsLayout="HorizontalList">
+                            ItemsLayout="HorizontalList"
+
+                            HeightRequest="150">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Grid Padding="10">
@@ -70,31 +90,31 @@
 
 
 
-                <Label Grid.Row="4"
+                <Label Grid.Row="6"
                    Grid.ColumnSpan="4"
                    Text="{Binding ReviewsHeader}" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
 
-                <Button Grid.Row="5"
+                <Button Grid.Row="7"
                     Grid.Column="0"
                     Text="Sort by Oldest"
                     Command="{Binding SortByOldest}"></Button>
 
-                <Button Grid.Row="5"
+                <Button Grid.Row="7"
                     Grid.Column="1"
                     Text="Sort by youngest"
                     Command="{Binding SortByYoungest}"></Button>
 
-                <Button Grid.Row="5"
+                <Button Grid.Row="7"
                     Grid.Column="2"
                     Text="Sort by best"
                     Command="{Binding SortByBest}"></Button>
 
-                <Button Grid.Row="5"
+                <Button Grid.Row="7"
                     Grid.Column="3"
                     Text="Sort by worst"
                     Command="{Binding SortByWorst}"></Button>
 
-                <CollectionView Grid.Row="6"
+                <CollectionView Grid.Row="8"
                             Grid.ColumnSpan="4"
                             ItemsSource="{Binding Reviews}">
                     <CollectionView.ItemTemplate>

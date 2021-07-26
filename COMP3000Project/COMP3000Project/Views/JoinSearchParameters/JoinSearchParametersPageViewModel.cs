@@ -85,6 +85,7 @@ namespace COMP3000Project.Views.JoinSearchParameters
         }
 
 
+
         //FUNCTIONS
         async Task<object> ExecuteJoinSearch()
         {

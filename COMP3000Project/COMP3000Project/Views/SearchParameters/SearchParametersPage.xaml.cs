@@ -21,6 +21,14 @@ namespace COMP3000Project.Views.SearchParameters
             BindingContext = viewModel;
         }
 
+        public SearchParametersPage(string location, string time, string[] eateryTypes)
+        {
+            InitializeComponent();
+
+            viewModel = new SearchParametersPageViewModel(location, time, eateryTypes);
+            BindingContext = viewModel;
+        }
+
         protected override void OnAppearing()
         {
             base.OnAppearing();

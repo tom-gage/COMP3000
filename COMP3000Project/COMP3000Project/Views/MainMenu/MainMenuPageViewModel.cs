@@ -105,7 +105,7 @@ namespace COMP3000Project.Views.MainMenu
         {
             string[] strArr = { SelectedPastSearch.EateryType };
 
-            SearchPage nextPage = new SearchPage(SelectedPastSearch.Location, SelectedPastSearch.Time, strArr);
+            SearchParametersPage nextPage = new SearchParametersPage(SelectedPastSearch.Location, SelectedPastSearch.Time, strArr);
 
             await Navigation.PushAsync(nextPage, true);
             return null;
@@ -114,8 +114,6 @@ namespace COMP3000Project.Views.MainMenu
 
         async Task<object> ExecuteGoToStartSearch()
         {
-            //bool startingNewSearch = true;
-            //SearchPage nextPage = new SearchPage(startingNewSearch, "");
             SearchParametersPage nextPage = new SearchParametersPage();
 
             await Navigation.PushAsync(nextPage, true);

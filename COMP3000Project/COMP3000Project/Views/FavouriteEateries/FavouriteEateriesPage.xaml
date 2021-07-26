@@ -1,25 +1,57 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="COMP3000Project.Views.FavouriteEateries.FavouriteEateriesPage">
+             x:Class="COMP3000Project.Views.FavouriteEateries.FavouriteEateriesPage"
+             Title="Favourites">
     <ContentPage.Content>
         <ScrollView>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
 
                 <Label Grid.Row="0"
                        Grid.Column="0"
-                       Text="Favs"></Label>
+                       Grid.ColumnSpan="5"
+                       
+                       FontSize="Large" FontAttributes="Bold" TextColor="Black"
+                       
+                       HorizontalTextAlignment="Center"
+                       Text="Welcome to the Favourites Page"></Label>
 
-                <CollectionView Grid.Row="0"
+                <Label Grid.Row="1"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="5"
+                       
+                       FontSize="Medium" TextColor="Black"
+                       
+                       HorizontalTextAlignment="Center"
+                       Text="Below you will find establishments you have saved"></Label>
+
+                <Label 
+                    Grid.Row="2"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="5"
+                    Text="{Binding FeedbackText}"
+                   TextColor="{Binding FeedbackTextColour}"
+                   IsVisible="{Binding FeedbackTextIsVisible}"
+                    HorizontalTextAlignment="Center"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+
+                <CollectionView Grid.Row="3"
                                 Grid.Column="0"
-                            Grid.ColumnSpan="1"
+                            Grid.ColumnSpan="5"
                                 SelectionMode="Single"
                             ItemsSource="{Binding Favourites}"
                                 SelectionChangedCommand="{Binding GoToFavouriteEateryDetailsPage}"

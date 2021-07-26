@@ -47,6 +47,32 @@ namespace COMP3000Project.Views.EateryOptionDetails
             }
         }
 
+        private string eateryAddress;
+        public string EateryAddress
+        {
+            get { return eateryAddress; }
+            set
+            {
+                if (eateryAddress != value)
+                {
+                    SetProperty(ref eateryAddress, value);//informs view of change
+                }
+            }
+        }
+
+        private string eateryPhoneNumber;
+        public string EateryPhoneNumber
+        {
+            get { return eateryPhoneNumber; }
+            set
+            {
+                if (eateryPhoneNumber != value)
+                {
+                    SetProperty(ref eateryPhoneNumber, value);//informs view of change
+                }
+            }
+        }
+
         private string reviewsHeader;
         public string ReviewsHeader
         {
@@ -99,6 +125,9 @@ namespace COMP3000Project.Views.EateryOptionDetails
 
             EateryTitle = eateryOption.Title;
             EateryRating = eateryOption.FormattedRating;
+
+            EateryAddress = eateryOption.Address;
+            EateryPhoneNumber = eateryOption.PhoneNumber;
 
             populateImagesArray(eateryOption);
 

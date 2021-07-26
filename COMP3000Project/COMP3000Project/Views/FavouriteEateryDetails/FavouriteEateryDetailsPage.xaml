@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="COMP3000Project.Views.FavouriteEateryDetails.FavouriteEateryDetailsPage">
+             x:Class="COMP3000Project.Views.FavouriteEateryDetails.FavouriteEateryDetailsPage"
+              Title="Favourites Details">
     <ContentPage.Content>
         <ScrollView>
             <Grid>
@@ -81,6 +82,14 @@
                         Grid.ColumnSpan="4"
                         Text="Save Note!"
                     Command="{Binding SaveNote}"
+                    />
+
+                <Button Grid.Row="6"
+                        Grid.RowSpan="1"
+                       Grid.Column="0"
+                        Grid.ColumnSpan="4"
+                        Text="Delete Favourite"
+                    Command="{Binding DeleteFavourite}"
                     />
 
             </Grid>

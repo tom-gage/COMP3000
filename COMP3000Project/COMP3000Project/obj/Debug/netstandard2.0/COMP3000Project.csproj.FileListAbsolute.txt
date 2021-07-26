@@ -75,3 +75,4 @@ C:\Users\Tom\Documents\COMP3000\COMP3000Project\COMP3000Project\obj\Debug\netsta
 C:\Users\Tom\Documents\COMP3000\COMP3000Project\COMP3000Project\obj\Debug\netstandard2.0\Views\SignUp\SignUpPage.xaml.g.cs
 C:\Users\Tom\Documents\COMP3000\COMP3000Project\COMP3000Project\obj\Debug\netstandard2.0\Views\Testing\TestingPage2.xaml.g.cs
 C:\Users\Tom\Documents\COMP3000\COMP3000Project\COMP3000Project\obj\Debug\netstandard2.0\Views\JoinSearchParameters\JoinSearchParametersPage.xaml.g.cs
+C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project\obj\Debug\netstandard2.0\Views\JoinSearchParameters\JoinSearchParametersPage.xaml.g.cs

@@ -70,6 +70,7 @@ namespace COMP3000Project.Views.FavouriteEateryDetails
 
         //COMMANDS
         public ICommand SaveNote { get; }
+        public ICommand DeleteFavourite { get; }
 
         //constructor
         public FavouriteEateryDetailsViewModel(EateryOption eateryOption)
@@ -78,6 +79,7 @@ namespace COMP3000Project.Views.FavouriteEateryDetails
 
             //set commands
             SaveNote = new Command(async () => ExecuteSaveNote());
+            DeleteFavourite = new Command(async () => ExecuteDeleteFavourite());
 
             Images = new ObservableCollection<ImageHolder>();
             Reviews = eateryOption.Reviews;
@@ -96,6 +98,11 @@ namespace COMP3000Project.Views.FavouriteEateryDetails
         public async void ExecuteSaveNote()
         {
             WebsocketHandler.RequestAddNoteToFavouriteEatery(UserDetails.Username, UserDetails.Password, EateryTitle, Note);
+        }
+
+        public async void ExecuteDeleteFavourite()
+        {
+            WebsocketHandler.RequestDeleteFavouriteEatery(UserDetails.Username, UserDetails.Password, EateryTitle);
         }
 
         async void populateImagesArray(EateryOption eateryOption)
@@ -126,12 +133,17 @@ namespace COMP3000Project.Views.FavouriteEateryDetails
             }
         }
 
-        public void Update(Message message)
+        async public void Update(Message message)
         {
             switch (message.type)
             {
                 case "":
                     Console.WriteLine("...");
+
+                    break;
+
+                case "favouriteEateryDeleted":
+                    await Navigation.PopAsync();
 
                     break;
 

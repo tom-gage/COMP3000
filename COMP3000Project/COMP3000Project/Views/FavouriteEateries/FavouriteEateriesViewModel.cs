@@ -47,6 +47,45 @@ namespace COMP3000Project.Views.FavouriteEateries
             }
         }
 
+        private string feedbackText;
+        public string FeedbackText
+        {
+            get { return feedbackText; }
+            set
+            {
+                if (feedbackText != value)
+                {
+                    SetProperty(ref feedbackText, value);//informs view of change
+                }
+            }
+        }
+
+        private string feedbackTextColour;
+        public string FeedbackTextColour
+        {
+            get { return feedbackTextColour; }
+            set
+            {
+                if (feedbackTextColour != value)
+                {
+                    SetProperty(ref feedbackTextColour, value);//informs view of change
+                }
+            }
+        }
+
+        private bool feedbackTextIsVisible;
+        public bool FeedbackTextIsVisible
+        {
+            get { return feedbackTextIsVisible; }
+            set
+            {
+                if (feedbackTextIsVisible != value)
+                {
+                    SetProperty(ref feedbackTextIsVisible, value);//informs view of change
+                }
+            }
+        }
+
 
         ObservableCollection<EateryOption> _favourites;
         public ObservableCollection<EateryOption> Favourites { get => _favourites; set => SetProperty(ref _favourites, value); }
@@ -61,6 +100,10 @@ namespace COMP3000Project.Views.FavouriteEateries
             //set commands
             GoToFavouriteEateryDetailsPage = new Command(async () => await ExecuteGoToFavouriteEateryDetailsPage());
 
+
+            FeedbackText = "";
+            FeedbackTextColour = "Red";
+            FeedbackTextIsVisible = false;
 
 
             WebsocketHandler.registerSubscriber(this);
@@ -80,7 +123,26 @@ namespace COMP3000Project.Views.FavouriteEateries
         async void populateFavouritesArray(string optionsJSON)
         {
             Favourites = JsonSerializer.Deserialize<ObservableCollection<EateryOption>>(optionsJSON);
+
+            if (Favourites.Count < 1)
+            {
+                showFeedback("No favourites found!", "Red");
+            }
         }
+
+
+        public void hideFeedbackText()
+        {
+            FeedbackTextIsVisible = false;
+        }
+        void showFeedback(string text, string colour)
+        {
+            FeedbackText = text;
+            FeedbackTextColour = colour;
+            FeedbackTextIsVisible = true;
+        }
+
+
 
 
         public void Update(Message message)

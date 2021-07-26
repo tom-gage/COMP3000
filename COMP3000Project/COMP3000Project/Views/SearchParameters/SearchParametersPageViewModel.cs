@@ -118,6 +118,37 @@ namespace COMP3000Project.Views.SearchParameters
             //WebsocketHandler.HandleMessages();
         }
 
+        //CONSTRUCTOR 2, for initialising past searches
+        public SearchParametersPageViewModel(string location, string time, string[] eateryTypes)
+        {
+            //set vars
+            SelectedLocation = location;
+            EateryTypeOptions = new ObservableCollection<string>();
+            SelectedEateryTypeOptions = new ObservableCollection<object>();
+
+
+
+            EateryTypeOptions.Add("bar");
+            EateryTypeOptions.Add("cafe");
+            EateryTypeOptions.Add("restaurant");
+            EateryTypeOptions.Add("meal_takeaway");
+            EateryTypeOptions.Add("bakery");
+            EateryTypeOptions.Add("meal_delivery");
+
+            SelectedEateryTypeOption = eateryTypes[0];
+
+
+            //SelectedTime = DateTime.Now.TimeOfDay;
+            SelectedTime = TimeSpan.Parse(time[0].ToString() + time[1].ToString() + ":" + time[2].ToString() + time[3].ToString());
+
+
+
+            //set commands
+            GoToStartSearch = new Command(async () => await ExecuteGoToSearchPage());
+
+            WebsocketHandler.registerSubscriber(this);
+        }
+
         //FUNCTIONS
         public bool ValidateSearchCode(string searchCode)
         {
@@ -139,13 +170,6 @@ namespace COMP3000Project.Views.SearchParameters
 
         async Task<object> ExecuteGoToSearchPage()
         {
-            //List<string> eateryTypeOptionsArray = new List<string>();
-
-            //for (int i = 0; i < SelectedEateryTypeOptions.Count; i++)
-            //{
-            //    eateryTypeOptionsArray.Add(SelectedEateryTypeOptions[i].ToString());
-            //}
-
             if (SelectedLocation == null)
             {
                 SelectedLocation = "plymouth, uk";

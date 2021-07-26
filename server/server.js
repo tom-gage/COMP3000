@@ -70,6 +70,18 @@ wss.on('connection', function connection(ws) {
                 serverFunctions.sendTestMessage(ws);
                 break;
 
+
+            case "deleteFavouriteEatery":
+                console.log("[MSG] received delete favourite eatery request");
+                serverFunctions.validateCredentials(username, password).then((credentialsAreValid)=>{
+                    console.log("attempting validation, creds are: " + credentialsAreValid);
+                    if(credentialsAreValid){
+                        serverFunctions.deleteFavouriteEatery(username, eateryTitle);
+                    }
+                })
+                break;
+
+
             case "updateNote":
                 console.log("[MSG] received get favourites request");
                 serverFunctions.validateCredentials(username, password).then((credentialsAreValid)=>{
@@ -140,7 +152,7 @@ wss.on('connection', function connection(ws) {
                 console.log(newUsername);
 
                 serverFunctions.validateCredentials(username, password).then((credentialsAreValid)=>{
-                    console.log("attempting log in, creds are: " + credentialsAreValid);
+                    // console.log("attempting log in, creds are: " + credentialsAreValid);
                     if(credentialsAreValid){
                         if(serverFunctions.usernameNotTaken(newUsername)){
                             serverFunctions.updateUsername(username, password, newUsername);
@@ -155,7 +167,7 @@ wss.on('connection', function connection(ws) {
                 console.log(password);
                 console.log(newPassword)
                 serverFunctions.validateCredentials(username, password).then((credentialsAreValid)=>{
-                    console.log("attempting log in, creds are: " + credentialsAreValid);
+                    // console.log("attempting log in, creds are: " + credentialsAreValid);
                     if(credentialsAreValid){
                         //do update password
                         //pass feedback to app
@@ -170,7 +182,7 @@ wss.on('connection', function connection(ws) {
                 console.log(username);
                 console.log(password);
                 serverFunctions.validateCredentials(username, password).then((credentialsAreValid)=>{
-                    console.log("attempting log in, creds are: " + credentialsAreValid);
+                    // console.log("attempting log in, creds are: " + credentialsAreValid);
                     if(credentialsAreValid){
                         //do delete user
                         //pass feedback to app

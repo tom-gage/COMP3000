@@ -47,6 +47,21 @@ class ServerFunctions{
         await DB.closeConnection();
     }
 
+    deleteFavouriteEatery(username, eateryTitle){
+
+        let thisInstance = this;
+
+        this.EateryOptionModel.findOneAndDelete({Username : username, Title : eateryTitle}, function (err) {
+            if (err){
+                return console.log(err);
+            } else {
+                let MSG = new Message(1, "favouriteEateryDeleted", "", []);
+                thisInstance.sendToUser(username, MSG);
+            }
+
+        });
+    }
+
     updateFavouriteEateryNote(username, eateryTitle, note){
 
         let thisInstance = this;
@@ -282,17 +297,20 @@ class ServerFunctions{
 
                         let currentDay = new Date().getDay();
 
-                        if(placeDetailsResponse.data.result.opening_hours.periods[currentDay].open.time === undefined || placeDetailsResponse.data.result.opening_hours.periods[currentDay].close.time === undefined){
-                            eateryData.data.results[i].openingTimeForToday = null;
-                            eateryData.data.results[i].closingTimeForToday = null;
-                        } else {
+                        try{
                             eateryData.data.results[i].openingTimeForToday = placeDetailsResponse.data.result.opening_hours.periods[currentDay].open.time;
                             eateryData.data.results[i].closingTimeForToday = placeDetailsResponse.data.result.opening_hours.periods[currentDay].close.time;
+                        }catch(err){
+                            eateryData.data.results[i].openingTimeForToday = null;
+                            eateryData.data.results[i].closingTimeForToday = null;
                         }
 
                         if(placeDetailsResponse.data.result.reviews){
                             eateryData.data.results[i].reviews = placeDetailsResponse.data.result.reviews;
                         }
+
+                        eateryData.data.results[i].formatted_address = placeDetailsResponse.data.result.formatted_address;
+                        eateryData.data.results[i].formatted_phone_number = placeDetailsResponse.data.result.formatted_phone_number;
 
                         counter++;
 
@@ -302,7 +320,8 @@ class ServerFunctions{
 
                     }).catch((err) => {
                         console.log("PLACE DETAILS SEARCH RESPONSE IS: " + counter);
-                        console.log("- error! -");
+                        // console.log("- error! -");
+                        console.log(err)
 
                         counter++;
                         eateryData.data.results[i].openingTimeForToday = null;
@@ -335,9 +354,13 @@ class ServerFunctions{
     compileAndSendToUser(username, eateryData, time){
         let eateryOptionsArray = this.createEateryOptionsArray(eateryData, time);
 
+        // console.log(eateryOptionsArray);
+
         let newActiveSearch = new ActiveSearch(this.getUser(username), eateryOptionsArray);
 
         ACTIVE_SEARCHES.push(newActiveSearch);
+
+        console.log("Search code is: " + newActiveSearch.ID);
 
         //then pass a success message back to the user, containing the ActiveSearch object
         let MSG = new Message(1, "newActiveSearchRequestGranted", "", [newActiveSearch.ID, newActiveSearch.EateryOptions]);
@@ -372,6 +395,8 @@ class ServerFunctions{
                 let ClosingTime = eateryData.data.results[i].closingTimeForToday;
                 let TimeToClosingTime = 0;
                 let Notes = "";
+                let Address = "";
+                let PhoneNumber = "";
 
                 if(ClosingTime !=  null){
                     TimeToClosingTime = Number(ClosingTime.toString().slice(0, 2) - Number(desiredArrivalTime.toString().slice(0, 2)));
@@ -411,6 +436,12 @@ class ServerFunctions{
                         }
                     }
 
+
+
+                    Address = eateryData.data.results[i].formatted_address;
+                    PhoneNumber = eateryData.data.results[i].formatted_phone_number;
+
+
                     let eatery = new EateryOption(
                         ID,
                         name,
@@ -425,7 +456,9 @@ class ServerFunctions{
                         OpeningTime,
                         ClosingTime,
                         TimeToClosingTime.toString(),
-                        Notes
+                        Notes,
+                        Address,
+                        PhoneNumber
 
                     );
 
@@ -459,7 +492,7 @@ class ServerFunctions{
         let that = this;
 
         let credentialsValidity = await new Promise((resolve, reject) => {
-            console.log(USERS);
+            // console.log(USERS);
 
             USERS.find(function (user) {//if credentials match existing user
                 if(user.Username === username){
