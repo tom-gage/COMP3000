@@ -115,7 +115,9 @@ class ServerFunctions{
                 thisEatery.OpeningTime,
                 thisEatery.ClosingTime,
                 "0",
-                thisEatery.Notes
+                thisEatery.Notes,
+                thisEatery.Address,
+                thisEatery.PhoneNumber
 
             );
 
@@ -129,6 +131,8 @@ class ServerFunctions{
     addEateryToFavourites(username, eatery){
         let newEateryOption = JSON.parse(eatery);
         // newEateryOption.username = username;
+
+        console.log(newEateryOption);
 
         let thisInstance = this;
 
@@ -156,9 +160,15 @@ class ServerFunctions{
             let match = search.checkForMatch();
 
             if(match){
+                console.log("[MATCH] got match!")
+                for(let i = 0; i < search.Participants.length; i++){
 
-                let MSG = new Message(1, "matched!", "", [match]);
-                this.sendToUser(username, MSG);
+                    console.log("sending gotMatch message to "+ search.Participants[i].Username);
+
+                    let MSG = new Message(1, "matched!", "", [match]);
+                    this.sendToUser(search.Participants[i].Username, MSG);
+                }
+
             }
 
             search.showVotes();

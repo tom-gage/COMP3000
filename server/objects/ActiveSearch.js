@@ -42,6 +42,7 @@ class ActiveSearch{
 
     checkForMatch(){
         //go through eateryOptions, where an eateryOption has a vote from each participant and the total number of votes is greater than one, return the eatery option
+        console.log("checking for a match...")
         for (let i = 0; i < this.EateryOptions.length; i++)
         {
             let selectedEateryOption = this.EateryOptions[i];

@@ -30,19 +30,6 @@ namespace COMP3000Project.Views.MatchDetails
             }
         }
 
-        private string _description;
-        public string Description
-        {
-            get { return _description; }
-            set
-            {
-                if (_description != value)
-                {
-                    SetProperty(ref _description, value);//informs view of change
-                }
-            }
-        }
-
         private string _rating;
         public string Rating
         {
@@ -52,6 +39,32 @@ namespace COMP3000Project.Views.MatchDetails
                 if (_rating != value)
                 {
                     SetProperty(ref _rating, value);//informs view of change
+                }
+            }
+        }
+
+        private string eateryAddress;
+        public string EateryAddress
+        {
+            get { return eateryAddress; }
+            set
+            {
+                if (eateryAddress != value)
+                {
+                    SetProperty(ref eateryAddress, value);//informs view of change
+                }
+            }
+        }
+
+        private string eateryPhoneNumber;
+        public string EateryPhoneNumber
+        {
+            get { return eateryPhoneNumber; }
+            set
+            {
+                if (eateryPhoneNumber != value)
+                {
+                    SetProperty(ref eateryPhoneNumber, value);//informs view of change
                 }
             }
         }
@@ -83,8 +96,9 @@ namespace COMP3000Project.Views.MatchDetails
         {
             EateryImage = eateryOption.EateryImage;
             Title = eateryOption.Title;
-            Description = eateryOption.Description;
             Rating = eateryOption.Rating.ToString();
+            EateryAddress = eateryOption.Address;
+            EateryPhoneNumber = eateryOption.PhoneNumber;
 
             //set commands
             GoToStartSearch = new Command(async () => await GoToExecuteStartSearch());

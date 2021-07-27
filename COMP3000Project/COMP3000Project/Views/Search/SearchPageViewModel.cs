@@ -192,7 +192,7 @@ namespace COMP3000Project.Views.Search
                     populateOptionsArray(message.Items[1].ToString());
                     break;
 
-                case "gotMatch":
+                case "matched!":
                     Console.WriteLine("[MSG] got match!");
                     //navigating to match page
                     EateryOption eateryOption = JsonSerializer.Deserialize<EateryOption>(message.Items[0].ToString());

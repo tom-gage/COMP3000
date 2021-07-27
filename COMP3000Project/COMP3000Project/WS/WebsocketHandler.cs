@@ -87,7 +87,7 @@ namespace COMP3000Project.WS
         //asks the server to add eatery to favs
         public static async void RequestAddToFavourites(string username, string password, EateryOption eateryOption)
         {
-            TransmittableEateryOption x = new TransmittableEateryOption(username, eateryOption.ID, eateryOption.Title, eateryOption.Description, eateryOption.Rating, eateryOption.PhotoReference0, eateryOption.PhotoReference1, eateryOption.PhotoReference2, eateryOption.PhotoReference3, eateryOption.PhotoReference4, new List<Review>(eateryOption.Reviews).ToArray(), eateryOption.Votes, eateryOption.OpeningTime, eateryOption.ClosingTime, "0");
+            TransmittableEateryOption x = new TransmittableEateryOption(username, eateryOption.ID, eateryOption.Title, eateryOption.Description, eateryOption.Rating, eateryOption.PhotoReference0, eateryOption.PhotoReference1, eateryOption.PhotoReference2, eateryOption.PhotoReference3, eateryOption.PhotoReference4, new List<Review>(eateryOption.Reviews).ToArray(), eateryOption.Votes, eateryOption.OpeningTime, eateryOption.ClosingTime, "0", eateryOption.Address, eateryOption.PhoneNumber);
 
             string y = JsonConvert.SerializeObject(x);
             string[] messageItems = { username, password, y};

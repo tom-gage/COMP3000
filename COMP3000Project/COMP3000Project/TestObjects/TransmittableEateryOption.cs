@@ -289,7 +289,35 @@ namespace COMP3000Project.TestObjects
             }
         }
 
-        public TransmittableEateryOption(string username, string ID, string Title, string description, float rating, string photoReference0, string photoReference1, string photoReference2, string photoReference3, string photoReference4, Review[] reviews, string[] votes, string openingTime, string closingTime, string timeToClosingTime)
+        private string address;
+        public string Address
+        {
+            get { return address; }
+            set
+            {
+                if (address == value)
+                {
+                    return;
+                }
+                address = value;
+            }
+        }
+
+        private string phoneNumber;
+        public string PhoneNumber
+        {
+            get { return phoneNumber; }
+            set
+            {
+                if (phoneNumber == value)
+                {
+                    return;
+                }
+                phoneNumber = value;
+            }
+        }
+
+        public TransmittableEateryOption(string username, string ID, string Title, string description, float rating, string photoReference0, string photoReference1, string photoReference2, string photoReference3, string photoReference4, Review[] reviews, string[] votes, string openingTime, string closingTime, string timeToClosingTime, string address, string phoneNumber)
         {
             this.Username = username;
             this.ID = ID;
@@ -307,6 +335,9 @@ namespace COMP3000Project.TestObjects
 
             this.Reviews = reviews;
             this.Votes = votes;
+
+            this.Address = address;
+            this.PhoneNumber = phoneNumber;
         }
     }
 }

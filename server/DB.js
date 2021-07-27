@@ -43,7 +43,9 @@ async function initialiseConnection() {
         OpeningTime:String,
         ClosingTime:String,
         TimeToClosingTime:String,
-        Notes:String
+        Notes:String,
+        Address:String,
+        PhoneNumber:String
     });
 
     if(!User){//if User not initiated
