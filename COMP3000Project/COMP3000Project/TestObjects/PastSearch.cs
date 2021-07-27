@@ -140,6 +140,75 @@ namespace COMP3000Project.TestObjects
             }
         }
 
+        string dayOfSearch;
+        public string DayOfSearch
+        {
+            get
+            {
+                return dayOfSearch;
+            }
+            set
+            {
+                if (dayOfSearch == value)
+                {
+                    return;
+                }
+                dayOfSearch = value;
+                HandlePropertyChanged();
+            }
+        }
+
+        string monthOfSearch;
+        public string MonthOfSearch
+        {
+            get
+            {
+                return monthOfSearch;
+            }
+            set
+            {
+                if (monthOfSearch == value)
+                {
+                    return;
+                }
+                monthOfSearch = value;
+                HandlePropertyChanged();
+            }
+        }
+
+        string yearOfSearch;
+        public string YearOfSearch
+        {
+            get
+            {
+                return yearOfSearch;
+            }
+            set
+            {
+                if (yearOfSearch == value)
+                {
+                    return;
+                }
+                yearOfSearch = value;
+                HandlePropertyChanged();
+            }
+        }
+
+        string formattedDateOfSearch;
+        public string FormattedDateOfSearch
+        {
+            get { return DayOfSearch + "/" + MonthOfSearch + "/" + YearOfSearch; }
+            set
+            {
+                if (formattedDateOfSearch == value)
+                {
+                    return;
+                }
+                formattedDateOfSearch = value;
+                HandlePropertyChanged();
+            }
+        }
+
 
         void HandlePropertyChanged([CallerMemberName] string propertyName = "")
         {

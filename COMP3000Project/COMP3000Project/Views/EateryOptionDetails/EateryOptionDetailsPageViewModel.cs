@@ -98,6 +98,7 @@ namespace COMP3000Project.Views.EateryOptionDetails
         public ICommand SortByBest { get; }
         public ICommand SortByWorst { get; }
         public ICommand AddToFavourites { get; }
+        public ICommand CastVote { get; }
 
 
         //CONSTRUCTOR
@@ -110,6 +111,7 @@ namespace COMP3000Project.Views.EateryOptionDetails
             SortByBest = new Command(async () => await ExecuteSortByBest());
             SortByWorst = new Command(async () => await ExecuteSortByWorst());
             AddToFavourites = new Command(async () => await ExecuteAddToFavourites(eateryOption));
+            CastVote = new Command(async () => await ExecuteCastVote(eateryOption));
 
             Reviews = sortByYoungest(eateryOption.Reviews);
             Images = new ObservableCollection<ImageHolder>();
@@ -137,6 +139,11 @@ namespace COMP3000Project.Views.EateryOptionDetails
         }
 
         //FUNCTIONS
+        async Task<object> ExecuteCastVote(EateryOption eateryOption)
+        {
+            WebsocketHandler.RequestCastVote(UserDetails.Username, UserDetails.Password, UserDetails.SearchID, eateryOption.ID);
+            return null;
+        }
         async Task<object> ExecuteAddToFavourites(EateryOption eateryOption)
         {
             WebsocketHandler.RequestAddToFavourites(UserDetails.Username, UserDetails.Password, eateryOption);

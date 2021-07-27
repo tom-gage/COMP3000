@@ -67,9 +67,6 @@ class ActiveSearch{
                 voterPool.push(name);// add it to the voterPool
             }
 
-            // if(!voterPool.find(name)){//if name is not already in voterPool
-            //     voterPool.push(name);// add it to the voterPool
-            // }
         }
         return voterPool.length;
     }

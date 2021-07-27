@@ -16,9 +16,11 @@
                             SelectionMode="Single" 
                             SelectionChangedCommand="{Binding GoToStartPastSearch}"
                             SelectedItem="{Binding SelectedPastSearch}">
+                
+                
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Padding="10">
+                        <Grid Padding="5" Margin="5">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
@@ -28,16 +30,19 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <!--<Image Grid.RowSpan="2"
-                       Source="{Binding ImageUrl}"
-                       Aspect="AspectFill"
-                       HeightRequest="60"
-                       WidthRequest="60" />-->
+                            
                             
                             <Label Grid.Column="0"
                        Text="{Binding FormattedLocation}"
                        FontAttributes="Bold" />
-                            
+
+                            <Label Grid.Column="0"
+                                   Grid.Row="1"
+                       Text="{Binding FormattedDateOfSearch}"
+                       FontAttributes="Italic" 
+                                   VerticalOptions="End"
+                                   />
+
                             <Label Grid.Row="0"
                                 Grid.Column="1"
                                 Text="{Binding FormattedEateryType}"

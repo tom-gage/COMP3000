@@ -173,12 +173,6 @@ class ServerFunctions{
 
             search.showVotes();
 
-
-            //TEST STUFF
-            // let x = search.EateryOptions[0];
-            //
-            // let MSG = new Message(1, "gotMatch", "", [x]);
-            // this.sendToUser(username, MSG);
         }
 
 
@@ -227,7 +221,7 @@ class ServerFunctions{
             Time : time,
             EateryType : eateryType,
             DayOfSearch : date.getDate(),
-            MonthOfSearch : date.getMonth(),
+            MonthOfSearch : date.getMonth() + 1,
             YearOfSearch : date.getFullYear()
         };
 
@@ -237,6 +231,7 @@ class ServerFunctions{
 
 
         console.log('[PAST_SEARCHES] new past search created');
+        console.log(newPastSearch);
 
         return null;
     }
@@ -261,7 +256,8 @@ class ServerFunctions{
 
         client.geocode({params : {
                 address : locationName,
-                key : APIKey
+                key : APIKey,
+                region : "uk"
             },
             timeout:1000
 
@@ -314,6 +310,13 @@ class ServerFunctions{
                             eateryData.data.results[i].openingTimeForToday = null;
                             eateryData.data.results[i].closingTimeForToday = null;
                         }
+
+                        try{
+                            eateryData.data.results[i].detailsPhotosArray = placeDetailsResponse.data.result.photos;
+                        }catch(err){
+
+                        }
+
 
                         if(placeDetailsResponse.data.result.reviews){
                             eateryData.data.results[i].reviews = placeDetailsResponse.data.result.reviews;
@@ -413,25 +416,29 @@ class ServerFunctions{
                 }
 
 
-
+                // console.log("BUSINESS NAME IS: "+eateryData.data.results[i].name)
+                // console.log("PHOTOS ARRAY IS: ")
+                // console.log(eateryData.data.results[i].photos)
 
                 if(eateryData.data.results[i].photos){
+
+
                     ID = eateryData.data.results[i].photos[0].photo_reference;
 
                     if(eateryData.data.results[i].photos[0]){
                         photoRef0 = eateryData.data.results[i].photos[0].photo_reference
                     }
-                    if(eateryData.data.results[i].photos[1]){
-                        photoRef0 = eateryData.data.results[i].photos[1].photo_reference
+                    if(eateryData.data.results[i].detailsPhotosArray[1]){
+                        photoRef1 = eateryData.data.results[i].detailsPhotosArray[1].photo_reference
                     }
-                    if(eateryData.data.results[i].photos[2]){
-                        photoRef0 = eateryData.data.results[i].photos[2].photo_reference
+                    if(eateryData.data.results[i].detailsPhotosArray[2]){
+                        photoRef2 = eateryData.data.results[i].detailsPhotosArray[2].photo_reference
                     }
-                    if(eateryData.data.results[i].photos[3]){
-                        photoRef0 = eateryData.data.results[i].photos[3].photo_reference
+                    if(eateryData.data.results[i].detailsPhotosArray[3]){
+                        photoRef3 = eateryData.data.results[i].detailsPhotosArray[3].photo_reference
                     }
-                    if(eateryData.data.results[i].photos[4]){
-                        photoRef0 = eateryData.data.results[i].photos[4].photo_reference
+                    if(eateryData.data.results[i].detailsPhotosArray[4]){
+                        photoRef4 = eateryData.data.results[i].detailsPhotosArray[4].photo_reference
                     }
 
                     if(eateryData.data.results[i].reviews){

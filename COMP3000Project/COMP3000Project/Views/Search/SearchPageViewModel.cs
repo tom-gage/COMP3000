@@ -104,6 +104,8 @@ namespace COMP3000Project.Views.Search
                     break;
 
                 case "Up":
+
+
                     EateryOptionDetailsPage nextPage = new EateryOptionDetailsPage(item);
 
                     await Navigation.PushAsync(nextPage, true);

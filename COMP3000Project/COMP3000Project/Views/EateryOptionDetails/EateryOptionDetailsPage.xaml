@@ -6,7 +6,7 @@
     <ContentPage.Content>
 
         <ScrollView>
-            <Grid>
+            <Grid Padding="5" Margin="5">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
@@ -53,15 +53,27 @@
                    Text="{Binding EateryPhoneNumber}" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
 
 
+
                 <Button Grid.Row="4"
-                        Grid.Column="1"
+                        Grid.Column="0"
                         Grid.ColumnSpan="2"
                         WidthRequest="50"
                         HeightRequest="50"
-                    Text="Favourite"
+                    Text="Vote!"
+                    BackgroundColor="Green"
+                    Command="{Binding CastVote}"></Button>
+
+                <Button Grid.Row="4"
+                        Grid.Column="2"
+                        Grid.ColumnSpan="2"
+                        WidthRequest="50"
+                        HeightRequest="50"
+                    Text="Add to favourites"
                     BackgroundColor="Green"
                     Command="{Binding AddToFavourites}"></Button>
 
+                
+                
                 <CollectionView Grid.Row="5"
                                 Grid.Column="0"
                             Grid.ColumnSpan="4"

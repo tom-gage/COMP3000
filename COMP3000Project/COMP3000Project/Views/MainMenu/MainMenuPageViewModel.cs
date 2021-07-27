@@ -62,6 +62,8 @@ namespace COMP3000Project.Views.MainMenu
             }
         }
 
+
+
         ObservableCollection<PastSearch> _pastSearches;
         public ObservableCollection<PastSearch> PastSearches { get => _pastSearches; set => SetProperty(ref _pastSearches, value); }
 
@@ -82,6 +84,7 @@ namespace COMP3000Project.Views.MainMenu
             GoToSettings = new Command(async () => await ExecuteGoToSettingsPage());
             GoToStartPastSearch = new Command(async () => await ExecuteGoToStartPastSearch());
             GoToFavourites = new Command(async () => await GoToFavouritesPage());
+
 
             WebsocketHandler.registerSubscriber(this);
             //WebsocketHandler.HandleMessages();
@@ -141,7 +144,39 @@ namespace COMP3000Project.Views.MainMenu
 
         async void populatePastSearchesArray(string optionsJSON)
         {
-            PastSearches = JsonSerializer.Deserialize<ObservableCollection<PastSearch>>(optionsJSON);
+            PastSearches = sortByLatest(JsonSerializer.Deserialize<ObservableCollection<PastSearch>>(optionsJSON));
+        }
+
+        ObservableCollection<PastSearch> sortByLatest(ObservableCollection<PastSearch> pastSearches)
+        {
+            PastSearch[] pastSearchArray = new List<PastSearch>(pastSearches).ToArray();
+            pastSearches.Clear();
+
+            PastSearch t;
+
+            for (int p = 0; p <= pastSearchArray.Length - 2; p++)
+            {
+                for (int i = 0; i <= pastSearchArray.Length - 2; i++)
+                {
+                    DateTime a = new DateTime(int.Parse(pastSearchArray[i].YearOfSearch), int.Parse(pastSearchArray[i].MonthOfSearch), int.Parse(pastSearchArray[i].DayOfSearch), int.Parse(pastSearchArray[i].Time.Substring(0, 2)), int.Parse(pastSearchArray[i].Time.Substring(2, 2)), 0);
+                    DateTime b = new DateTime(int.Parse(pastSearchArray[i + 1].YearOfSearch), int.Parse(pastSearchArray[i + 1].MonthOfSearch), int.Parse(pastSearchArray[i + 1].DayOfSearch), int.Parse(pastSearchArray[i + 1].Time.Substring(0, 2)), int.Parse(pastSearchArray[i].Time.Substring(2, 2)), 0);
+
+                    if (a < b)
+                    {
+                        t = pastSearchArray[i + 1];
+                        pastSearchArray[i + 1] = pastSearchArray[i];
+                        pastSearchArray[i] = t;
+                    }
+                }
+            }
+
+            foreach (PastSearch ps in pastSearchArray)
+            {
+                pastSearches.Add(ps);
+            }
+
+
+            return pastSearches;
         }
 
         public void Update(Message message)
