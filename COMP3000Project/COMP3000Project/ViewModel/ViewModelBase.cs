@@ -1,4 +1,5 @@
-﻿using System;
+﻿using COMP3000Project.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -16,6 +17,11 @@ namespace COMP3000Project.ViewModel
 		}
 
 		protected INavigation Navigation => Application.Current.MainPage.Navigation;
+
+		public void ShowToast(string message)
+        {
+			DependencyService.Get<Toast>().Show(message);
+		}
 
 		//magic
 		protected void SetProperty<T>(ref T backingStore, T value, Action onChanged = null, [CallerMemberName] string propertyName = "")

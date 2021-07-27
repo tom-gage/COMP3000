@@ -345,6 +345,9 @@ namespace COMP3000Project.Views.EateryOptionDetails
             }
         }
 
+
+        
+
         public void Update(Message message)
         {
             switch (message.type)
@@ -354,9 +357,25 @@ namespace COMP3000Project.Views.EateryOptionDetails
 
                     break;
 
+                case "participantJoined":
+                    Console.WriteLine("[MSG] a participant joined");
+                    ShowToast(message.Body + " joined the search!");
+                    break;
+
+                case "IVoted":
+                    Console.WriteLine("[MSG] I voted! ");
+                    ShowToast("Vote cast!");
+                    break;
+
+
+                case "participantVoted":
+                    Console.WriteLine("[MSG] a participant voted");
+                    ShowToast(message.Body + " voted!");
+                    break;
+
                 case "eateryAddedToFavourites":
                     Console.WriteLine("got eatery added to favs confirmation!");
-
+                    ShowToast("Added to Favourites!");
                     //do confirmation feedback...
 
                     break;

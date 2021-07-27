@@ -194,6 +194,16 @@ namespace COMP3000Project.Views.Search
                     populateOptionsArray(message.Items[1].ToString());
                     break;
 
+                case "participantVoted":
+                    Console.WriteLine("[MSG] a participant voted");
+                    ShowToast(message.Body + " Voted!");
+                    break;
+
+                case "participantJoined":
+                    Console.WriteLine("[MSG] a participant joined");
+                    ShowToast(message.Body + " joined!");
+                    break;
+
                 case "matched!":
                     Console.WriteLine("[MSG] got match!");
                     //navigating to match page

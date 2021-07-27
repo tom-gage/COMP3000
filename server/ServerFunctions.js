@@ -169,6 +169,11 @@ class ServerFunctions{
                     this.sendToUser(search.Participants[i].Username, MSG);
                 }
 
+            } else {
+                let MSG = new Message(1, "IVoted", "", []);
+                this.sendToUser(username, MSG);
+
+                this.sendToAllExcept(username, search, "participantVoted",username, []);
             }
 
             search.showVotes();
@@ -193,6 +198,8 @@ class ServerFunctions{
             //send feedback to app
             let MSG = new Message(1, "joinSearchRequestGranted", searchCode, [search.ID, search.EateryOptions, search.Participants]);
             this.sendToUser(username, MSG);
+
+            this.sendToAllExcept(username, search, "participantJoined", username, []);
         } else {
             //else, reject request
             let MSG = new Message(1, "joinSearchRequestRejected", searchCode, []);
@@ -201,6 +208,8 @@ class ServerFunctions{
 
 
     }
+
+
 
     getPastSearches(username){
         //go to database, get three most recent searches, send them back to the user
@@ -774,6 +783,18 @@ class ServerFunctions{
 
     clearUSERS(){
         global.USERS = [];
+    }
+
+    sendToAllExcept(username, search, type, body, items){
+        for(let i = 0; i < search.Participants.length; i++){
+            if(search.Participants[i].Username.toString() !== username.toString()){
+                console.log("sending participant voted message to "+ search.Participants[i].Username);
+
+                let MSG = new Message(1, type, body, items);
+                this.sendToUser(search.Participants[i].Username, MSG);
+            }
+
+        }
     }
 
     sendToUser(username, message){

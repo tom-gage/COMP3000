@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="COMP3000Project.Views.Login.LoginPage"
              Title="login">
+    
+    
     <ContentPage.Content>
         <StackLayout>
             <Label Text="Welcome to the Login Page!"
@@ -31,6 +33,13 @@
             <Button Text="Go to SignUp page"
                     Command="{Binding GoToSignUpPage}"
                     />
+
+            <Button Text="show toast message"
+                    Command="{Binding ShowToast}"
+                    />
+
+
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
