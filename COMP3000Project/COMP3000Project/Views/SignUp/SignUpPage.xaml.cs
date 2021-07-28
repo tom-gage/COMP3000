@@ -21,5 +21,11 @@ namespace COMP3000Project.Views.SignUp
 
             BindingContext = viewModel;
         }
+
+        protected override void OnAppearing()
+        {
+            viewModel.hideLoginFeedbackText();
+            base.OnAppearing();
+        }
     }
 }

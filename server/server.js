@@ -125,7 +125,9 @@ wss.on('connection', function connection(ws) {
                 console.log(password);
 
                 if(serverFunctions.usernameNotTaken(username)){
-                    serverFunctions.registerNewUser(username, password);
+                    serverFunctions.registerNewUser(username, password, ws);
+                } else {
+                    serverFunctions.rejectRegistration(ws);
                 }
                 break
 

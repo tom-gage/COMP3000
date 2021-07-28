@@ -1,25 +1,104 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="COMP3000Project.Views.SignUp.SignUpPage">
+             x:Class="COMP3000Project.Views.SignUp.SignUpPage"
+             Title="Registration">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to the Sign Up page!"
+        <Grid Padding="5" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+
+
+            <Label Grid.Row="0"
+                   Grid.Column="0"
+                    Grid.ColumnSpan="5"
+                   Grid.RowSpan="1"
+                Text="Enter your details below to register!"
+                   FontSize="Large"
+                   FontAttributes="Bold"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
 
-            <Entry Placeholder="username"
+            <Label Grid.Row="1"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="5"
+                   Grid.RowSpan="1"
+                Text="{Binding FeedbackText}"
+                   TextColor="{Binding FeedbackTextColour}"
+                   IsVisible="{Binding FeedbackTextIsVisible}"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+
+
+            <Label Grid.Row="2"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="1"
+                   Grid.RowSpan="1"
+                Text="Username:"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+
+
+            <Entry 
+                   Grid.Row="3"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="5"
+                   Grid.RowSpan="1"
+                
+                Placeholder="username"
                    Text="{Binding Username}"
                    x:Name="entUsername"/>
 
-            <Entry Placeholder="password"
+
+
+            <Label Grid.Row="4"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="1"
+                   Grid.RowSpan="1"
+                Text="Password:"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+
+            <Entry 
+                Grid.Row="5"
+                Grid.Column="0"
+                   Grid.ColumnSpan="5"
+                   Grid.RowSpan="1" 
+                Placeholder="password"
                    Text="{Binding Password}"
                    IsPassword="True"
                    x:Name="entPassword"/>
 
-            <Button Text="Register new user"
+
+            <Button
+                Grid.Row="6"
+                   Grid.Column="1"
+                   Grid.ColumnSpan="3"
+                   Grid.RowSpan="1"
+                Text="Register"
                     Command="{Binding RegisterNewUser}"
                     />
-        </StackLayout>
+
+        </Grid>
+
+
     </ContentPage.Content>
 </ContentPage>

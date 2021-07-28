@@ -88,7 +88,6 @@ namespace COMP3000Project.Views.Login
         //COMMANDS
         public ICommand Login { get; }
         public ICommand GoToSignUpPage { get; }
-        public ICommand ShowToast { get; }
 
         //CONSTRUCTOR
         public LoginPageViewModel()
@@ -99,7 +98,6 @@ namespace COMP3000Project.Views.Login
             //set commands
             Login = new Command(async () => await ExecuteLogin());
             GoToSignUpPage = new Command(async () => await ExecuteGoToSignUpPage());
-            ShowToast = new Command(() => executeShowToast());
 
             FeedbackText = "";
             FeedbackTextColour = "Green";
@@ -111,10 +109,6 @@ namespace COMP3000Project.Views.Login
         }
 
         //FUNCTIONS
-        void executeShowToast()
-        {
-            DependencyService.Get<Toast>().Show("Toast Message");
-        }
 
         void displayNotification()
         {

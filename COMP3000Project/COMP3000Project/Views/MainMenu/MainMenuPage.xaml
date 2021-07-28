@@ -5,9 +5,153 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="COMP3000Project.Views.MainMenu.MainMenuPage"
-             Title="MainPage">
+             Title="Main Menu">
     <ContentPage.Content>
-        <StackLayout>
+
+        <Grid Padding="5" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="400"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="4"
+                Text="Past Searches:"
+                   FontSize="Small"
+                   FontAttributes="Bold"
+                   
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+
+
+            <CollectionView 
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="4"
+                
+                ItemsSource="{Binding PastSearches}" 
+                            SelectionMode="Single" 
+                            SelectionChangedCommand="{Binding GoToStartPastSearch}"
+                            SelectedItem="{Binding SelectedPastSearch}">
+
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BorderColor="Black"
+                                CornerRadius="10"
+                                HasShadow="True"
+                               Padding="10"
+                               Margin="0">
+
+                            <Grid Padding="0" Margin="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+
+
+
+                                <Label Grid.Column="0"
+                                    Text="Location:"
+                                    FontAttributes="Bold" 
+                                    VerticalOptions="Start"/>
+
+                                <Label Grid.Column="0"
+                                    Text="{Binding Location}"
+                                    FontAttributes="Italic" 
+                                    VerticalOptions="End"/>
+
+
+
+                                <Label 
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Text="Type:"
+                                    FontAttributes="Bold"
+                                    VerticalOptions="Start" />
+
+                                <Label 
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Text="{Binding EateryType}"
+                                    FontAttributes="Italic"
+                                    VerticalOptions="End" />
+
+                                <TimePicker 
+                                    Grid.Column="2"
+                                    HorizontalOptions="Center"
+                                Time="{Binding timeSpan}"/>
+
+                                <Label 
+                                    Grid.Column="2"
+                                    Grid.Row="1"
+                                    Text="{Binding FormattedDateOfSearch}"
+                                    FontAttributes="Italic" 
+                                    VerticalOptions="End"
+                                    HorizontalOptions="Center"
+                                   />
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+
+            <Button 
+                Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Text="start a search!"
+                    Command="{Binding GoToStartSearch}"
+                    />
+
+
+
+            <Button 
+                Grid.Row="2"
+                Grid.Column="2"
+                Grid.ColumnSpan="2"
+                Text="join a search!"
+                    Command="{Binding GoToJoinSearch}"
+                    />
+
+            <Button 
+                Grid.Row="3"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Text="View your Favourite Eateries"
+                    Command="{Binding GoToFavourites}"
+                    />
+
+            <Button 
+                Grid.Row="3"
+                Grid.Column="2"
+                Grid.ColumnSpan="2"
+                Text="account settings"
+                    Command="{Binding GoToSettings}"
+                    />
+
+
+
+        </Grid>
+
+        <!--<StackLayout>
             <Label Text="Welcome to the main menu!"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
@@ -73,6 +217,6 @@
             <Button Text="go to account settings!"
                     Command="{Binding GoToSettings}"
                     />
-        </StackLayout>
+        </StackLayout>-->
     </ContentPage.Content>
 </ContentPage>

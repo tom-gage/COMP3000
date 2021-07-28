@@ -2,44 +2,113 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="COMP3000Project.Views.Login.LoginPage"
-             Title="login">
+             Title="Login / Register">
     
     
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to the Login Page!"
+
+        <Grid Padding="5" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            
+            
+            <Label Grid.Row="0"
+                   Grid.Column="0"
+                    Grid.ColumnSpan="5"
+                   Grid.RowSpan="1"
+                Text="Welcome to Restaurant Tinder!"
+                   FontSize="Large"
+                   FontAttributes="Bold"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
 
-            <Label Text="{Binding FeedbackText}"
+            <Label Grid.Row="1"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="5"
+                   Grid.RowSpan="1"
+                Text="{Binding FeedbackText}"
                    TextColor="{Binding FeedbackTextColour}"
                    IsVisible="{Binding FeedbackTextIsVisible}"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
 
-            <Entry Placeholder="username"
+
+            <Label Grid.Row="2"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="1"
+                   Grid.RowSpan="1"
+                Text="Username:"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            
+            
+            <Entry 
+                   Grid.Row="3"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="5"
+                   Grid.RowSpan="1"
+                
+                Placeholder="username"
                    Text="{Binding Username}"
                    x:Name="entUsername"/>
+
             
-            <Entry Placeholder="password"
+            
+            <Label Grid.Row="4"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="1"
+                   Grid.RowSpan="1"
+                Text="Password:"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+
+            <Entry 
+                Grid.Row="5"
+                Grid.Column="0"
+                   Grid.ColumnSpan="5"
+                   Grid.RowSpan="1" 
+                Placeholder="password"
                    Text="{Binding Password}"
                    IsPassword="True"
                    x:Name="entPassword"/>
 
-            <Button Text="Login"
+            <Button
+                Grid.Row="6"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="2"
+                   Grid.RowSpan="1"
+                Text="Login!"
                     Command="{Binding Login}"
                     />
 
-            <Button Text="Go to SignUp page"
+            <Button
+                Grid.Row="6"
+                   Grid.Column="3"
+                   Grid.ColumnSpan="2"
+                   Grid.RowSpan="1"
+                Text="Register"
                     Command="{Binding GoToSignUpPage}"
                     />
 
-            <Button Text="show toast message"
-                    Command="{Binding ShowToast}"
-                    />
+        </Grid>
 
-
-
-        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

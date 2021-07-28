@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using COMP3000Project.Interfaces;
+using COMP3000Project.TestObjects;
 using COMP3000Project.ViewModel;
 using COMP3000Project.WS;
 using Xamarin.Forms;
 
 namespace COMP3000Project.Views.SignUp
 {
-    public class SignUpPageViewModel : ViewModelBase
+    public class SignUpPageViewModel : ViewModelBase, Subscriber
     {
         //VARIABLES
         private string _username;
@@ -39,16 +41,54 @@ namespace COMP3000Project.Views.SignUp
             }
         }
 
+        private string feedbackText;
+        public string FeedbackText
+        {
+            get { return feedbackText; }
+            set
+            {
+                if (feedbackText != value)
+                {
+                    SetProperty(ref feedbackText, value);//informs view of change
+                }
+            }
+        }
+
+        private string feedbackTextColour;
+        public string FeedbackTextColour
+        {
+            get { return feedbackTextColour; }
+            set
+            {
+                if (feedbackTextColour != value)
+                {
+                    SetProperty(ref feedbackTextColour, value);//informs view of change
+                }
+            }
+        }
+
+        private bool feedbackTextIsVisible;
+        public bool FeedbackTextIsVisible
+        {
+            get { return feedbackTextIsVisible; }
+            set
+            {
+                if (feedbackTextIsVisible != value)
+                {
+                    SetProperty(ref feedbackTextIsVisible, value);//informs view of change
+                }
+            }
+        }
+
         //COMMANDS
         public ICommand RegisterNewUser { get; }
 
         //CONSTRUCTOR
         public SignUpPageViewModel()
         {
-            Username = "u";
-            Password = "p";
-
             RegisterNewUser = new Command(async () => await ExecuteRegisterUser());
+
+            WebsocketHandler.registerSubscriber(this);
         }
 
         //FUNCTIONS
@@ -74,11 +114,62 @@ namespace COMP3000Project.Views.SignUp
         {
             if(UandPAreValid(Username, Password))
             {
+                showRegistrationInProgress();
                 WebsocketHandler.RequestRegisterNewUser(Username, Password);
 
                 return null;
             }
             return null;
         }
+
+
+        public void hideLoginFeedbackText()
+        {
+            FeedbackTextIsVisible = false;
+        }
+        void showRegistrationSuccess()
+        {
+            FeedbackText = "Registration successful!";
+            FeedbackTextColour = "Green";
+            FeedbackTextIsVisible = true;
+        }
+        void showRegistrationInProgress()
+        {
+            FeedbackText = "Processing...";
+            FeedbackTextColour = "Orange";
+            FeedbackTextIsVisible = true;
+        }
+        void showRegistrationFailed()
+        {
+            FeedbackText = "Registration rejected, username is taken!";
+            FeedbackTextColour = "Red";
+            FeedbackTextIsVisible = true;
+        }
+
+
+        public void Update(Message message)
+        {
+            switch (message.type)
+            {
+                case "registrationSuccess":
+
+                    showRegistrationSuccess();
+                    
+                    Navigation.PopAsync();
+
+                    break;
+
+                case "registrationRequestRejected":
+
+                    showRegistrationFailed();
+
+                    break;
+
+                default:
+                    Console.WriteLine("[MSG] sign up page recieved unknown message");
+                    break;
+            }
+        }
+
     }
 }

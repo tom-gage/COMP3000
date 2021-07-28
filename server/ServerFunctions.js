@@ -672,7 +672,9 @@ class ServerFunctions{
             if(USERS.find(function (user) {//if credentials match existing user, username is taken
                 return (user.Username === username);
             })) {
-                console.log('[LOGIN] Validation failure, username is taken!');
+
+
+                console.log('[LOGIN] Validation failure, username is taken!!');
                 return false;
             }
             else {
@@ -681,7 +683,19 @@ class ServerFunctions{
             }
         }
     }
-    async registerNewUser(username, password){
+
+    async rejectRegistration(ws){
+        let MSG = new Message(1, "registrationRequestRejected", "", []);
+
+        try{
+            ws.send(JSON.stringify(MSG));
+            console.log('[LOGIN] registration rejected');
+        } catch {
+
+        }
+    }
+
+    async registerNewUser(username, password, ws){
         let that = this;
         await this.generateSaltedAndHashedPassword(password).then(
             async function (hashedPass){
@@ -704,8 +718,13 @@ class ServerFunctions{
                         console.log(newUser);
                         console.log(global.USERS);
 
+                        //update connections map 
+                        that.connectionsMap.set(that.getUser(username), ws);
+
                         console.log('[LOGIN] user registration succeeded');
 
+                        let MSG = new Message(1, "registrationSuccess", "", []);
+                        that.sendToUser(username, MSG);
                     });
                 });
             }
@@ -806,6 +825,8 @@ class ServerFunctions{
             console.log("Message type: " + message.type);
             console.log("Message body: " + message.Body);
             console.log("Message.items contains: " + message.Items.length + " object(s)");
+        } else {
+            console.log("WS INVALID, MESSAGE SEND FAILED");
         }
 
 

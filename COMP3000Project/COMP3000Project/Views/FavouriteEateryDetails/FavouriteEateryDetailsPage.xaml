@@ -9,9 +9,12 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
-                    <RowDefinition Height="260" />
                     <RowDefinition Height="auto" />
-                    <RowDefinition Height="230" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="200" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
@@ -24,81 +27,115 @@
 
 
                 <Label Grid.Row="0"
-                   Grid.ColumnSpan="4"
-                       BackgroundColor="Aqua"
-                   Text="{Binding EateryTitle}" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-
+                    Grid.ColumnSpan="4"
+                    Text="{Binding EateryTitle}"
+                       FontSize="40" 
+                       HorizontalTextAlignment="Center" 
+                       VerticalTextAlignment="Center"
+                       FontAttributes="Bold"/>
 
 
                 <Label Grid.Row="1"
                    Grid.Column="0"
-                   Grid.ColumnSpan="4"
-                       BackgroundColor="green"
-                   Text="{Binding EateryRating}" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                   Grid.ColumnSpan="2"
+                   Text="Rating:"
+                       FontSize="Medium" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                       FontAttributes="Bold"/>
 
                 <Label Grid.Row="2"
-                   Grid.ColumnSpan="4"
-                   Text="{Binding EateryAddress}" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                   Grid.Column="0"
+                   Grid.ColumnSpan="2"
+                   Text="{Binding EateryRating}" FontSize="Medium" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                       FontAttributes="Italic"/>
 
+                <Label Grid.Row="1"
+                   Grid.Column="2"
+                   Grid.ColumnSpan="2"
+                   Text="PhoneNumber:"
+                       FontSize="Medium" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                       FontAttributes="Bold"/>
 
+                <Label Grid.Row="2"
+                   Grid.Column="2"
+                   Grid.ColumnSpan="2"
+                   Text="{Binding EateryPhoneNumber}" FontSize="Medium" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                       FontAttributes="Italic"/>
 
                 <Label Grid.Row="3"
-                   Grid.Column="0"
                    Grid.ColumnSpan="4"
-                   Text="{Binding EateryPhoneNumber}" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                   Text="Address:"
+                       FontSize="Medium" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                       FontAttributes="Bold"/>
+                
+                <Label Grid.Row="4"
+                   Grid.ColumnSpan="4"
+                   Text="{Binding EateryAddress}" FontSize="Medium" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                       FontAttributes="Italic"/>
 
-                <CollectionView Grid.Row="4"
+
+                <CollectionView Grid.Row="5"
                                 Grid.Column="0"
                             Grid.ColumnSpan="4"
-                                BackgroundColor="yellow"
                             ItemsSource="{Binding Images}"
                             ItemsLayout="HorizontalList">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Grid Padding="10" Margin="10">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="200" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
 
-                                <Image Source="{Binding Image}" Aspect="Fill"  AbsoluteLayout.LayoutBounds=".5,0.5,1,1" AbsoluteLayout.LayoutFlags="All" />
-                                <!--<Image Source="{Binding Image}" Aspect="Fill" />-->
+                            <Frame BorderColor="Black"
+                                HasShadow="True"
+                               Padding="5"
+                               Margin="0"
+                                   >
 
-                            </Grid>
+                                <Grid Padding="0" Margin="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="300" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!--<Image Source="{Binding Image}" Aspect="Fill"  AbsoluteLayout.LayoutBounds=".5,0.5,1,1" AbsoluteLayout.LayoutFlags="All" />-->
+                                    <Image Source="{Binding Image}" Aspect="Fill" />
+                                </Grid>
+                            </Frame>
+                            
+
+
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
 
 
 
-                <Label Grid.Row="5"
+                <Label Grid.Row="6"
                        Grid.Column="0"
-                       Text="Personal notes:"
-                       FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center">
+                       Grid.ColumnSpan="4"
+                       Text="Personal note:"
+                       FontSize="Medium" 
+                       FontAttributes="Bold" 
+                       HorizontalTextAlignment="Center" 
+                       VerticalTextAlignment="Center">
                 </Label>
 
-                <Editor Grid.Row="6"
+                <Editor Grid.Row="7"
                         Grid.RowSpan="1"
                        Grid.Column="0"
                         Grid.ColumnSpan="4"
-                        BackgroundColor="LightBlue"
-                        x:Name="editor" Text="{Binding Note}" />
+                        x:Name="editor" 
+                        Text="{Binding Note}" />
 
 
-                <Button Grid.Row="7"
-                        Grid.RowSpan="1"
+                <Button Grid.Row="8"
                        Grid.Column="0"
-                        Grid.ColumnSpan="4"
+                        Grid.ColumnSpan="2"
                         Text="Save Note!"
                     Command="{Binding SaveNote}"
                     />
 
                 <Button Grid.Row="8"
-                        Grid.RowSpan="1"
-                       Grid.Column="0"
-                        Grid.ColumnSpan="4"
+                       Grid.Column="2"
+                        Grid.ColumnSpan="2"
                         Text="Delete Favourite"
                     Command="{Binding DeleteFavourite}"
                     />
