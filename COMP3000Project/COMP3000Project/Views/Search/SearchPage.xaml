@@ -8,7 +8,9 @@
              x:Class="COMP3000Project.Views.Search.SearchPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to the Search Page!"
+            <Label Text="{Binding SearchCode}"
+                   FontSize="Medium"
+                   FontAttributes="Bold"
                 VerticalOptions="Center" 
                 HorizontalOptions="CenterAndExpand" />
             

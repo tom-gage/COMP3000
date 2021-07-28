@@ -38,6 +38,19 @@ namespace COMP3000Project.Views.Search
             }
         }
 
+        private string searchCode;
+        public string SearchCode
+        {
+            get { return "Your search code is: " + searchCode; }
+            set
+            {
+                if (searchCode != value)
+                {
+                    SetProperty(ref searchCode, value);//informs view of change
+                }
+            }
+        }
+
         ObservableCollection<EateryOption> _eateryOptions;
         public ObservableCollection<EateryOption> EateryOptions { get => _eateryOptions; set => SetProperty(ref _eateryOptions, value); }
 
@@ -56,6 +69,8 @@ namespace COMP3000Project.Views.Search
 
             EateryOptions = new ObservableCollection<EateryOption>();
 
+
+            SearchCode = "pending...";
 
 
             //subscribe to messages
@@ -182,6 +197,7 @@ namespace COMP3000Project.Views.Search
                     Console.WriteLine("[MSG] got CREATE active search request granted!");
                     Console.WriteLine("Search ID: " + message.Items[0]);
                     UserDetails.SearchID = message.Items[0].ToString();
+                    SearchCode = message.Items[0].ToString();
                     Console.WriteLine("[MSG] populating array!");
                     populateOptionsArray(message.Items[1].ToString());
                     break;
@@ -190,6 +206,8 @@ namespace COMP3000Project.Views.Search
                     Console.WriteLine("[MSG] got JOIN active search request granted!");
                     Console.WriteLine("Search ID: " + message.Items[0]);
                     UserDetails.SearchID = message.Items[0].ToString();
+                    SearchCode = message.Items[0].ToString();
+
                     Console.WriteLine("[MSG] populating array!");
                     populateOptionsArray(message.Items[1].ToString());
                     break;

@@ -199,7 +199,7 @@ namespace COMP3000Project.Views.SearchParameters
                     break;
 
                 default:
-                    Console.WriteLine("[MSG] searchpage viewmodel  recieved unknown message");
+                    Console.WriteLine("[MSG] search parameters page  recieved unknown message");
                     break;
             }
         }
