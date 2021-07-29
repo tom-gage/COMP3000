@@ -3,6 +3,7 @@ C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\bin\iPhon
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\bin\iPhone\Debug\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\bin\iPhone\Debug\MLToolkit.Forms.SwipeCardView.dll
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\bin\iPhone\Debug\Newtonsoft.Json.dll
+C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\bin\iPhone\Debug\Plugin.LocalNotification.dll
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\bin\iPhone\Debug\System.Buffers.dll
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\bin\iPhone\Debug\System.Runtime.CompilerServices.Unsafe.dll
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\bin\iPhone\Debug\System.Text.Encodings.Web.dll

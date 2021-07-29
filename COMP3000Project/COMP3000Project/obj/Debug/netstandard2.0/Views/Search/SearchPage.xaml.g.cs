@@ -17,8 +17,12 @@ namespace COMP3000Project.Views.Search {
     public partial class SearchPage : global::Xamarin.Forms.ContentPage {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
+        private global::MLToolkit.Forms.SwipeCardView.SwipeCardView SwipeCardView;
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
         private void InitializeComponent() {
             global::Xamarin.Forms.Xaml.Extensions.LoadFromXaml(this, typeof(SearchPage));
+            SwipeCardView = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::MLToolkit.Forms.SwipeCardView.SwipeCardView>(this, "SwipeCardView");
         }
     }
 }

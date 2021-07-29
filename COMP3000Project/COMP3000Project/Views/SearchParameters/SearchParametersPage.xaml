@@ -4,28 +4,119 @@
              x:Class="COMP3000Project.Views.SearchParameters.SearchParametersPage"
              Title="Start your search!">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Enter the parameters of your search below"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
 
-            <Entry Placeholder="Location"
-                   Text="{Binding SelectedLocation}"
-                   x:Name="entSearchCode"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-            <TimePicker Time="{Binding SelectedTime}" />
+            <Label 
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="5"
+                HorizontalOptions="Center"
+                Text="Use the parameters below to define your search!"
+                FontSize="Medium"
+                FontAttributes="Bold"
+                />
 
-            <CollectionView x:Name="collectionView"
-                ItemsSource="{Binding EateryTypeOptions}"
-                SelectionMode="Single"
-                SelectedItem="{Binding SelectedEateryTypeOption}">
-                <!--SelectedItems="{Binding SelectedEateryTypeOptions}"-->
-                
-            </CollectionView>
+            <Label 
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="5"
+                HorizontalOptions="Center"
+                Text="Where?"
+                FontSize="Medium"
+                FontAttributes="Bold"
+                />
 
-            <Button Text="Begin Search!"
-                    Command="{Binding GoToStartSearch}"
+            <Entry
+                Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="5"
+                HorizontalOptions="Center"
+                FontAttributes="Italic"
+                Placeholder="Enter the location of your search here"
+                Text="{Binding SelectedLocation}"
+                />
+
+            <Label 
+                Grid.Row="3"
+                Grid.Column="0"
+                Grid.ColumnSpan="5"
+                Text="When?"
+                HorizontalOptions="Center"
+                FontSize="Medium"
+                FontAttributes="Bold"
+                />
+
+            <TimePicker
+                Grid.Row="4"
+                Grid.Column="0"
+                Grid.ColumnSpan="5"
+                HorizontalOptions="Center"
+                FontAttributes="Italic"
+                Time="{Binding SelectedTime}" />
+
+
+            <Label 
+                Grid.Row="5"
+                Grid.Column="0"
+                Grid.ColumnSpan="5"
+                Text="What?"
+                HorizontalOptions="Center"
+                FontSize="Medium"
+                FontAttributes="Bold"
+                />
+
+
+            <Frame 
+                Grid.Row="6"
+                Grid.Column="0"
+                Grid.ColumnSpan="5"
+                BorderColor="Black"
+                CornerRadius="10"
+                HasShadow="True"
+                Padding="10"
+                Margin="20"
+                >
+
+                <CollectionView
+                    HorizontalOptions="Center"
+                    ItemsSource="{Binding EateryTypeOptions}"
+                    SelectionMode="Single"
+                    SelectedItem="{Binding SelectedEateryTypeOption}"
+                    >
+                    
+
+
+
+                </CollectionView>
+            </Frame>
+
+
+            <Button
+                Grid.Row="7"
+                Grid.Column="1"
+                Grid.ColumnSpan="3"
+                Text="Go!"
+                Command="{Binding GoToStartSearch}"
                     />
-        </StackLayout>
+
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

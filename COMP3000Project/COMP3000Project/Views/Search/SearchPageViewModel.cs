@@ -20,6 +20,7 @@ using System.Text.Json;
 using COMP3000Project.Views.EateryOptionDetails;
 using COMP3000Project.Views.FavouriteEateryDetails;
 
+
 namespace COMP3000Project.Views.Search
 {
     class SearchPageViewModel : ViewModelBase, Subscriber
@@ -38,6 +39,20 @@ namespace COMP3000Project.Views.Search
             }
         }
 
+
+        private string title;
+        public string Title
+        {
+            get { return title; }
+            set
+            {
+                if (title != value)
+                {
+                    SetProperty(ref title, value);//informs view of change
+                }
+            }
+        }
+
         private string searchCode;
         public string SearchCode
         {
@@ -48,6 +63,18 @@ namespace COMP3000Project.Views.Search
                 {
                     SetProperty(ref searchCode, value);//informs view of change
                 }
+            }
+        }
+
+
+        private uint _threshold;
+        public uint Threshold
+        {
+            get => _threshold;
+            set
+            {
+                _threshold = value;
+                SetProperty(ref _threshold, value);//informs view of change
             }
         }
 
@@ -66,7 +93,7 @@ namespace COMP3000Project.Views.Search
             Swipe = new Command<SwipedCardEventArgs>(ExecuteSwipe);
 
             //set vars
-
+            Threshold = (uint)(App.ScreenWidth / 3);
             EateryOptions = new ObservableCollection<EateryOption>();
 
 
@@ -86,6 +113,7 @@ namespace COMP3000Project.Views.Search
             Swipe = new Command<SwipedCardEventArgs>(ExecuteSwipe);
 
             //set vars
+            Threshold = (uint)(App.ScreenWidth / 3);
             EateryOptions = new ObservableCollection<EateryOption>();
 
             //subscribe to messages
@@ -107,6 +135,8 @@ namespace COMP3000Project.Views.Search
         async void ExecuteSwipe(SwipedCardEventArgs eventArgs)
         {
             var item = eventArgs.Item as EateryOption;
+
+            
 
             switch (eventArgs.Direction.ToString())
             {

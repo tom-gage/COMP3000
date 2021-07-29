@@ -1,44 +1,163 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="COMP3000Project.Views.Settings.SettingsPage">
+             x:Class="COMP3000Project.Views.Settings.SettingsPage"
+             Title="Account Details">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to the Settings Page!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <Grid Padding="10" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="5"
+                Text="Edit your account details below..."
+                HorizontalOptions="Center"
+                FontSize="Medium"
+                FontAttributes="Bold"/>
+
+            <Frame 
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="5"
+                
+                BorderColor="Black"
+                CornerRadius="10"
+                HasShadow="True"
+                Padding="10"
+                Margin="10">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="3">
+
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Current Username: "></Span>
+                                <Span Text="{Binding CurrentUsername}"></Span>
+                            </FormattedString>
+                        </Label.FormattedText>
+
+                    </Label>
+
+                    <Entry 
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="3"
+                        Placeholder="New Username"
+                        Text="{Binding NewUsername}"/>
+
+                    <Button
+                        Grid.Row="0"
+                        Grid.Column="4"
+                        Grid.ColumnSpan="2"
+                        Grid.RowSpan="2"
+                        Text="Change username"
+                        Command="{Binding ChangeUsername}"/>
+
+                </Grid>
 
 
-            <Label Text="Current Details \/"/>
 
-            <Label Text="{Binding CurrentUsername}"
-                   x:Name="entCurrentUsername"/>
+            </Frame>
 
-            <Label Text="{Binding CurrentPassword}"
-                   x:Name="entCurrentPassword"/>
 
-            <Label Text="New Details \/"/>
+            <Frame 
+                Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="5"
+                
+                BorderColor="Black"
+                CornerRadius="10"
+                HasShadow="True"
+                Padding="10"
+                Margin="10">
 
-            <Entry Placeholder="New Username"
-                   Text="{Binding NewUsername}"
-                   x:Name="entNewUsername"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
 
-            <Entry Placeholder="NewPassword"
-                   Text="{Binding NewPassword}"
-                   x:Name="entNewPassword"/>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-            
-            <Button Text="Change username"
-                    Command="{Binding ChangeUsername}"
-                    />
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="3">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Current Password: "></Span>
+                                <Span Text="{Binding CurrentPassword}"></Span>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
 
-            <Button Text="Change password"
-                    Command="{Binding ChangePassword}"
-                    />
+                    <Entry 
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="3"
+                        Placeholder="New Password"
+                        Text="{Binding NewPassword}"/>
 
-            <Button Text="Delete Account"
-                    Command="{Binding DeleteAccount}"
-                    />
-        </StackLayout>
+                    <Button
+                        Grid.Row="0"
+                        Grid.Column="4"
+                        Grid.ColumnSpan="2"
+                        Grid.RowSpan="2"
+                        Text="Change Password"
+                        Command="{Binding ChangePassword}"/>
+
+                </Grid>
+            </Frame>
+
+            <Button
+                Grid.Row="4"
+                Grid.Column="0"
+                Grid.ColumnSpan="5"
+                Text="delete account"
+                Command="{Binding DeleteAccount}"/>
+
+
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
