@@ -5,7 +5,7 @@
              Title="Start your search!">
     <ContentPage.Content>
 
-        <Grid>
+        <Grid Padding="10" Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>

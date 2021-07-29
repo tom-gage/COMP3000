@@ -3,26 +3,55 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="COMP3000Project.Views.JoinSearchParameters.JoinSearchParametersPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
 
-            <Label Text="{Binding FeedbackText}"
+        <Grid Padding="10" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="5"                
+                FontAttributes="Bold"
+                FontSize="Large"
+                Text="Enter a search code to join a friends search!"/>
+
+            <Label 
+                Grid.Row="1"
+                Grid.Column="1"
+                Grid.ColumnSpan="3"                
+                Text="{Binding FeedbackText}"
                    TextColor="{Binding FeedbackTextColour}"
                    IsVisible="{Binding FeedbackTextIsVisible}"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
 
-            <Entry Placeholder="Search Code"
+            <Entry 
+                Grid.Row="2"
+                Grid.Column="1"
+                Grid.ColumnSpan="3"                
+                Placeholder="Search Code"
                    Text="{Binding SearchCode}"
                    x:Name="entSearchCode"/>
 
-            <Button Text="join a search!"
+            <Button 
+                Grid.Row="3"
+                Grid.Column="1"
+                Grid.ColumnSpan="3"
+                Text="join a search!"
                     Command="{Binding JoinSearch}"
                     />
-            
-            
-        </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

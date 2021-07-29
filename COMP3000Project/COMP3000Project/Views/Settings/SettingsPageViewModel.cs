@@ -68,6 +68,46 @@ namespace COMP3000Project.Views.Settings
             }
         }
 
+
+        private string feedbackText;
+        public string FeedbackText
+        {
+            get { return feedbackText; }
+            set
+            {
+                if (feedbackText != value)
+                {
+                    SetProperty(ref feedbackText, value);//informs view of change
+                }
+            }
+        }
+
+        private string feedbackTextColour;
+        public string FeedbackTextColour
+        {
+            get { return feedbackTextColour; }
+            set
+            {
+                if (feedbackTextColour != value)
+                {
+                    SetProperty(ref feedbackTextColour, value);//informs view of change
+                }
+            }
+        }
+
+        private bool feedbackTextIsVisible;
+        public bool FeedbackTextIsVisible
+        {
+            get { return feedbackTextIsVisible; }
+            set
+            {
+                if (feedbackTextIsVisible != value)
+                {
+                    SetProperty(ref feedbackTextIsVisible, value);//informs view of change
+                }
+            }
+        }
+
         //COMMANDS
         public ICommand ChangeUsername { get; }
         public ICommand ChangePassword { get; }
@@ -133,6 +173,7 @@ namespace COMP3000Project.Views.Settings
         {
             if (UsernameIsValid(NewUsername))
             {
+                showFeedbackText("Updating username...", "Orange");
                 WebsocketHandler.RequestChangeUsername(CurrentUsername, CurrentPassword, NewUsername);
 
                 return null;
@@ -145,6 +186,7 @@ namespace COMP3000Project.Views.Settings
         {
             if (PasswordIsValid(NewPassword))
             {
+                showFeedbackText("Updating password...", "Orange");
                 WebsocketHandler.RequestChangePassword(CurrentUsername, CurrentPassword, NewPassword);
 
                 return null;
@@ -156,10 +198,25 @@ namespace COMP3000Project.Views.Settings
 
         async Task<object> ExecuteDeleteAccount()
         {
+            showFeedbackText("Processing...", "Orange");
             WebsocketHandler.RequestDeleteUser(CurrentUsername, CurrentPassword);
 
             return null;
         }
+
+
+        public void hideFeedbackText()
+        {
+            FeedbackTextIsVisible = false;
+        }
+
+        void showFeedbackText(string message, string colour)
+        {
+            FeedbackText = message;
+            FeedbackTextColour = colour;
+            FeedbackTextIsVisible = true;
+        }
+
 
         public void Update(Message message)
         {
@@ -167,21 +224,39 @@ namespace COMP3000Project.Views.Settings
             {
                 case "usernameUpdated":
                     Console.WriteLine("[MSG] Settings page, username update");
-
+                    showFeedbackText("Username updated!", "Green");
                     UserDetails.Username = message.Body;
                     CurrentUsername = message.Body;
+
+
                     break;
+
+                case "usernameChangeRequestRejected":
+                    Console.WriteLine("[MSG] Settings page, username update rejected");
+                    showFeedbackText("Username update failed, username is taken!", "Red");
+
+
+                    break;
+
 
                 case "passwordUpdated":
                     Console.WriteLine("[MSG] Settings page, password update");
-
+                    showFeedbackText("Password updated!", "Green");
                     UserDetails.Password = message.Body;
                     CurrentPassword = message.Body;
                     break;
 
+
+                case "passwordUpdateRequestRejected":
+                    Console.WriteLine("[MSG] Settings page, username update rejected");
+                    showFeedbackText("Password update failed!", "Red");
+
+
+                    break;
+
                 case "userDeleted":
                     Console.WriteLine("[MSG] Settings page, user delete");
-
+                    showFeedbackText("Account deleted!", "Red");
                     UserDetails.clearDetails();
 
 

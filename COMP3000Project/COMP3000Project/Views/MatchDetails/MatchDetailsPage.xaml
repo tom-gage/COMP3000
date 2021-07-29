@@ -1,18 +1,127 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="COMP3000Project.Views.MatchDetails.MatchDetailsPage">
+             x:Class="COMP3000Project.Views.MatchDetails.MatchDetailsPage"
+             Title="Matched!">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to the Match Page!"
-                VerticalOptions="Center" 
-                HorizontalOptions="CenterAndExpand" />
+        <ScrollView>
+            <Grid Padding="10" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="310"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-            <Image Source="{Binding EateryImage}"/>
-            <Label Text="{Binding Title}" />
-            <Label Text="{Binding Rating}" />
-            <Label Text="{Binding EateryAddress}" />
-            <Label Text="{Binding EateryPhoneNumber}" />
-        </StackLayout>
+
+                <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                HorizontalTextAlignment="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="You matched!" FontSize="50" FontAttributes="Bold"></Span>
+                            <Span Text="&#10;"></Span>
+                            <Span Text="You're going to..." FontSize="Medium" FontAttributes="None"></Span>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                
+                
+
+                <Label
+                Grid.Row="1"
+                Grid.Column="0"
+                Text="{Binding Title}"
+                FontSize="Large"
+                FontAttributes="Bold"
+                    HorizontalTextAlignment="Center"/>
+
+                
+                <CollectionView Grid.Row="3"
+                                Grid.Column="0"
+                            Grid.ColumnSpan="1"
+                            ItemsSource="{Binding Images}"
+                            ItemsLayout="HorizontalList">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+
+                            <Frame BorderColor="Black"
+                                HasShadow="True"
+                               Padding="5"
+                               Margin="0"
+                                   >
+
+                                <Grid Padding="0" Margin="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="300" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="300" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Image Source="{Binding Image}" Aspect="Fill" />
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+
+                <Label
+                Grid.Row="5"
+                Grid.Column="0"
+                Text="{Binding FormattedRating}"
+                FontSize="Large"
+                FontAttributes="Bold"/>
+
+                <Label
+                Grid.Row="5"
+                Grid.Column="0"
+                HorizontalTextAlignment="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{Binding Rating}" FontSize="40" FontAttributes="Bold"></Span>
+                            <Span Text="/5" FontSize="40" FontAttributes="Bold"></Span>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+
+                <Label
+                Grid.Row="6"
+                Grid.Column="0"
+                Text="Contact Details:"
+                FontSize="Large"
+                FontAttributes="Bold"
+                    HorizontalTextAlignment="Center"/>
+
+                <Label
+                Grid.Row="7"
+                Grid.Column="0"
+                Text="{Binding EateryPhoneNumber}"
+                FontSize="Large"
+                FontAttributes="Italic"
+                    HorizontalTextAlignment="Center"/>
+                
+                <Label
+                Grid.Row="8"
+                Grid.Column="0"
+                Text="{Binding EateryAddress}"
+                FontSize="Large"
+                FontAttributes="Italic"
+                    HorizontalTextAlignment="Center"/>
+
+            </Grid>
+        </ScrollView>
+
+        
     </ContentPage.Content>
 </ContentPage>

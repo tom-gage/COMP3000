@@ -161,11 +161,18 @@ class ServerFunctions{
 
             if(match){
                 console.log("[MATCH] got match!")
+
+                let participants = [];
+
+                for(let i = 0; i < search.Participants.length; i++){
+                    participants.push(search.Participants[i].Username);
+                }
+
                 for(let i = 0; i < search.Participants.length; i++){
 
                     console.log("sending gotMatch message to "+ search.Participants[i].Username);
 
-                    let MSG = new Message(1, "matched!", "", [match]);
+                    let MSG = new Message(1, "matched!", "", [match, participants]);
                     this.sendToUser(search.Participants[i].Username, MSG);
                 }
 
@@ -550,17 +557,17 @@ class ServerFunctions{
         }
     }
 
-        rejectLoginRequest(ws){
-            //inform user that their login request is granted
-            let MSG = new Message(1, "loginRequestRejected", "", []);
+    rejectLoginRequest(ws){
+        //inform user that their login request is granted
+        let MSG = new Message(1, "loginRequestRejected", "", []);
 
-            try{
-                ws.send(JSON.stringify(MSG));
-                console.log('[LOGIN] user login rejected');
-            } catch {
+        try{
+            ws.send(JSON.stringify(MSG));
+            console.log('[LOGIN] user login rejected');
+        } catch {
 
-            }
         }
+    }
 
     async updateUsername(username, password, newUsername){
         console.log("[LOGIN] updating username...");
@@ -609,6 +616,18 @@ class ServerFunctions{
             })
     }
 
+    async rejectUpdateUsernameRequest(ws){
+        //inform user that their login request is granted
+        let MSG = new Message(1, "usernameChangeRequestRejected", "", []);
+
+        try{
+            ws.send(JSON.stringify(MSG));
+            console.log('[LOGIN] username change rejected');
+        } catch {
+
+        }
+    }
+
     async updatePassword(username, password, newPassword){
         console.log("[LOGIN] updating password...");
 
@@ -642,6 +661,19 @@ class ServerFunctions{
         )
 
 
+    }
+
+
+    async rejectUpdatePasswordRequest(ws){
+        //inform user that their login request is granted
+        let MSG = new Message(1, "passwordUpdateRequestRejected", "", []);
+
+        try{
+            ws.send(JSON.stringify(MSG));
+            console.log('[LOGIN] password change rejected');
+        } catch {
+
+        }
     }
 
     async deleteUser(username, password){
@@ -718,7 +750,7 @@ class ServerFunctions{
                         console.log(newUser);
                         console.log(global.USERS);
 
-                        //update connections map 
+                        //update connections map
                         that.connectionsMap.set(that.getUser(username), ws);
 
                         console.log('[LOGIN] user registration succeeded');

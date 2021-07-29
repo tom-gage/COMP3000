@@ -98,7 +98,7 @@ namespace COMP3000Project.Views.SearchParameters
         public SearchParametersPageViewModel()
         {
             //set vars
-            SelectedLocation = "plymouth, uk";
+            SelectedLocation = "";
             EateryTypeOptions = new ObservableCollection<string>();
             SelectedEateryTypeOptions = new ObservableCollection<object>();
 
@@ -170,7 +170,7 @@ namespace COMP3000Project.Views.SearchParameters
 
         async Task<object> ExecuteGoToSearchPage()
         {
-            if (SelectedLocation == null)
+            if (SelectedLocation == null || SelectedLocation == "")
             {
                 SelectedLocation = "plymouth, uk";
             }

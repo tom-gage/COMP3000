@@ -23,5 +23,11 @@ namespace COMP3000Project.Views.Settings
 
             BindingContext = vm;
         }
+
+        protected override void OnAppearing()
+        {
+            vm.hideFeedbackText();
+            base.OnAppearing();
+        }
     }
 }

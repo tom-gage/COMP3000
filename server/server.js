@@ -158,6 +158,8 @@ wss.on('connection', function connection(ws) {
                     if(credentialsAreValid){
                         if(serverFunctions.usernameNotTaken(newUsername)){
                             serverFunctions.updateUsername(username, password, newUsername);
+                        } else {
+                            serverFunctions.rejectUpdateUsernameRequest(ws);
                         }
                     }
                 })
@@ -174,6 +176,8 @@ wss.on('connection', function connection(ws) {
                         //do update password
                         //pass feedback to app
                         serverFunctions.updatePassword(username, password, newPassword);
+                    } else {
+                        serverFunctions.rejectUpdatePasswordRequest(ws);
                     }
                 })
 

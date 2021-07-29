@@ -12,6 +12,10 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
+
+using System.Collections.ObjectModel;
+using System.Text.Json;
+
 namespace COMP3000Project.Views.MatchDetails
 {
     class MatchDetailsPageViewModel : ViewModelBase, Subscriber
@@ -88,31 +92,55 @@ namespace COMP3000Project.Views.MatchDetails
             }
         }
 
+        ObservableCollection<ImageHolder> images;
+        public ObservableCollection<ImageHolder> Images { get => images; set => SetProperty(ref images, value); }
+
         //COMMANDS
-        public ICommand GoToStartSearch { get; }
+
 
         //CONSTRUCTOR
         public MatchDetailsPageViewModel(EateryOption eateryOption)
         {
-            EateryImage = eateryOption.EateryImage;
+            Images = new ObservableCollection<ImageHolder>();
             Title = eateryOption.Title;
             Rating = eateryOption.Rating.ToString();
             EateryAddress = eateryOption.Address;
             EateryPhoneNumber = eateryOption.PhoneNumber;
 
+            populateImagesArray(eateryOption);
+
             //set commands
-            GoToStartSearch = new Command(async () => await GoToExecuteStartSearch());
 
             WebsocketHandler.registerSubscriber(this);
         }
 
         //FUNCTIONS
-        async Task<object> GoToExecuteStartSearch()
+        async void populateImagesArray(EateryOption eateryOption)
         {
-            //bool startingNewSearch = true;
-            //SearchPage nextPage = new SearchPage(startingNewSearch, "");
-            //await Navigation.PushAsync(nextPage, true);
-            return null;
+            if (eateryOption.EateryImage0 != null)
+            {
+                Images.Add(new ImageHolder(eateryOption.EateryImage0));
+            }
+
+            if (eateryOption.EateryImage1 != null)
+            {
+                Images.Add(new ImageHolder(eateryOption.EateryImage1));
+            }
+
+            if (eateryOption.EateryImage2 != null)
+            {
+                Images.Add(new ImageHolder(eateryOption.EateryImage2));
+            }
+
+            if (eateryOption.EateryImage3 != null)
+            {
+                Images.Add(new ImageHolder(eateryOption.EateryImage3));
+            }
+
+            if (eateryOption.EateryImage4 != null)
+            {
+                Images.Add(new ImageHolder(eateryOption.EateryImage4));
+            }
         }
 
         public void Update(Message message)
