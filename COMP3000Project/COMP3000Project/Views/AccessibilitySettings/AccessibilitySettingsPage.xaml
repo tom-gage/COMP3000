@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="COMP3000Project.Views.AccessibilitySettings.AccessibilitySettingsPage">
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid Padding="10" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="5"
+                Text="Manage your prefered font sizes here."
+                FontSize="50"
+                FontAttributes="Bold"
+                HorizontalTextAlignment="Center"/>
+
+                <Label
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="5"
+                FontAttributes="Bold"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Very Large Text" FontSize="{Binding VeryLargeText}"></Span>
+                            <Span Text="&#10;"></Span>
+                            <Span Text="Large Text" FontSize="{Binding LargeText}"></Span>
+                            <Span Text="&#10;"></Span>
+                            <Span Text="Medium Text" FontSize="{Binding MediumText}"></Span>
+                        </FormattedString>
+
+                    </Label.FormattedText>
+                </Label>
+
+                <Frame 
+                Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="5"
+                
+                BorderColor="Black"
+                CornerRadius="10"
+                HasShadow="True"
+                Padding="10"
+                Margin="10">
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="5"
+                        Text="Use Very large text"
+                        FontSize="30"
+                        FontAttributes="Bold"
+                        Command="{Binding SetVeryLargeText}">
+
+                        </Button>
+
+                        <Button
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="5"
+                        Text="Use Large text"
+                        FontSize="25"
+                        FontAttributes="Bold"
+                        Command="{Binding SetLargeText}">
+
+                        </Button>
+
+
+
+                        <Button
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="5"
+                        Text="Use regular text size"
+                        FontSize="Small"
+                        FontAttributes="Bold"
+                        Command="{Binding SetMediumText}">
+
+                        </Button>
+                    </Grid>
+
+                </Frame>
+
+
+
+
+
+                <Button
+                Grid.Row="3"
+                Grid.Column="1"
+                Grid.ColumnSpan="3"
+                Text="Continue"
+                FontSize="30"
+                FontAttributes="Bold">
+
+                </Button>
+
+            </Grid>
+        </ScrollView>
+        
+    </ContentPage.Content>
+</ContentPage>

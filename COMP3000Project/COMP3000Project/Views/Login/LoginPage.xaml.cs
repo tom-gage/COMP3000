@@ -6,6 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using COMP3000Project.UserDetailsSingleton;
+using COMP3000Project.Views.AccessibilitySettings;
+using COMP3000Project.LDH;
 
 namespace COMP3000Project.Views.Login
 {
@@ -17,9 +20,23 @@ namespace COMP3000Project.Views.Login
         {
             InitializeComponent();
 
+            LocalDataHandler.SetUserDetailsFromLocalStorage();
+
+
             viewModel = new LoginPageViewModel();
 
             BindingContext = viewModel;
+
+
+
+            if (true)//UserDetails.IsFirstStartUp)
+            {
+                Navigation.PushAsync(new AccessibilitySettingsPage());
+                UserDetails.IsFirstStartUp = false;
+                LocalDataHandler.SaveUserDetails();
+            }
+
+
         }
 
         protected override void OnAppearing()

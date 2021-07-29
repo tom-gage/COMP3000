@@ -99,6 +99,11 @@ namespace COMP3000Project.Views.Login
             Login = new Command(async () => await ExecuteLogin());
             GoToSignUpPage = new Command(async () => await ExecuteGoToSignUpPage());
 
+            //set text size
+            VeryLargeText = UserDetails.GetVeryLargeTextSetting();
+            LargeText = UserDetails.GetlargeTextSetting();
+            MediumText = UserDetails.GetMediumTextSetting();
+
             FeedbackText = "";
             FeedbackTextColour = "Green";
             FeedbackTextIsVisible = false;

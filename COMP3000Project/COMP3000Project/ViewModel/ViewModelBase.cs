@@ -23,6 +23,36 @@ namespace COMP3000Project.ViewModel
 			DependencyService.Get<Toast>().Show(message);
 		}
 
+
+		string veryLargeText;
+		public string VeryLargeText
+		{
+			get => veryLargeText;
+			set => SetProperty(ref veryLargeText, value);
+		}
+
+		string largeText;
+		public string LargeText
+		{
+			get => largeText;
+			set => SetProperty(ref largeText, value);
+		}
+
+		string mediumText;
+		public string MediumText
+		{
+			get => mediumText;
+			set => SetProperty(ref mediumText, value);
+		}
+
+		string smallText;
+		public string SmallText
+		{
+			get => smallText;
+			set => SetProperty(ref smallText, value);
+		}
+
+
 		//magic
 		protected void SetProperty<T>(ref T backingStore, T value, Action onChanged = null, [CallerMemberName] string propertyName = "")
 		{
