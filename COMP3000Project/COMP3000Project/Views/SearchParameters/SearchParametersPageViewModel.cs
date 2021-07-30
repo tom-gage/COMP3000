@@ -13,6 +13,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
 using Newtonsoft.Json;
+using COMP3000Project.UserDetailsSingleton;
 
 namespace COMP3000Project.Views.SearchParameters
 {
@@ -114,6 +115,12 @@ namespace COMP3000Project.Views.SearchParameters
             //set commands
             GoToStartSearch = new Command(async () => await ExecuteGoToSearchPage());
 
+            //set text size
+            VeryLarge = UserDetails.GetVeryLargeTextSetting();
+            Large = UserDetails.GetlargeTextSetting();
+            Medium = UserDetails.GetMediumTextSetting();
+            Small = UserDetails.GetSmallTextSetting();
+
             WebsocketHandler.registerSubscriber(this);
             //WebsocketHandler.HandleMessages();
         }
@@ -136,6 +143,12 @@ namespace COMP3000Project.Views.SearchParameters
             EateryTypeOptions.Add("meal_delivery");
 
             SelectedEateryTypeOption = eateryTypes[0];
+
+            //set text size
+            VeryLarge = UserDetails.GetVeryLargeTextSetting();
+            Large = UserDetails.GetlargeTextSetting();
+            Medium = UserDetails.GetMediumTextSetting();
+            Small = UserDetails.GetSmallTextSetting();
 
 
             //SelectedTime = DateTime.Now.TimeOfDay;

@@ -24,8 +24,9 @@
                 Grid.Column="0"
                 Grid.ColumnSpan="5"                
                 FontAttributes="Bold"
-                FontSize="Large"
-                Text="Enter a search code to join a friends search!"/>
+                FontSize="{Binding Large}"
+                Text="Enter a search code to join a friends search!"
+                HorizontalTextAlignment="Center"/>
 
             <Label 
                 Grid.Row="1"
@@ -35,7 +36,8 @@
                    TextColor="{Binding FeedbackTextColour}"
                    IsVisible="{Binding FeedbackTextIsVisible}"
                 VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+                HorizontalOptions="CenterAndExpand"
+                                FontSize="{Binding Small}"/>
 
             <Entry 
                 Grid.Row="2"
@@ -43,7 +45,8 @@
                 Grid.ColumnSpan="3"                
                 Placeholder="Search Code"
                    Text="{Binding SearchCode}"
-                   x:Name="entSearchCode"/>
+                   x:Name="entSearchCode"
+                 FontSize="{Binding Small}"/>
 
             <Button 
                 Grid.Row="3"
@@ -51,7 +54,7 @@
                 Grid.ColumnSpan="3"
                 Text="join a search!"
                     Command="{Binding JoinSearch}"
-                    />
+                    FontSize="{Binding Small}"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using COMP3000Project.Interfaces;
 using COMP3000Project.TestObjects;
+using COMP3000Project.UserDetailsSingleton;
 using COMP3000Project.ViewModel;
 using COMP3000Project.WS;
 using Xamarin.Forms;
@@ -87,6 +88,12 @@ namespace COMP3000Project.Views.SignUp
         public SignUpPageViewModel()
         {
             RegisterNewUser = new Command(async () => await ExecuteRegisterUser());
+
+            //set text size
+            VeryLarge = UserDetails.GetVeryLargeTextSetting();
+            Large = UserDetails.GetlargeTextSetting();
+            Medium = UserDetails.GetMediumTextSetting();
+            Small = UserDetails.GetSmallTextSetting();
 
             WebsocketHandler.registerSubscriber(this);
         }

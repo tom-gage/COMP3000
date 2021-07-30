@@ -51,9 +51,9 @@ C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project\bin\Debug\net
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project\bin\Debug\netstandard2.0\COMP3000Project.dll
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project\bin\Debug\netstandard2.0\ref\COMP3000Project.dll
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project\bin\Debug\netstandard2.0\COMP3000Project.pdb
-C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project\obj\Debug\netstandard2.0\COMP3000Project.csprojAssemblyReference.cache
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project\obj\Debug\netstandard2.0\App.xaml.g.cs
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project\obj\Debug\netstandard2.0\MainPage.xaml.g.cs
+C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project\obj\Debug\netstandard2.0\Views\AccessibilitySettings\AccessibilitySettingsPage.xaml.g.cs
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project\obj\Debug\netstandard2.0\Views\EateryOptionDetails\EateryOptionDetailsPage.xaml.g.cs
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project\obj\Debug\netstandard2.0\Views\EateryTypeSelection\EateryTypeSelectionPage.xaml.g.cs
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project\obj\Debug\netstandard2.0\Views\FavouriteEateries\FavouriteEateriesPage.xaml.g.cs
@@ -76,4 +76,4 @@ C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project\obj\Debug\net
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project\obj\Debug\netstandard2.0\COMP3000Project.dll
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project\obj\Debug\netstandard2.0\ref\COMP3000Project.dll
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project\obj\Debug\netstandard2.0\COMP3000Project.pdb
-C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project\obj\Debug\netstandard2.0\Views\AccessibilitySettings\AccessibilitySettingsPage.xaml.g.cs
+C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project\obj\Debug\netstandard2.0\COMP3000Project.csprojAssemblyReference.cache

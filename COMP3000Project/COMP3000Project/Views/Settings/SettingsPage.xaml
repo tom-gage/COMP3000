@@ -30,7 +30,7 @@
                 Grid.ColumnSpan="5"
                 Text="Edit your account details below..."
                 HorizontalOptions="Center"
-                FontSize="Medium"
+                FontSize="{Binding Medium}"
                 FontAttributes="Bold"/>
 
             <Label Grid.Row="1"
@@ -41,7 +41,8 @@
                    TextColor="{Binding FeedbackTextColour}"
                    IsVisible="{Binding FeedbackTextIsVisible}"
                 VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+                HorizontalOptions="CenterAndExpand" 
+                                  FontSize="{Binding Small}"/>
 
             <Frame 
                 Grid.Row="2"
@@ -166,7 +167,8 @@
                 Grid.Column="0"
                 Grid.ColumnSpan="5"
                 Text="delete account"
-                Command="{Binding DeleteAccount}"/>
+                Command="{Binding DeleteAccount}"
+                                FontSize="{Binding Medium}"/>
 
 
         </Grid>

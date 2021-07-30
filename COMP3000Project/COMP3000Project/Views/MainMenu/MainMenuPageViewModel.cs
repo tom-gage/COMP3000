@@ -17,6 +17,7 @@ using Xamarin.Forms;
 using System.Collections.ObjectModel;
 using System.Text.Json;
 using COMP3000Project.Views.JoinSearchParameters;
+using COMP3000Project.Views.AccessibilitySettings;
 
 namespace COMP3000Project.Views.MainMenu
 {
@@ -74,6 +75,8 @@ namespace COMP3000Project.Views.MainMenu
         public ICommand GoToStartPastSearch { get; }
         public ICommand GoToFavourites { get; }
 
+        public ICommand GoToAccessibilitySettings { get; }
+
         //CONSTRUCTOR
         public MainMenuPageViewModel()
         {
@@ -84,7 +87,13 @@ namespace COMP3000Project.Views.MainMenu
             GoToSettings = new Command(async () => await ExecuteGoToSettingsPage());
             GoToStartPastSearch = new Command(async () => await ExecuteGoToStartPastSearch());
             GoToFavourites = new Command(async () => await GoToFavouritesPage());
+            GoToAccessibilitySettings = new Command(async () => await ExecuteGoToAccessibilitySettings());
 
+            //set text size
+            VeryLarge = UserDetails.GetVeryLargeTextSetting();
+            Large = UserDetails.GetlargeTextSetting();
+            Medium = UserDetails.GetMediumTextSetting();
+            Small = UserDetails.GetSmallTextSetting();
 
             WebsocketHandler.registerSubscriber(this);
             //WebsocketHandler.HandleMessages();
@@ -138,6 +147,13 @@ namespace COMP3000Project.Views.MainMenu
             SettingsPage nextPage = new SettingsPage();
             await Navigation.PushAsync(nextPage, true);
 
+            return null;
+        }
+
+        async Task<object> ExecuteGoToAccessibilitySettings()
+        {
+            AccessibilitySettingsPage nextPage = new AccessibilitySettingsPage();
+            await Navigation.PushAsync(nextPage, true);
             return null;
         }
 

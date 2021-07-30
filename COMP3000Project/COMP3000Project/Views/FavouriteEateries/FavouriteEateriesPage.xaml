@@ -26,7 +26,7 @@
                        Grid.Column="0"
                        Grid.ColumnSpan="5"
                        
-                       FontSize="Small"
+                FontSize="{Binding Small}"
                        FontAttributes="Bold"
                        
                        HorizontalTextAlignment="Center"
@@ -43,7 +43,8 @@
                    IsVisible="{Binding FeedbackTextIsVisible}"
                     HorizontalTextAlignment="Center"
                 VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+                HorizontalOptions="CenterAndExpand"
+                                    FontSize="{Binding Small}"/>
 
                 <CollectionView 
                     Grid.Row="2"

@@ -29,7 +29,7 @@
                         <FormattedString>
                             <Span Text="You matched!" FontSize="50" FontAttributes="Bold"></Span>
                             <Span Text="&#10;"></Span>
-                            <Span Text="You're going to..." FontSize="Medium" FontAttributes="None"></Span>
+                            <Span Text="You're going to..." FontSize="{Binding Medium}" FontAttributes="None"></Span>
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
@@ -40,7 +40,7 @@
                 Grid.Row="1"
                 Grid.Column="0"
                 Text="{Binding Title}"
-                FontSize="Large"
+                FontSize="{Binding Large}"
                 FontAttributes="Bold"
                     HorizontalTextAlignment="Center"/>
 
@@ -79,7 +79,7 @@
                 Grid.Row="5"
                 Grid.Column="0"
                 Text="{Binding FormattedRating}"
-                FontSize="Large"
+                FontSize="{Binding Large}"
                 FontAttributes="Bold"/>
 
                 <Label
@@ -99,7 +99,7 @@
                 Grid.Row="6"
                 Grid.Column="0"
                 Text="Contact Details:"
-                FontSize="Large"
+                FontSize="{Binding Large}"
                 FontAttributes="Bold"
                     HorizontalTextAlignment="Center"/>
 
@@ -107,7 +107,7 @@
                 Grid.Row="7"
                 Grid.Column="0"
                 Text="{Binding EateryPhoneNumber}"
-                FontSize="Large"
+                FontSize="{Binding Large}"
                 FontAttributes="Italic"
                     HorizontalTextAlignment="Center"/>
                 
@@ -115,7 +115,7 @@
                 Grid.Row="8"
                 Grid.Column="0"
                 Text="{Binding EateryAddress}"
-                FontSize="Large"
+                FontSize="{Binding Large}"
                 FontAttributes="Italic"
                     HorizontalTextAlignment="Center"/>
 

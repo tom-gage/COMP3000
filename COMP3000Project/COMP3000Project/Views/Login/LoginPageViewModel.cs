@@ -100,9 +100,10 @@ namespace COMP3000Project.Views.Login
             GoToSignUpPage = new Command(async () => await ExecuteGoToSignUpPage());
 
             //set text size
-            VeryLargeText = UserDetails.GetVeryLargeTextSetting();
-            LargeText = UserDetails.GetlargeTextSetting();
-            MediumText = UserDetails.GetMediumTextSetting();
+            VeryLarge = UserDetails.GetVeryLargeTextSetting();
+            Large = UserDetails.GetlargeTextSetting();
+            Medium = UserDetails.GetMediumTextSetting();
+            Small = UserDetails.GetSmallTextSetting();
 
             FeedbackText = "";
             FeedbackTextColour = "Green";

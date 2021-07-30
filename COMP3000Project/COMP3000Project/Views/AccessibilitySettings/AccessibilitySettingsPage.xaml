@@ -39,15 +39,34 @@
                     HorizontalTextAlignment="Center">
                     <Label.FormattedText>
                         <FormattedString>
-                            <Span Text="Very Large Text" FontSize="{Binding VeryLargeText}"></Span>
+                            <Span Text="Very Large Text: " FontSize="{Binding VeryLarge}"></Span>
+                            <Span Text="{Binding VeryLarge}"></Span>
                             <Span Text="&#10;"></Span>
-                            <Span Text="Large Text" FontSize="{Binding LargeText}"></Span>
+                            
+                            <Span Text="Large Text: " FontSize="{Binding Large}"></Span>
+                            <Span Text="{Binding Large}"></Span>
                             <Span Text="&#10;"></Span>
-                            <Span Text="Medium Text" FontSize="{Binding MediumText}"></Span>
+                            
+                            <Span Text="Medium Text: " FontSize="{Binding Medium}"></Span>
+                            <Span Text="{Binding Medium}"></Span>
+                            <Span Text="&#10;"></Span>
+                            
+                            <Span Text="Small Text: " FontSize="{Binding Small}" ></Span>
+                            <Span Text="{Binding Small}"></Span>
+
+
+                            <!--<Span Text="Very Large Text" FontSize="35" FontAttributes="Bold"></Span>
+                            <Span Text="&#10;"></Span>
+                            <Span Text="Large Text" FontSize="Large" FontAttributes="Bold"></Span>
+                            <Span Text="&#10;"></Span>
+                            <Span Text="Medium Text" FontSize="Medium" FontAttributes="Bold"></Span>
+                            <Span Text="&#10;"></Span>
+                            <Span Text="Small Text" FontSize="Small" FontAttributes="Bold"></Span>-->
                         </FormattedString>
 
                     </Label.FormattedText>
                 </Label>
+
 
                 <Frame 
                 Grid.Row="2"
@@ -114,9 +133,10 @@
                 Grid.Row="3"
                 Grid.Column="1"
                 Grid.ColumnSpan="3"
-                Text="Continue"
+                Text="Done"
                 FontSize="30"
-                FontAttributes="Bold">
+                FontAttributes="Bold"
+                    Command="{Binding Done}">
 
                 </Button>
 

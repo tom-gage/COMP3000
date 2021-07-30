@@ -35,10 +35,11 @@
                     Grid.ColumnSpan="5"
                    Grid.RowSpan="1"
                 Text="Welcome to Restaurant Tinder!"
-                   FontSize="Large"
+                   FontSize="{Binding Large}"
                    FontAttributes="Bold"
                 VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+                HorizontalOptions="CenterAndExpand"
+                   HorizontalTextAlignment="Center"/>
 
             <Label Grid.Row="1"
                    Grid.Column="0"
@@ -57,7 +58,8 @@
                    Grid.RowSpan="1"
                 Text="Username:"
                 VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+                HorizontalOptions="CenterAndExpand"
+                   FontSize="{Binding Small}"/>
             
             
             <Entry 
@@ -68,7 +70,8 @@
                 
                 Placeholder="username"
                    Text="{Binding Username}"
-                   x:Name="entUsername"/>
+                   x:Name="entUsername"
+                FontSize="{Binding Small}"/>
 
             
             
@@ -78,7 +81,8 @@
                    Grid.RowSpan="1"
                 Text="Password:"
                 VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+                HorizontalOptions="CenterAndExpand"
+                   FontSize="{Binding Small}"/>
 
             <Entry 
                 Grid.Row="5"
@@ -88,7 +92,8 @@
                 Placeholder="password"
                    Text="{Binding Password}"
                    IsPassword="True"
-                   x:Name="entPassword"/>
+                   x:Name="entPassword"
+                FontSize="{Binding Small}"/>
 
             <Button
                 Grid.Row="6"
@@ -97,6 +102,7 @@
                    Grid.RowSpan="1"
                 Text="Login!"
                     Command="{Binding Login}"
+                FontSize="{Binding Small}"
                     />
 
             <Button
@@ -106,6 +112,7 @@
                    Grid.RowSpan="1"
                 Text="Register"
                     Command="{Binding GoToSignUpPage}"
+                FontSize="{Binding Small}"
                     />
 
         </Grid>

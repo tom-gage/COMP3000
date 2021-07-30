@@ -24,37 +24,65 @@ namespace COMP3000Project.ViewModel
 		}
 
 
-		string veryLargeText;
-		public string VeryLargeText
-		{
-			get => veryLargeText;
-			set => SetProperty(ref veryLargeText, value);
-		}
 
-		string largeText;
-		public string LargeText
-		{
-			get => largeText;
-			set => SetProperty(ref largeText, value);
-		}
-
-		string mediumText;
-		public string MediumText
-		{
-			get => mediumText;
-			set => SetProperty(ref mediumText, value);
-		}
-
-		string smallText;
-		public string SmallText
-		{
-			get => smallText;
-			set => SetProperty(ref smallText, value);
-		}
+        private double veryLargeText;
+        public double VeryLarge
+        {
+            get { return veryLargeText; }
+            set
+            {
+                if (veryLargeText != value)
+                {
+                    SetProperty(ref veryLargeText, value);//informs view of change
+                }
+            }
+        }
 
 
-		//magic
-		protected void SetProperty<T>(ref T backingStore, T value, Action onChanged = null, [CallerMemberName] string propertyName = "")
+        private double largeText;
+        public double Large
+        {
+            get { return largeText; }
+            set
+            {
+                if (largeText != value)
+                {
+                    SetProperty(ref largeText, value);//informs view of change
+                }
+            }
+        }
+
+
+        private double mediumText;
+        public double Medium
+        {
+            get { return mediumText; }
+            set
+            {
+                if (mediumText != value)
+                {
+                    SetProperty(ref mediumText, value);//informs view of change
+                }
+            }
+        }
+
+
+        private double smallText;
+        public double Small
+        {
+            get { return smallText; }
+            set
+            {
+                if (smallText != value)
+                {
+                    SetProperty(ref smallText, value);//informs view of change
+                }
+            }
+        }
+
+
+        //magic
+        protected void SetProperty<T>(ref T backingStore, T value, Action onChanged = null, [CallerMemberName] string propertyName = "")
 		{
 			if (EqualityComparer<T>.Default.Equals(backingStore, value))
 				return;

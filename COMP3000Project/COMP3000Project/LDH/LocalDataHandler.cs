@@ -14,7 +14,7 @@ namespace COMP3000Project.LDH
     public static class LocalDataHandler
     {
         //PROPERTIES
-        private static string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "flashCardData.json");
+        private static string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "userDetails.json");
 
 
 

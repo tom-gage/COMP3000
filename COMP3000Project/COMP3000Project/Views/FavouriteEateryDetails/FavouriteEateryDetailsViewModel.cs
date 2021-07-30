@@ -118,6 +118,12 @@ namespace COMP3000Project.Views.FavouriteEateryDetails
 
             Note = eateryOption.Notes;
 
+            //set text size
+            VeryLarge = UserDetails.GetVeryLargeTextSetting();
+            Large = UserDetails.GetlargeTextSetting();
+            Medium = UserDetails.GetMediumTextSetting();
+            Small = UserDetails.GetSmallTextSetting();
+
             populateImagesArray(eateryOption);
 
             WebsocketHandler.registerSubscriber(this);

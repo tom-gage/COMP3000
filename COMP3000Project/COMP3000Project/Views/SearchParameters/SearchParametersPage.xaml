@@ -30,7 +30,7 @@
                 Grid.ColumnSpan="5"
                 HorizontalOptions="Center"
                 Text="Use the parameters below to define your search!"
-                FontSize="Medium"
+                FontSize="{Binding Medium}"
                 FontAttributes="Bold"
                 />
 
@@ -40,7 +40,7 @@
                 Grid.ColumnSpan="5"
                 HorizontalOptions="Center"
                 Text="Where?"
-                FontSize="Medium"
+                FontSize="{Binding Medium}"
                 FontAttributes="Bold"
                 />
 
@@ -52,7 +52,7 @@
                 FontAttributes="Italic"
                 Placeholder="Enter the location of your search here"
                 Text="{Binding SelectedLocation}"
-                />
+                                FontSize="{Binding Small}"/>
 
             <Label 
                 Grid.Row="3"
@@ -60,7 +60,7 @@
                 Grid.ColumnSpan="5"
                 Text="When?"
                 HorizontalOptions="Center"
-                FontSize="Medium"
+                FontSize="{Binding Medium}"
                 FontAttributes="Bold"
                 />
 
@@ -70,7 +70,8 @@
                 Grid.ColumnSpan="5"
                 HorizontalOptions="Center"
                 FontAttributes="Italic"
-                Time="{Binding SelectedTime}" />
+                Time="{Binding SelectedTime}"
+                                FontSize="{Binding Small}"/>
 
 
             <Label 
@@ -79,7 +80,7 @@
                 Grid.ColumnSpan="5"
                 Text="What?"
                 HorizontalOptions="Center"
-                FontSize="Medium"
+                FontSize="{Binding Medium}"
                 FontAttributes="Bold"
                 />
 
@@ -93,6 +94,7 @@
                 HasShadow="True"
                 Padding="10"
                 Margin="20"
+                
                 >
 
                 <CollectionView
@@ -115,7 +117,7 @@
                 Grid.ColumnSpan="3"
                 Text="Go!"
                 Command="{Binding GoToStartSearch}"
-                    />
+                                    FontSize="{Binding Small}"/>
 
         </Grid>
     </ContentPage.Content>

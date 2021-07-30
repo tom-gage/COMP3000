@@ -127,6 +127,12 @@ namespace COMP3000Project.Views.Settings
             ChangePassword = new Command(async () => await ExecuteChangePassword());
             DeleteAccount = new Command(async () => await ExecuteDeleteAccount());
 
+            //set text size
+            VeryLarge = UserDetails.GetVeryLargeTextSetting();
+            Large = UserDetails.GetlargeTextSetting();
+            Medium = UserDetails.GetMediumTextSetting();
+            Small = UserDetails.GetSmallTextSetting();
+
             WebsocketHandler.registerSubscriber(this);//subscribe to messages from the WSH
             //WebsocketHandler.HandleMessages();
         }

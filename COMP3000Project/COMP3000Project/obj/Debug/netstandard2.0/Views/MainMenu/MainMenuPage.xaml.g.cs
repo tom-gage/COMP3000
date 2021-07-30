@@ -17,8 +17,12 @@ namespace COMP3000Project.Views.MainMenu {
     public partial class MainMenuPage : global::Xamarin.Forms.ContentPage {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
+        private global::Xamarin.Forms.CollectionView pastSearches;
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
         private void InitializeComponent() {
             global::Xamarin.Forms.Xaml.Extensions.LoadFromXaml(this, typeof(MainMenuPage));
+            pastSearches = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.CollectionView>(this, "pastSearches");
         }
     }
 }

@@ -99,6 +99,11 @@ namespace COMP3000Project.Views.Search
 
             SearchCode = "pending...";
 
+            //set text size
+            VeryLarge = UserDetails.GetVeryLargeTextSetting();
+            Large = UserDetails.GetlargeTextSetting();
+            Medium = UserDetails.GetMediumTextSetting();
+            Small = UserDetails.GetSmallTextSetting();
 
             //subscribe to messages
             WebsocketHandler.registerSubscriber(this);

@@ -20,16 +20,16 @@ namespace COMP3000Project.Views.Login
         {
             InitializeComponent();
 
-            LocalDataHandler.SetUserDetailsFromLocalStorage();
+
 
 
             viewModel = new LoginPageViewModel();
 
             BindingContext = viewModel;
 
+            LocalDataHandler.SetUserDetailsFromLocalStorage();
 
-
-            if (true)//UserDetails.IsFirstStartUp)
+            if (UserDetails.IsFirstStartUp)
             {
                 Navigation.PushAsync(new AccessibilitySettingsPage());
                 UserDetails.IsFirstStartUp = false;
@@ -37,11 +37,15 @@ namespace COMP3000Project.Views.Login
             }
 
 
+
         }
 
         protected override void OnAppearing()
         {
-
+            viewModel.VeryLarge = UserDetails.GetVeryLargeTextSetting();
+            viewModel.Large = UserDetails.GetlargeTextSetting();
+            viewModel.Medium = UserDetails.GetMediumTextSetting();
+            viewModel.Small = UserDetails.GetSmallTextSetting();
 
             viewModel.hideLoginFeedbackText();
             base.OnAppearing();

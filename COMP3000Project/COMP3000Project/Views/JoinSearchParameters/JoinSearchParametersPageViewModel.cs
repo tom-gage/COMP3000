@@ -82,6 +82,12 @@ namespace COMP3000Project.Views.JoinSearchParameters
 
 
             WebsocketHandler.registerSubscriber(this);
+
+            //set text size
+            VeryLarge = UserDetails.GetVeryLargeTextSetting();
+            Large = UserDetails.GetlargeTextSetting();
+            Medium = UserDetails.GetMediumTextSetting();
+            Small = UserDetails.GetSmallTextSetting();
         }
 
 

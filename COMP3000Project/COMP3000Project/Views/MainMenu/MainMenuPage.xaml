@@ -7,37 +7,39 @@
              x:Class="COMP3000Project.Views.MainMenu.MainMenuPage"
              Title="Main Menu">
     <ContentPage.Content>
+        <ScrollView>
+            <Grid Padding="5" Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="400"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-        <Grid Padding="5" Margin="5">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="400"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <Label Grid.Row="0"
+                <Label Grid.Row="0"
                    Grid.Column="0"
                    Grid.ColumnSpan="4"
                 Text="Past Searches:"
-                   FontSize="Small"
+                   FontSize="{Binding Small}"
                    FontAttributes="Bold"
                    
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
 
 
-            <CollectionView 
+                <CollectionView
+                x:Name="pastSearches"
                 Grid.Row="1"
                 Grid.Column="0"
                 Grid.ColumnSpan="4"
+               
                 
                 ItemsSource="{Binding PastSearches}" 
                             SelectionMode="Single" 
@@ -45,178 +47,126 @@
                             SelectedItem="{Binding SelectedPastSearch}">
 
 
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame BorderColor="Black"
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame BorderColor="Black"
                                 CornerRadius="10"
                                 HasShadow="True"
                                Padding="10"
                                Margin="0">
 
-                            <Grid Padding="0" Margin="0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
+                                <Grid Padding="0" Margin="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
 
 
 
 
-                                <Label Grid.Column="0"
+                                    <Label Grid.Column="0"
                                     Text="Location:"
                                     FontAttributes="Bold" 
-                                    VerticalOptions="Start"/>
+                                    VerticalOptions="Start"
+                                       FontSize="{Binding Path=BindingContext.Small}"/>
 
-                                <Label Grid.Column="0"
+                                    <Label Grid.Column="0"
                                     Text="{Binding Location}"
                                     FontAttributes="Italic" 
-                                    VerticalOptions="End"/>
+                                    VerticalOptions="End"
+                                       FontSize="{Binding Path=BindingContext.Small}"/>
 
 
 
-                                <Label 
+                                    <Label 
                                     Grid.Row="0"
                                     Grid.Column="1"
                                     Text="Type:"
                                     FontAttributes="Bold"
-                                    VerticalOptions="Start" />
+                                    VerticalOptions="Start" 
+                                    FontSize="{Binding Path=BindingContext.Small}"/>
 
-                                <Label 
+                                    <Label 
                                     Grid.Row="0"
                                     Grid.Column="1"
                                     Text="{Binding EateryType}"
                                     FontAttributes="Italic"
-                                    VerticalOptions="End" />
+                                    VerticalOptions="End" 
+                                    FontSize="{Binding Path=BindingContext.Small}"/>
 
-                                <TimePicker 
+                                    <TimePicker 
                                     Grid.Column="2"
                                     HorizontalOptions="Center"
-                                Time="{Binding timeSpan}"/>
+                                Time="{Binding timeSpan}"
+                                    FontSize="{Binding Path=BindingContext.Small}"/>
 
-                                <Label 
+                                    <Label 
                                     Grid.Column="2"
                                     Grid.Row="1"
                                     Text="{Binding FormattedDateOfSearch}"
                                     FontAttributes="Italic" 
                                     VerticalOptions="End"
                                     HorizontalOptions="Center"
-                                   />
-                            </Grid>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                                   FontSize="{Binding Path=BindingContext.Small}"/>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
 
 
-            <Button 
+                <Button 
                 Grid.Row="2"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 Text="start a search!"
                     Command="{Binding GoToStartSearch}"
-                    />
+                    FontSize="{Binding Small}"/>
 
 
 
-            <Button 
+                <Button 
                 Grid.Row="2"
                 Grid.Column="2"
                 Grid.ColumnSpan="2"
                 Text="join a search!"
                     Command="{Binding GoToJoinSearch}"
-                    />
+                    FontSize="{Binding Small}"/>
 
-            <Button 
+                <Button 
                 Grid.Row="3"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 Text="View your Favourite Eateries"
                     Command="{Binding GoToFavourites}"
-                    />
+                    FontSize="{Binding Small}"/>
 
-            <Button 
+                <Button 
                 Grid.Row="3"
                 Grid.Column="2"
                 Grid.ColumnSpan="2"
                 Text="account settings"
                     Command="{Binding GoToSettings}"
-                    />
+                    FontSize="{Binding Small}"/>
+
+
+                <Button 
+                Grid.Row="4"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Text="Accessibility settings"
+                    Command="{Binding GoToAccessibilitySettings}"
+                    FontSize="{Binding Medium}"/>
 
 
 
-        </Grid>
-
-        <!--<StackLayout>
-            <Label Text="Welcome to the main menu!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-
-            <CollectionView ItemsSource="{Binding PastSearches}" 
-                            SelectionMode="Single" 
-                            SelectionChangedCommand="{Binding GoToStartPastSearch}"
-                            SelectedItem="{Binding SelectedPastSearch}">
-                
-                
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Padding="5" Margin="5">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="200" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            
-                            
-                            <Label Grid.Column="0"
-                       Text="{Binding FormattedLocation}"
-                       FontAttributes="Bold" />
-
-                            <Label Grid.Column="0"
-                                   Grid.Row="1"
-                       Text="{Binding FormattedDateOfSearch}"
-                       FontAttributes="Italic" 
-                                   VerticalOptions="End"
-                                   />
-
-                            <Label Grid.Row="0"
-                                Grid.Column="1"
-                                Text="{Binding FormattedEateryType}"
-                                FontAttributes="Italic"
-                                VerticalOptions="End" />
-
-                            <TimePicker Grid.Column="2"
-                                Time="{Binding timeSpan}"/>
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-
-            <Button Text="start your search!"
-                    Command="{Binding GoToStartSearch}"
-                    />
-
-
-
-            <Button Text="join a search!"
-                    Command="{Binding GoToJoinSearch}"
-                    />
-
-            <Button Text="View Favourite Eateries"
-                    Command="{Binding GoToFavourites}"
-                    />
-
-            <Button Text="go to account settings!"
-                    Command="{Binding GoToSettings}"
-                    />
-        </StackLayout>-->
+            </Grid>
+        </ScrollView>
+        
     </ContentPage.Content>
 </ContentPage>

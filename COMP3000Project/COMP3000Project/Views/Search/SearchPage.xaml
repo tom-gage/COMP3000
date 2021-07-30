@@ -10,7 +10,7 @@
     <ContentPage.Content>
         <StackLayout>
             <Label Text="{Binding SearchCode}"
-                   FontSize="Medium"
+                   FontSize="{Binding Large}"
                    FontAttributes="Bold"
                 VerticalOptions="Center" 
                 HorizontalOptions="CenterAndExpand" />

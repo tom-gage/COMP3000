@@ -19,9 +19,16 @@ namespace COMP3000Project.Views.MainMenu
         }
         protected override void OnAppearing()
         {
-            base.OnAppearing();
+            viewModel.VeryLarge = UserDetails.GetVeryLargeTextSetting();
+            viewModel.Large = UserDetails.GetlargeTextSetting();
+            viewModel.Medium = UserDetails.GetMediumTextSetting();
+            viewModel.Small = UserDetails.GetSmallTextSetting();
 
             WebsocketHandler.RequestGetPastSearches(UserDetails.Username, UserDetails.Password);
+
+            base.OnAppearing();
+
+
         }
     }
 }

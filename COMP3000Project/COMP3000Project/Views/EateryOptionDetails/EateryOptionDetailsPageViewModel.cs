@@ -131,6 +131,12 @@ namespace COMP3000Project.Views.EateryOptionDetails
             EateryAddress = eateryOption.Address;
             EateryPhoneNumber = eateryOption.PhoneNumber;
 
+            //set text size
+            VeryLarge = UserDetails.GetVeryLargeTextSetting();
+            Large = UserDetails.GetlargeTextSetting();
+            Medium = UserDetails.GetMediumTextSetting();
+            Small = UserDetails.GetSmallTextSetting();
+
             populateImagesArray(eateryOption);
 
             WebsocketHandler.registerSubscriber(this);

@@ -115,58 +115,77 @@ namespace COMP3000Project.UserDetailsSingleton
             Password = null;
         }
 
-        public static string GetVeryLargeTextSetting()
+        public static float GetVeryLargeTextSetting()
         {
             if (PreferVeryLargeText)
             {
-                return "200";
+                return 40;
             }
             if (PreferLargeText)
             {
-                return "100";
+                return 35;
             }
             if (PreferMediumText)
             {
-                return "50";
+                return 30;
             }
 
-            return "50";
+            return 30;
         }
 
-        public static string GetlargeTextSetting()
+        public static float GetlargeTextSetting()
         {
             if (PreferVeryLargeText)
             {
-                return "100";
+                return 32;
             }
             if (PreferLargeText)
             {
-                return "50";
+                return 27;
             }
             if (PreferMediumText)
             {
-                return "Large";
+                return 22;
             }
 
-            return "Large";
+            return 22;
         }
 
-        public static string GetMediumTextSetting()
+        public static float GetMediumTextSetting()
         {
             if (PreferVeryLargeText)
             {
-                return "50";
+                return 27;
             }
             if (PreferLargeText)
             {
-                return "Large";
+                return 22;
             }
             if (PreferMediumText)
             {
-                return "Medium";
+                return 17;
             }
 
-            return "Medium";
+            return 17;
+        }
+
+        public static double GetSmallTextSetting()
+        {
+
+            if (PreferVeryLargeText)
+            {
+                return 22;
+            }
+            if (PreferLargeText)
+            {
+                return 17;
+            }
+            if (PreferMediumText)
+            {
+                return 14;
+            }
+
+            return 14;
         }
     }
 }

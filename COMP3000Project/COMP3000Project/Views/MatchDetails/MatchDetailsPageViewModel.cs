@@ -15,6 +15,7 @@ using Xamarin.Forms;
 
 using System.Collections.ObjectModel;
 using System.Text.Json;
+using COMP3000Project.UserDetailsSingleton;
 
 namespace COMP3000Project.Views.MatchDetails
 {
@@ -109,7 +110,12 @@ namespace COMP3000Project.Views.MatchDetails
 
             populateImagesArray(eateryOption);
 
-            //set commands
+
+            //set text size
+            VeryLarge = UserDetails.GetVeryLargeTextSetting();
+            Large = UserDetails.GetlargeTextSetting();
+            Medium = UserDetails.GetMediumTextSetting();
+            Small = UserDetails.GetSmallTextSetting();
 
             WebsocketHandler.registerSubscriber(this);
         }

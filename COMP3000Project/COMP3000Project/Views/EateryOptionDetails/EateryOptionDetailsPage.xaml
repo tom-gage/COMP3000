@@ -30,27 +30,27 @@
 
                 <Label Grid.Row="0"
                    Grid.ColumnSpan="4"
-                   Text="{Binding EateryTitle}" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                   Text="{Binding EateryTitle}" FontSize="{Binding Large}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
 
 
 
                 <Label Grid.Row="1"
                    Grid.Column="0"
                    Grid.ColumnSpan="4"
-                   Text="{Binding EateryRating}" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                   Text="{Binding EateryRating}" FontSize="{Binding Large}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
 
                 
                 
                 <Label Grid.Row="2"
                    Grid.ColumnSpan="4"
-                   Text="{Binding EateryAddress}" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                   Text="{Binding EateryAddress}" FontSize="{Binding Large}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
 
 
 
                 <Label Grid.Row="3"
                    Grid.Column="0"
                    Grid.ColumnSpan="4"
-                   Text="{Binding EateryPhoneNumber}" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                   Text="{Binding EateryPhoneNumber}" FontSize="{Binding Large}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
 
 
 
@@ -61,7 +61,8 @@
                         HeightRequest="50"
                     Text="Vote!"
                     BackgroundColor="Green"
-                    Command="{Binding CastVote}"></Button>
+                    Command="{Binding CastVote}"
+                        FontSize="{Binding Small}"></Button>
 
                 <Button Grid.Row="4"
                         Grid.Column="2"
@@ -70,7 +71,8 @@
                         HeightRequest="50"
                     Text="Add to favourites"
                     BackgroundColor="Green"
-                    Command="{Binding AddToFavourites}"></Button>
+                    Command="{Binding AddToFavourites}"
+                        FontSize="{Binding Small}"></Button>
 
                 
                 
@@ -104,27 +106,31 @@
 
                 <Label Grid.Row="6"
                    Grid.ColumnSpan="4"
-                   Text="{Binding ReviewsHeader}" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                   Text="{Binding ReviewsHeader}" FontSize="{Binding Large}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
 
                 <Button Grid.Row="7"
                     Grid.Column="0"
                     Text="Sort by Oldest"
-                    Command="{Binding SortByOldest}"></Button>
+                    Command="{Binding SortByOldest}"
+                        FontSize="{Binding Small}"></Button>
 
                 <Button Grid.Row="7"
                     Grid.Column="1"
                     Text="Sort by youngest"
-                    Command="{Binding SortByYoungest}"></Button>
+                    Command="{Binding SortByYoungest}"
+                        FontSize="{Binding Small}"></Button>
 
                 <Button Grid.Row="7"
                     Grid.Column="2"
                     Text="Sort by best"
-                    Command="{Binding SortByBest}"></Button>
+                    Command="{Binding SortByBest}"
+                        FontSize="{Binding Small}"></Button>
 
                 <Button Grid.Row="7"
                     Grid.Column="3"
                     Text="Sort by worst"
-                    Command="{Binding SortByWorst}"></Button>
+                    Command="{Binding SortByWorst}"
+                        FontSize="{Binding Small}"></Button>
 
                 <CollectionView Grid.Row="8"
                             Grid.ColumnSpan="4"

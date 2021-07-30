@@ -105,6 +105,12 @@ namespace COMP3000Project.Views.FavouriteEateries
             FeedbackTextColour = "Red";
             FeedbackTextIsVisible = false;
 
+            //set text size
+            VeryLarge = UserDetails.GetVeryLargeTextSetting();
+            Large = UserDetails.GetlargeTextSetting();
+            Medium = UserDetails.GetMediumTextSetting();
+            Small = UserDetails.GetSmallTextSetting();
+
 
             WebsocketHandler.registerSubscriber(this);
         }
