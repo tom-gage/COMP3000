@@ -19,7 +19,7 @@ namespace COMP3000Project.LDH
 
 
         //FUNCTIONS
-        //get local data
+        //gets user details data from local storage
         public static void SetUserDetailsFromLocalStorage()
         {
             MapToUserDetails userDetailsMap;
@@ -60,7 +60,7 @@ namespace COMP3000Project.LDH
         }
 
         //sets user details
-        public static void SetUserDetails(MapToUserDetails userDetailsMap)
+        static void SetUserDetails(MapToUserDetails userDetailsMap)
         {
             UserDetails.Username = userDetailsMap.Username;
             UserDetails.Password = userDetailsMap.Password;
@@ -72,7 +72,7 @@ namespace COMP3000Project.LDH
         }
 
         //gets a user details map object
-        public static MapToUserDetails GetUserDetailsMap()
+        static MapToUserDetails GetUserDetailsMap()
         {
             MapToUserDetails map = new MapToUserDetails();
 

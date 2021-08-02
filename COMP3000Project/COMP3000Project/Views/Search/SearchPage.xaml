@@ -78,8 +78,6 @@
                             </Frame>
                         </StackLayout>
                         
-                        <!--<Image Source="{Binding EateryImage}"/>-->
-                        <!--<Label Text="{Binding Title}" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="Gray" />-->
                     </DataTemplate>
                 </swipeCardView:SwipeCardView.ItemTemplate>
             </swipeCardView:SwipeCardView>

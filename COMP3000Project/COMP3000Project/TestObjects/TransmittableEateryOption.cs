@@ -6,11 +6,7 @@ namespace COMP3000Project.TestObjects
 {
     class TransmittableEateryOption
     {
-        //string ID, Title, Description, PhotoReference0, PhotoReference1, PhotoReference2, PhotoReference3, PhotoReference4, OpeningTime, ClosingTime, TimeToClosingTime;
-        //float Rating;
-        //Review[] Reviews;
-        //string[] Votes;
-
+        //this is the TransmittableEateryOption class, it is used as a map for the EateryOption class when it needs to be serialised for transmission
         string _username;
         public string Username
         {

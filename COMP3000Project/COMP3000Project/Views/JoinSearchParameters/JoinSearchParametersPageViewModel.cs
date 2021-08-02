@@ -80,58 +80,53 @@ namespace COMP3000Project.Views.JoinSearchParameters
             //set commands
             JoinSearch = new Command(async () => await ExecuteJoinSearch());
 
-
-            WebsocketHandler.registerSubscriber(this);
-
             //set text size
             VeryLarge = UserDetails.GetVeryLargeTextSetting();
             Large = UserDetails.GetlargeTextSetting();
             Medium = UserDetails.GetMediumTextSetting();
             Small = UserDetails.GetSmallTextSetting();
+
+            //register this class as a subscriber to the websocket handler, allows for the recieving of inter class messages
+            WebsocketHandler.registerSubscriber(this);
         }
 
 
 
         //FUNCTIONS
+        //attempt to join a search
         async Task<object> ExecuteJoinSearch()
         {
-            if (ValidateSearchCode(SearchCode))
+            if (ValidateSearchCode(SearchCode))//if code exists
             {
-                showJoinInProgress();
+                //show join in progress feedback
+                showFeedBacktext("Joining a search...", "Orange");
+                //begin request
                 WebsocketHandler.RequestJoinExistingSearch(UserDetails.Username, UserDetails.Password, SearchCode);
 
             } else
             {
-                showJoinRejected("Please enter a join code!");
+                //show empty code request
+                showFeedBacktext("Please enter a join code!", "Red");
+                
             }
             return null;
         }
 
+        //hide feedback text
         public void hideFeedbackText()
         {
             FeedbackTextIsVisible = false;
         }
 
-        void showJoinSuccess()
+        //show feedback text
+        void showFeedBacktext(string message, string colour)
         {
-            FeedbackText = "Join search successful!";
-            FeedbackTextColour = "Green";
-            FeedbackTextIsVisible = true;
-        }
-        void showJoinInProgress()
-        {
-            FeedbackText = "Joining search...";
-            FeedbackTextColour = "Orange";
-            FeedbackTextIsVisible = true;
-        }
-        void showJoinRejected(string rejectionText)
-        {
-            FeedbackText = rejectionText;
-            FeedbackTextColour = "Red";
+            FeedbackText = message;
+            FeedbackTextColour = colour;
             FeedbackTextIsVisible = true;
         }
 
-
+        //if search code entered is null or empty, return false
         public bool ValidateSearchCode(string searchCode)
         {
             if (searchCode == null)
@@ -150,6 +145,7 @@ namespace COMP3000Project.Views.JoinSearchParameters
             return true;
         }
 
+        //catches incoming messages from the publisher
         async public void Update(Message message)
         {
             switch (message.type)
@@ -159,19 +155,19 @@ namespace COMP3000Project.Views.JoinSearchParameters
 
                     break;
 
-                case "joinSearchRequestGranted":
+                case "joinSearchRequestGranted"://join search is successful
                     Console.WriteLine("join request granted");
-                    showJoinSuccess();
+                    showFeedBacktext("Join search successful!", "Green");
 
-                    SearchPage nextPage = new SearchPage(message.Items[1].ToString());
+                    SearchPage nextPage = new SearchPage(message.Items[1].ToString());//navigate to search page
                     await Navigation.PushAsync(nextPage, true);
                     
 
                     break;
 
-                case "joinSearchRequestRejected":
+                case "joinSearchRequestRejected"://join search unsuccessful
                     Console.WriteLine("join request rejected");
-                    showJoinRejected("Join request rejected! \n Search Code: " + message.Body + " is invalid!");
+                    showFeedBacktext("Join request rejected! \n Search Code: " + message.Body + " is invalid!", "Red");//show negative feedback
 
                     break;
 

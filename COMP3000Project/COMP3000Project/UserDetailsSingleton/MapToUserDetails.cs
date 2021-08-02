@@ -6,6 +6,7 @@ namespace COMP3000Project.UserDetailsSingleton
 {
     public class MapToUserDetails
     {
+        //this class is the map to the user details, it serves as a map for the UserDetails singleton so it can be serialised and deserialised into JSON for local storage
         //VARIABLES
         private string _username;
         public string Username

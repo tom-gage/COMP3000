@@ -10,6 +10,8 @@ namespace COMP3000Project.TestObjects
 {
     public class ImageHolder : INotifyPropertyChanged
     {
+        //ImageHolder, used to populate image arrays for presentation in the view
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         ImageSource _image;

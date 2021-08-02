@@ -13,6 +13,8 @@ namespace COMP3000Project.Views.SearchParameters
     public partial class SearchParametersPage : ContentPage
     {
         SearchParametersPageViewModel viewModel;
+
+        //constructor 1, for starting a new search
         public SearchParametersPage()
         {
             InitializeComponent();
@@ -21,17 +23,13 @@ namespace COMP3000Project.Views.SearchParameters
             BindingContext = viewModel;
         }
 
+        //constructor 2, for starting a past search
         public SearchParametersPage(string location, string time, string[] eateryTypes)
         {
             InitializeComponent();
 
             viewModel = new SearchParametersPageViewModel(location, time, eateryTypes);
             BindingContext = viewModel;
-        }
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
         }
     }
 }

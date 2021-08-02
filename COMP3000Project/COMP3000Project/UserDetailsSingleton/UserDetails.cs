@@ -6,7 +6,9 @@ namespace COMP3000Project.UserDetailsSingleton
 {
     public static class UserDetails
     {
-        //VARIABLES
+        //UserDetails is a singleton that holds all the users details
+
+        //properties
         private static string _username;
         public static string Username
         {
@@ -115,6 +117,7 @@ namespace COMP3000Project.UserDetailsSingleton
             Password = null;
         }
 
+        //returns the very large text setting, output changes depending on the selected text size preference
         public static float GetVeryLargeTextSetting()
         {
             if (PreferVeryLargeText)
@@ -133,6 +136,7 @@ namespace COMP3000Project.UserDetailsSingleton
             return 30;
         }
 
+        //returns the large text setting, output changes depending on the selected text size preference
         public static float GetlargeTextSetting()
         {
             if (PreferVeryLargeText)
@@ -151,6 +155,7 @@ namespace COMP3000Project.UserDetailsSingleton
             return 22;
         }
 
+        //returns the medium text setting, output changes depending on the selected text size preference
         public static float GetMediumTextSetting()
         {
             if (PreferVeryLargeText)
@@ -169,6 +174,7 @@ namespace COMP3000Project.UserDetailsSingleton
             return 17;
         }
 
+        //returns the small text setting, output changes depending on the selected text size preference
         public static double GetSmallTextSetting()
         {
 

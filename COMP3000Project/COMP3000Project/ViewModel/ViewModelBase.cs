@@ -18,13 +18,13 @@ namespace COMP3000Project.ViewModel
 
 		protected INavigation Navigation => Application.Current.MainPage.Navigation;
 
-		public void ShowToast(string message)
+		public void ShowToast(string message)//shows a toast message, used to provide feedback to the user
         {
 			DependencyService.Get<Toast>().Show(message);
 		}
 
 
-
+        //prefered text sizes 
         private double veryLargeText;
         public double VeryLarge
         {
@@ -33,7 +33,7 @@ namespace COMP3000Project.ViewModel
             {
                 if (veryLargeText != value)
                 {
-                    SetProperty(ref veryLargeText, value);//informs view of change
+                    SetProperty(ref veryLargeText, value);
                 }
             }
         }
@@ -47,7 +47,7 @@ namespace COMP3000Project.ViewModel
             {
                 if (largeText != value)
                 {
-                    SetProperty(ref largeText, value);//informs view of change
+                    SetProperty(ref largeText, value);
                 }
             }
         }
@@ -61,7 +61,7 @@ namespace COMP3000Project.ViewModel
             {
                 if (mediumText != value)
                 {
-                    SetProperty(ref mediumText, value);//informs view of change
+                    SetProperty(ref mediumText, value);
                 }
             }
         }
@@ -75,13 +75,13 @@ namespace COMP3000Project.ViewModel
             {
                 if (smallText != value)
                 {
-                    SetProperty(ref smallText, value);//informs view of change
+                    SetProperty(ref smallText, value);
                 }
             }
         }
 
 
-        //magic
+        //informs view of changes made to properties
         protected void SetProperty<T>(ref T backingStore, T value, Action onChanged = null, [CallerMemberName] string propertyName = "")
 		{
 			if (EqualityComparer<T>.Default.Equals(backingStore, value))

@@ -133,12 +133,12 @@ namespace COMP3000Project.Views.Settings
             Medium = UserDetails.GetMediumTextSetting();
             Small = UserDetails.GetSmallTextSetting();
 
+            //register this class as a subscriber to the websocket handler, allows for the recieving of inter class messages
             WebsocketHandler.registerSubscriber(this);//subscribe to messages from the WSH
-            //WebsocketHandler.HandleMessages();
         }
 
         //FUNCTIONS
-
+        //returns false if username is null or empty
         public bool UsernameIsValid(string username)
         {
             if (username == null)
@@ -157,6 +157,7 @@ namespace COMP3000Project.Views.Settings
             return true;
         }
 
+        //returns false if password is null or empty
         public bool PasswordIsValid(string password)
         {
             if (password == null)
@@ -175,6 +176,7 @@ namespace COMP3000Project.Views.Settings
             return true;
         }
 
+        //change username
         async Task<object> ExecuteChangeUsername()
         {
             if (UsernameIsValid(NewUsername))
@@ -188,6 +190,7 @@ namespace COMP3000Project.Views.Settings
             return null;
         }
 
+        //change password
         async Task<object> ExecuteChangePassword()
         {
             if (PasswordIsValid(NewPassword))
@@ -202,6 +205,7 @@ namespace COMP3000Project.Views.Settings
             return null;
         }
 
+        //delete account
         async Task<object> ExecuteDeleteAccount()
         {
             showFeedbackText("Processing...", "Orange");
@@ -210,12 +214,13 @@ namespace COMP3000Project.Views.Settings
             return null;
         }
 
-
+        //hide feedback text
         public void hideFeedbackText()
         {
             FeedbackTextIsVisible = false;
         }
 
+        //show feedback text
         void showFeedbackText(string message, string colour)
         {
             FeedbackText = message;
@@ -223,7 +228,7 @@ namespace COMP3000Project.Views.Settings
             FeedbackTextIsVisible = true;
         }
 
-
+        //catches incoming messages from the publisher
         public void Update(Message message)
         {
             switch (message.type)

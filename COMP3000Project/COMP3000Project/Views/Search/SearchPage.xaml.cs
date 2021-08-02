@@ -13,21 +13,28 @@ namespace COMP3000Project.Views.Search
     public partial class SearchPage : ContentPage
     {
         SearchPageViewModel viewModel;
-        public SearchPage(string location, string time, string[] eateryTypes)//start new search
+
+        //constructor 1, for starting a new search
+        public SearchPage(string location, string time, string[] eateryTypes)
         {
             InitializeComponent();
 
             viewModel = new SearchPageViewModel(location, time, eateryTypes);
             BindingContext = viewModel;
+
+            //bind dragging to OnDragging
             SwipeCardView.Dragging += OnDragging;
         }
 
-        public SearchPage(string SearchCode)//join existing search
+        //constructor 2, for joining an existing search
+        public SearchPage(string SearchCode)
         {
             InitializeComponent();
 
             viewModel = new SearchPageViewModel(SearchCode);
             BindingContext = viewModel;
+
+            //bind dragging to OnDragging
             SwipeCardView.Dragging += OnDragging;
         }
 

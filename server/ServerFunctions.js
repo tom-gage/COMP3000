@@ -755,7 +755,7 @@ class ServerFunctions{
 
                         console.log('[LOGIN] user registration succeeded');
 
-                        let MSG = new Message(1, "registrationSuccess", "", []);
+                        let MSG = new Message(1, "registrationSuccess", "", [username.toString(), password.toString()]);
                         that.sendToUser(username, MSG);
                     });
                 });

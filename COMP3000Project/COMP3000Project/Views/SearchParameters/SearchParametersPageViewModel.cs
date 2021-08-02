@@ -95,10 +95,10 @@ namespace COMP3000Project.Views.SearchParameters
         //COMMANDS
         public ICommand GoToStartSearch { get; }
 
-        //CONSTRUCTOR
+        //CONSTRUCTOR 1, for starting a new search
         public SearchParametersPageViewModel()
         {
-            //set vars
+            //set properties
             SelectedLocation = "";
             EateryTypeOptions = new ObservableCollection<string>();
             SelectedEateryTypeOptions = new ObservableCollection<object>();
@@ -121,8 +121,8 @@ namespace COMP3000Project.Views.SearchParameters
             Medium = UserDetails.GetMediumTextSetting();
             Small = UserDetails.GetSmallTextSetting();
 
+            //register this class as a subscriber to the websocket handler, allows for the recieving of inter class messages
             WebsocketHandler.registerSubscriber(this);
-            //WebsocketHandler.HandleMessages();
         }
 
         //CONSTRUCTOR 2, for initialising past searches
@@ -151,7 +151,6 @@ namespace COMP3000Project.Views.SearchParameters
             Small = UserDetails.GetSmallTextSetting();
 
 
-            //SelectedTime = DateTime.Now.TimeOfDay;
             SelectedTime = TimeSpan.Parse(time[0].ToString() + time[1].ToString() + ":" + time[2].ToString() + time[3].ToString());
 
 
@@ -159,10 +158,12 @@ namespace COMP3000Project.Views.SearchParameters
             //set commands
             GoToStartSearch = new Command(async () => await ExecuteGoToSearchPage());
 
+            //register this class as a subscriber to the websocket handler, allows for the recieving of inter class messages
             WebsocketHandler.registerSubscriber(this);
         }
 
         //FUNCTIONS
+        //return falase on null or empty search code
         public bool ValidateSearchCode(string searchCode)
         {
             if (searchCode == null)
@@ -181,13 +182,16 @@ namespace COMP3000Project.Views.SearchParameters
             return true;
         }
 
+        //navigate to search page...
         async Task<object> ExecuteGoToSearchPage()
         {
+            //if location is null, set location to plymouth
             if (SelectedLocation == null || SelectedLocation == "")
             {
                 SelectedLocation = "plymouth, uk";
             }
 
+            //if no eatery option type selected, set type to restaurant
             if (SelectedEateryTypeOption == null)
             {
                 SelectedEateryTypeOption = "restaurant";
@@ -202,6 +206,7 @@ namespace COMP3000Project.Views.SearchParameters
             return null;
         }
 
+        //catches incoming messages from the publisher
         public void Update(Message message)
         {
             switch (message.type)

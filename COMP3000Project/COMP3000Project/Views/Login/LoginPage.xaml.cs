@@ -27,11 +27,15 @@ namespace COMP3000Project.Views.Login
 
             BindingContext = viewModel;
 
+
+            //get user details from local storage
             LocalDataHandler.SetUserDetailsFromLocalStorage();
 
-            if (UserDetails.IsFirstStartUp)
+            if (UserDetails.IsFirstStartUp)//if this is first start up, prompt user with text accessibility page
             {
                 Navigation.PushAsync(new AccessibilitySettingsPage());
+
+                //no longer the first start up, set flag to false
                 UserDetails.IsFirstStartUp = false;
                 LocalDataHandler.SaveUserDetails();
             }
@@ -42,11 +46,18 @@ namespace COMP3000Project.Views.Login
 
         protected override void OnAppearing()
         {
+            //on appearing
+            //set text size
             viewModel.VeryLarge = UserDetails.GetVeryLargeTextSetting();
             viewModel.Large = UserDetails.GetlargeTextSetting();
             viewModel.Medium = UserDetails.GetMediumTextSetting();
             viewModel.Small = UserDetails.GetSmallTextSetting();
 
+            //set username/password
+            viewModel.Username = UserDetails.Username;
+            viewModel.Password = UserDetails.Password;
+
+            //hide feedback text
             viewModel.hideLoginFeedbackText();
             base.OnAppearing();
         }

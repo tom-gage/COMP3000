@@ -14,6 +14,7 @@ using COMP3000Project.TestObjects;
 using COMP3000Project.Views.MainMenu;
 using COMP3000Project.UserDetailsSingleton;
 using Plugin.LocalNotification;
+using COMP3000Project.LDH;
 
 namespace COMP3000Project.Views.Login
 {
@@ -92,8 +93,8 @@ namespace COMP3000Project.Views.Login
         //CONSTRUCTOR
         public LoginPageViewModel()
         {
-            Username = "u";//hardcoded for now, V TEMPORARY :<<<<<
-            Password = "p";
+            Username = UserDetails.Username;
+            Password = UserDetails.Password;
 
             //set commands
             Login = new Command(async () => await ExecuteLogin());
@@ -105,32 +106,21 @@ namespace COMP3000Project.Views.Login
             Medium = UserDetails.GetMediumTextSetting();
             Small = UserDetails.GetSmallTextSetting();
 
+            //set feedback text...
             FeedbackText = "";
             FeedbackTextColour = "Green";
             FeedbackTextIsVisible = false;
 
-
+            //initialise the connection with the server
             WebsocketHandler.InitialiseConnectionAsync();
+
+            //register this class as a subscriber to the websocket handler, allows for the recieving of inter class messages
             WebsocketHandler.registerSubscriber(this);
         }
 
         //FUNCTIONS
 
-        void displayNotification()
-        {
-            var notification = new NotificationRequest
-            {
-                BadgeNumber = 0,
-                Description = "this is my notification",
-                Title = "this is the title",
-                ReturningData = "this is the returning data",
-                NotificationId = 123,
-                CategoryType = NotificationCategoryType.Progress
-            };
-
-            NotificationCenter.Current.Show(notification);
-        }
-
+        //if username and password are null or empty, return false
         public bool UandPAreValid(string username, string password)
         {
             if (username == null || password == null)
@@ -149,11 +139,12 @@ namespace COMP3000Project.Views.Login
             return true;
         }
 
+        //
         async Task<object> ExecuteLogin()
         {
             if(UandPAreValid(Username, Password))
             {
-                showLoginInProgress();
+                showFeedBacktext("Logging you in...", "Orange");
                 WebsocketHandler.RequestLoginExistingUser(Username, Password);
                 return null;
             }
@@ -162,35 +153,26 @@ namespace COMP3000Project.Views.Login
             return null;
         }
 
+        //navigate to sign up page
         async Task ExecuteGoToSignUpPage()
         {
             SignUpPage nextPage = new SignUpPage();
             await Navigation.PushAsync(nextPage, true);
         }
 
+        //hide feedback text
         public void hideLoginFeedbackText()
         {
             FeedbackTextIsVisible = false;
         }
-        void showLoginSuccess()
-        {
-            FeedbackText = "Login successful!";
-            FeedbackTextColour = "Green";
-            FeedbackTextIsVisible = true;
-        }
-        void showLoginInProgress()
-        {
-            FeedbackText = "Processing...";
-            FeedbackTextColour = "Orange";
-            FeedbackTextIsVisible = true;
-        }
-        void showLoginRejected()
-        {
-            FeedbackText = "Login rejected!";
-            FeedbackTextColour = "Red";
-            FeedbackTextIsVisible = true;
-        }
 
+        //show feedback text
+        void showFeedBacktext(string message, string colour)
+        {
+            FeedbackText = message;
+            FeedbackTextColour = colour;
+            FeedbackTextIsVisible = true;
+        }
 
         public void Update(Message message)
         {
@@ -198,18 +180,18 @@ namespace COMP3000Project.Views.Login
             {
                 case "loginRequestGranted":
                     Console.WriteLine("[MSG] login page, proceeding to main menu...");
-                    showLoginSuccess();
+                    showFeedBacktext("Login successful!", "Green");//show positive feedback
 
-                    UserDetails.setDetails(Username, Password);
+                    UserDetails.setDetails(Username, Password);//set users details
+                    LocalDataHandler.SaveUserDetails();//save details locally...
 
-                    MainMenuPage nextPage = new MainMenuPage();
+                    MainMenuPage nextPage = new MainMenuPage();//navigate to main menu
                     Navigation.PushAsync(nextPage, true);
                     break;
 
                 case "loginRequestRejected":
                     Console.WriteLine("[MSG] login page, login rejected...");
-                    showLoginRejected();
-
+                    showFeedBacktext("Login rejected", "Red");//show negative feedback
                     break;
 
                 default:

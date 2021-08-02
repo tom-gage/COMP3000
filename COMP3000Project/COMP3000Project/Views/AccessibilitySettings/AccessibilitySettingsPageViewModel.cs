@@ -29,6 +29,7 @@ namespace COMP3000Project.Views.AccessibilitySettings
             SetMediumText = new Command(() => ExecuteSetMediumText());
             Done = new Command(() => ExecuteDone());
 
+            //set initial text size preference
             UserDetails.PreferVeryLargeText = false;
             UserDetails.PreferLargeText = false;
             UserDetails.PreferMediumText = true;
@@ -40,6 +41,7 @@ namespace COMP3000Project.Views.AccessibilitySettings
             Small = UserDetails.GetSmallTextSetting();
         }
 
+        //sets text size preference to very large
         void ExecuteSetVeryLargeText()
         {
             UserDetails.PreferVeryLargeText = true;
@@ -54,6 +56,7 @@ namespace COMP3000Project.Views.AccessibilitySettings
             Small = UserDetails.GetSmallTextSetting();
         }
 
+        //sets text size preference to large
         void ExecuteSetLargeText()
         {
             UserDetails.PreferVeryLargeText = false;
@@ -68,6 +71,7 @@ namespace COMP3000Project.Views.AccessibilitySettings
             Small = UserDetails.GetSmallTextSetting();
         }
 
+        //sets text size preference to medium
         void ExecuteSetMediumText()
         {
             UserDetails.PreferVeryLargeText = false;
@@ -82,6 +86,7 @@ namespace COMP3000Project.Views.AccessibilitySettings
             Small = UserDetails.GetSmallTextSetting();
         }
 
+        //returns to login page
         void ExecuteDone()
         {
             Navigation.PopAsync();

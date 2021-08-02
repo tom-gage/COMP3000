@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using COMP3000Project.Interfaces;
+using COMP3000Project.LDH;
 using COMP3000Project.TestObjects;
 using COMP3000Project.UserDetailsSingleton;
 using COMP3000Project.ViewModel;
@@ -87,6 +88,7 @@ namespace COMP3000Project.Views.SignUp
         //CONSTRUCTOR
         public SignUpPageViewModel()
         {
+            //set command
             RegisterNewUser = new Command(async () => await ExecuteRegisterUser());
 
             //set text size
@@ -95,10 +97,12 @@ namespace COMP3000Project.Views.SignUp
             Medium = UserDetails.GetMediumTextSetting();
             Small = UserDetails.GetSmallTextSetting();
 
+            //register this class as a subscriber to the websocket handler, allows for the recieving of inter class messages
             WebsocketHandler.registerSubscriber(this);
         }
 
         //FUNCTIONS
+        //returns false if username or password is null or empty
         public bool UandPAreValid(string username, string password)
         {
             if (username == null || password == null)
@@ -117,58 +121,54 @@ namespace COMP3000Project.Views.SignUp
             return true;
         }
 
+        //shows feedback and asks the WSH to send a message to the server asking to register a new user
         async Task<object> ExecuteRegisterUser()
         {
             if(UandPAreValid(Username, Password))
             {
-                showRegistrationInProgress();
-                WebsocketHandler.RequestRegisterNewUser(Username, Password);
+                showFeedBacktext("Processing...", "Orange");//show feedback
+                WebsocketHandler.RequestRegisterNewUser(Username, Password);//send request to server
 
                 return null;
             }
             return null;
         }
 
-
+        //hises the feedback text
         public void hideLoginFeedbackText()
         {
             FeedbackTextIsVisible = false;
         }
-        void showRegistrationSuccess()
+
+        //show feedback text
+        void showFeedBacktext(string message, string colour)
         {
-            FeedbackText = "Registration successful!";
-            FeedbackTextColour = "Green";
+            FeedbackText = message;
+            FeedbackTextColour = colour;
             FeedbackTextIsVisible = true;
         }
-        void showRegistrationInProgress()
-        {
-            FeedbackText = "Processing...";
-            FeedbackTextColour = "Orange";
-            FeedbackTextIsVisible = true;
-        }
-        void showRegistrationFailed()
-        {
-            FeedbackText = "Registration rejected, username is taken!";
-            FeedbackTextColour = "Red";
-            FeedbackTextIsVisible = true;
-        }
+
 
 
         public void Update(Message message)
         {
             switch (message.type)
             {
-                case "registrationSuccess":
+                case "registrationSuccess"://registration was successfull
+                    showFeedBacktext("Registration Successfull!", "Green");//show success feedback
 
-                    showRegistrationSuccess();
-                    
-                    Navigation.PopAsync();
+                    UserDetails.Username = message.Items[0].ToString();//set username & password
+                    UserDetails.Password = message.Items[1].ToString();
+
+                    LocalDataHandler.SaveUserDetails();//save details locally
+
+                    Navigation.PopAsync();//return to login page
 
                     break;
 
                 case "registrationRequestRejected":
 
-                    showRegistrationFailed();
+                    showFeedBacktext("Registration rejected, username is taken!", "Red");//show failure feedback
 
                     break;
 

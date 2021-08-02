@@ -26,6 +26,7 @@ namespace COMP3000Project.Views.Settings
 
         protected override void OnAppearing()
         {
+            //on appearing, hide feedback text
             vm.hideFeedbackText();
             base.OnAppearing();
         }

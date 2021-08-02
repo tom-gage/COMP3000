@@ -11,6 +11,8 @@ namespace COMP3000Project.TestObjects
 {
     public class EateryOption : INotifyPropertyChanged
     {
+        //EateryOption, represents a real-world location that a user can encounter, vote for, and save to their favourites
+
         //VARS
         public event PropertyChangedEventHandler PropertyChanged;
 

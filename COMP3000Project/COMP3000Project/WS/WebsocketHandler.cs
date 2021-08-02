@@ -19,17 +19,9 @@ namespace COMP3000Project.WS
 {
 
 
-    public static class WebsocketHandler //: Publisher//: INotifyPropertyChanged
+    public static class WebsocketHandler
     {
-        //magic
-        //public event PropertyChangedEventHandler PropertyChanged;
-        //static public ObservableCollection<EateryOption> MessageList { get => _MessageList; set => SetProperty(ref _MessageList, value); }
-
-
-        //VARIABLES
-        //private ObservableCollection<EateryOption> _EateriesArray;
-        //public ObservableCollection<EateryOption> EateriesArray { get => _EateriesArray; set => _EateriesArray = value; }
-
+        
         static List<Subscriber> subscribers = new List<Subscriber>();
 
         static ClientWebSocket ws = new ClientWebSocket();
@@ -172,6 +164,7 @@ namespace COMP3000Project.WS
             SendRequest(request);
         }
 
+        //asks the server to start a new search
         public static async void RequestStartNewSearch(string currentUsername, string currentPassword, string locationName, string desiredTime, string[] eateryTypes)
         {
             object[] messageItems = { currentUsername, currentPassword, locationName, desiredTime, eateryTypes };
@@ -183,17 +176,19 @@ namespace COMP3000Project.WS
             SendRequest(request);
         }
 
-        public static async void RequestStartNewSearch(string currentUsername, string currentPassword, double lattitude, double longitude)
-        {
-            object[] messageItems = { currentUsername, currentPassword, lattitude, longitude };
 
-            //make request message object
-            Message request = new Message("1", "startNewSearch", "", messageItems);
+        //public static async void RequestStartNewSearch(string currentUsername, string currentPassword, double lattitude, double longitude)
+        //{
+        //    object[] messageItems = { currentUsername, currentPassword, lattitude, longitude };
 
-            //send to server
-            SendRequest(request);
-        }
+        //    //make request message object
+        //    Message request = new Message("1", "startNewSearch", "", messageItems);
 
+        //    //send to server
+        //    SendRequest(request);
+        //}
+
+        //asks the server to join an existing search
         public static async void RequestJoinExistingSearch(string currentUsername, string currentPassword, string searchCode)
         {
             object[] messageItems = { currentUsername, currentPassword, searchCode };
@@ -205,6 +200,7 @@ namespace COMP3000Project.WS
             SendRequest(request);
         }
 
+        //asks the server to accept a vote for an option
         public static async void RequestCastVote(string currentUsername, string currentPassword, string searchID, string eateryOptionID)
         {
             object[] messageItems = { currentUsername, currentPassword, searchID, eateryOptionID };
@@ -227,36 +223,39 @@ namespace COMP3000Project.WS
 
 
         //Publisher / Subscriber stuff, handles inter-class communication
+        //register subscriber, registered subscribers can recieve message updates
         public static void registerSubscriber(Subscriber subscriber)
         {
             subscribers.Add(subscriber);
         }
 
+        //remove subscriber
         public static void removeSubsciber(Subscriber subscriber)
         {
             subscribers.Remove(subscriber);
         }
 
+        //update subscriber, calls the update function in the subscribed class, passes in a message object for them to handle
         public static void updateSubscribers(Message message)
         {
+            //for each subscriber
             for (int i = 0; i < subscribers.Count; i++)
             {
-                subscribers[i].Update(message);
+                subscribers[i].Update(message);//send message
             }
         }
 
-        //this bad boy handles all incoming messages
-        //don't touch him
+        //called when the app starts, runs in the background catching and publishing WS messages
         public static async Task HandleMessages()
         {
             try
             {
                 using (var ms = new MemoryStream())
                 {
-                    while (ws.State == WebSocketState.Open)
+                    while (ws.State == WebSocketState.Open)//while WS connection is active
                     {
                         WebSocketReceiveResult result;
-                        do
+                        do//get messages
                         {
                             var messageBuffer = WebSocket.CreateClientBuffer(1024, 16);
                             result = await ws.ReceiveAsync(messageBuffer, CancellationToken.None);
@@ -264,13 +263,13 @@ namespace COMP3000Project.WS
                         }
                         while (!result.EndOfMessage);
 
-                        if (result.MessageType == WebSocketMessageType.Text)
+                        if (result.MessageType == WebSocketMessageType.Text)// if message is a text message
                         {
                             var msgString = Encoding.UTF8.GetString(ms.ToArray());
-                            var message = JsonConvert.DeserializeObject<Message>(msgString);
+                            var message = JsonConvert.DeserializeObject<Message>(msgString);//convert to message object
 
-                            Console.WriteLine("[WS] Got a message of type " + message.type);
-                            updateSubscribers(message);
+                            
+                            updateSubscribers(message);//send to subscribers...
                         }
 
                         ms.Seek(0, SeekOrigin.Begin);
@@ -279,31 +278,14 @@ namespace COMP3000Project.WS
                     }
                 }
             }
-            //catch (InvalidOperationException)
-            //{
-            //    Console.WriteLine("[WS] Tried to receive message while already reading one.");
-            //}
             catch (Exception Ex)
             {
                 Console.WriteLine("Exception is as follows: ");
                 Console.WriteLine(Ex);
+
+                await HandleMessages();
             }
         }
 
-        //BLACK MAGIC - THOU SHALT NOT TOUCH
-        //void SetProperty<T>(ref T backingStore, T value, Action onChanged = null, [CallerMemberName] string propertyName = "")
-        //{
-        //    if (EqualityComparer<T>.Default.Equals(backingStore, value))
-        //        return;
-
-        //    backingStore = value;
-
-        //    onChanged?.Invoke();
-
-        //    HandlePropertyChanged(propertyName);
-        //}
-
-        //void HandlePropertyChanged(string propertyName = "") =>
-        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

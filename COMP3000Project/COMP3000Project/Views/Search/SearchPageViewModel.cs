@@ -105,10 +105,12 @@ namespace COMP3000Project.Views.Search
             Medium = UserDetails.GetMediumTextSetting();
             Small = UserDetails.GetSmallTextSetting();
 
-            //subscribe to messages
-            WebsocketHandler.registerSubscriber(this);
 
+            //populate eateryOptions array
             StartNewSearch(location, time, eateryTypes);
+
+            //register this class as a subscriber to the websocket handler, allows for the recieving of inter class messages
+            WebsocketHandler.registerSubscriber(this);
         }
 
         //CONSTRUCTOR 2
@@ -121,31 +123,44 @@ namespace COMP3000Project.Views.Search
             Threshold = (uint)(App.ScreenWidth / 3);
             EateryOptions = new ObservableCollection<EateryOption>();
 
-            //subscribe to messages
-            WebsocketHandler.registerSubscriber(this);
+            SearchCode = "pending...";
 
+            //set text size
+            VeryLarge = UserDetails.GetVeryLargeTextSetting();
+            Large = UserDetails.GetlargeTextSetting();
+            Medium = UserDetails.GetMediumTextSetting();
+            Small = UserDetails.GetSmallTextSetting();
+
+            //populate eateryOptions array
             populateOptionsArray(eateryOptionsJson);
+
+            //register this class as a subscriber to the websocket handler, allows for the recieving of inter class messages
+            WebsocketHandler.registerSubscriber(this);
         }
 
+
+        //starts a new search
         public async void StartNewSearch(string location, string time, string[] eateryTypes)
         {
             WebsocketHandler.RequestStartNewSearch(UserDetails.Username, UserDetails.Password, location, time, eateryTypes);
         }
 
+        //join an existing search 
         public async void JoinExistingSearch(string searchCode)
         {
             WebsocketHandler.RequestJoinExistingSearch(UserDetails.Username, UserDetails.Password, searchCode);
         }
 
+        //on card swiped...
         async void ExecuteSwipe(SwipedCardEventArgs eventArgs)
         {
             var item = eventArgs.Item as EateryOption;
 
             
 
-            switch (eventArgs.Direction.ToString())
+            switch (eventArgs.Direction.ToString())//get swipe direction
             {
-                case "Right":
+                case "Right"://if right, cast vote for option
                     WebsocketHandler.RequestCastVote(UserDetails.Username, UserDetails.Password, UserDetails.SearchID, item.ID);
                     break;
 
@@ -153,7 +168,7 @@ namespace COMP3000Project.Views.Search
 
                     break;
 
-                case "Up":
+                case "Up"://if up, navigate to details page
 
 
                     EateryOptionDetailsPage nextPage = new EateryOptionDetailsPage(item);
@@ -178,52 +193,53 @@ namespace COMP3000Project.Views.Search
 
 
 
-
+        //populate options array
         async void populateOptionsArray(string optionsJSON)
         {
             EateryOptions = JsonSerializer.Deserialize<ObservableCollection<EateryOption>>(optionsJSON);
         }
 
 
-        public async Task<Location> getLocation()
-        {
-            Location location;
-            try
-            {
-                location = await Geolocation.GetLastKnownLocationAsync();
+        //public async Task<Location> getLocation()
+        //{
+        //    Location location;
+        //    try
+        //    {
+        //        location = await Geolocation.GetLastKnownLocationAsync();
 
-                if (location != null)
-                {
-                    Console.WriteLine($"Latitude: {location.Latitude}, Longitude: {location.Longitude}, Altitude: {location.Altitude}");
+        //        if (location != null)
+        //        {
+        //            Console.WriteLine($"Latitude: {location.Latitude}, Longitude: {location.Longitude}, Altitude: {location.Altitude}");
 
-                    return location;
-                }
-            }
-            catch (FeatureNotSupportedException fnsEx)
-            {
-                // Handle not supported on device exception
-                Console.WriteLine(fnsEx);
-            }
-            catch (FeatureNotEnabledException fneEx)
-            {
-                // Handle not enabled on device exception
-                Console.WriteLine(fneEx);
-            }
-            catch (PermissionException pEx)
-            {
-                // Handle permission exception
-                Console.WriteLine(pEx);
-            }
-            catch (Exception ex)
-            {
-                // Unable to get location
-                Console.WriteLine(ex);
-            }
+        //            return location;
+        //        }
+        //    }
+        //    catch (FeatureNotSupportedException fnsEx)
+        //    {
+        //        // Handle not supported on device exception
+        //        Console.WriteLine(fnsEx);
+        //    }
+        //    catch (FeatureNotEnabledException fneEx)
+        //    {
+        //        // Handle not enabled on device exception
+        //        Console.WriteLine(fneEx);
+        //    }
+        //    catch (PermissionException pEx)
+        //    {
+        //        // Handle permission exception
+        //        Console.WriteLine(pEx);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Unable to get location
+        //        Console.WriteLine(ex);
+        //    }
 
-            Console.WriteLine("LOCATION NOT FOUND");
-            return null;
-        }
+        //    Console.WriteLine("LOCATION NOT FOUND");
+        //    return null;
+        //}
 
+        //catches incoming messages from the publisher
         public void Update(Message message)
         {
             switch (message.type)

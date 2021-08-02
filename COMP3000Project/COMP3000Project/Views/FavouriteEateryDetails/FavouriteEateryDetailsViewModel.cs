@@ -101,21 +101,17 @@ namespace COMP3000Project.Views.FavouriteEateryDetails
         //constructor
         public FavouriteEateryDetailsViewModel(EateryOption eateryOption)
         {
-
-
             //set commands
             SaveNote = new Command(async () => ExecuteSaveNote());
             DeleteFavourite = new Command(async () => ExecuteDeleteFavourite());
 
+            //init properties
             Images = new ObservableCollection<ImageHolder>();
             Reviews = eateryOption.Reviews;
-
             EateryTitle = eateryOption.Title;
             EateryRating = eateryOption.FormattedRating;
-
             EateryAddress = eateryOption.Address;
             EateryPhoneNumber = eateryOption.PhoneNumber;
-
             Note = eateryOption.Notes;
 
             //set text size
@@ -124,22 +120,27 @@ namespace COMP3000Project.Views.FavouriteEateryDetails
             Medium = UserDetails.GetMediumTextSetting();
             Small = UserDetails.GetSmallTextSetting();
 
+            //populate images array
             populateImagesArray(eateryOption);
 
+            //register this class as a subscriber to the websocket handler, allows for the recieving of inter class messages
             WebsocketHandler.registerSubscriber(this);
         }
 
-        //functions
+        //FUNCTIONS
+        //save note
         public async void ExecuteSaveNote()
         {
             WebsocketHandler.RequestAddNoteToFavouriteEatery(UserDetails.Username, UserDetails.Password, EateryTitle, Note);
         }
 
+        //delete favourite
         public async void ExecuteDeleteFavourite()
         {
             WebsocketHandler.RequestDeleteFavouriteEatery(UserDetails.Username, UserDetails.Password, EateryTitle);
         }
 
+        //populate images array
         async void populateImagesArray(EateryOption eateryOption)
         {
             if (eateryOption.EateryImage0 != null)
@@ -168,6 +169,7 @@ namespace COMP3000Project.Views.FavouriteEateryDetails
             }
         }
 
+        //catches incoming messages from the publisher
         async public void Update(Message message)
         {
             switch (message.type)
@@ -178,6 +180,7 @@ namespace COMP3000Project.Views.FavouriteEateryDetails
                     break;
 
                 case "favouriteEateryDeleted":
+                    //eatery deleted, return to favourites page
                     await Navigation.PopAsync();
 
                     break;

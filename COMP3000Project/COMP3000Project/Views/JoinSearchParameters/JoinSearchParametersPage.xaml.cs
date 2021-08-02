@@ -23,6 +23,7 @@ namespace COMP3000Project.Views.JoinSearchParameters
 
         protected override void OnAppearing()
         {
+            //on page appear, hide feedback text
             viewModel.hideFeedbackText();
             base.OnAppearing();
         }

@@ -102,12 +102,14 @@ namespace COMP3000Project.Views.MatchDetails
         //CONSTRUCTOR
         public MatchDetailsPageViewModel(EateryOption eateryOption)
         {
+            //set properties
             Images = new ObservableCollection<ImageHolder>();
             Title = eateryOption.Title;
             Rating = eateryOption.Rating.ToString();
             EateryAddress = eateryOption.Address;
             EateryPhoneNumber = eateryOption.PhoneNumber;
 
+            //populate images array
             populateImagesArray(eateryOption);
 
 
@@ -117,10 +119,12 @@ namespace COMP3000Project.Views.MatchDetails
             Medium = UserDetails.GetMediumTextSetting();
             Small = UserDetails.GetSmallTextSetting();
 
+            //register this class as a subscriber to the websocket handler, allows for the recieving of inter class messages
             WebsocketHandler.registerSubscriber(this);
         }
 
         //FUNCTIONS
+        //populate images array
         async void populateImagesArray(EateryOption eateryOption)
         {
             if (eateryOption.EateryImage0 != null)
@@ -148,7 +152,7 @@ namespace COMP3000Project.Views.MatchDetails
                 Images.Add(new ImageHolder(eateryOption.EateryImage4));
             }
         }
-
+        //catches incoming messages from the publisher
         public void Update(Message message)
         {
             switch (message.type)

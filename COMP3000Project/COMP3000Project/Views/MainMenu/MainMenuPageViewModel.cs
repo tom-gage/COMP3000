@@ -80,7 +80,6 @@ namespace COMP3000Project.Views.MainMenu
         //CONSTRUCTOR
         public MainMenuPageViewModel()
         {
-
             //set commands
             GoToStartSearch = new Command(async () => await ExecuteGoToStartSearch());
             GoToJoinSearch = new Command(async () => await ExecuteGoToJoinSearch());
@@ -95,15 +94,13 @@ namespace COMP3000Project.Views.MainMenu
             Medium = UserDetails.GetMediumTextSetting();
             Small = UserDetails.GetSmallTextSetting();
 
+            //register this class as a subscriber to the websocket handler, allows for the recieving of inter class messages
             WebsocketHandler.registerSubscriber(this);
-            //WebsocketHandler.HandleMessages();
-
-            //WebsocketHandler.RequestGetPastSearches(UserDetails.Username, UserDetails.Password);
         }
 
         //FUNCTIONS
 
-
+        //navigate to the favourites page
         async Task<object> GoToFavouritesPage()
         {
 
@@ -113,6 +110,7 @@ namespace COMP3000Project.Views.MainMenu
             return null;
         }
 
+        //navigate to pre-search parameters page, use past search constructor
         async Task<object> ExecuteGoToStartPastSearch()
         {
             string[] strArr = { SelectedPastSearch.EateryType };
@@ -123,7 +121,7 @@ namespace COMP3000Project.Views.MainMenu
             return null;
         }
 
-
+        //navigate to pre-search parameters page, use start new search constructor
         async Task<object> ExecuteGoToStartSearch()
         {
             SearchParametersPage nextPage = new SearchParametersPage();
@@ -132,6 +130,7 @@ namespace COMP3000Project.Views.MainMenu
             return null;
         }
 
+        //navigate to join search page
         async Task<object> ExecuteGoToJoinSearch()
         {
 
@@ -142,6 +141,7 @@ namespace COMP3000Project.Views.MainMenu
 
         }
 
+        //navigate to settings page
         async Task<object> ExecuteGoToSettingsPage()
         {
             SettingsPage nextPage = new SettingsPage();
@@ -150,6 +150,7 @@ namespace COMP3000Project.Views.MainMenu
             return null;
         }
 
+        //navigate to accessibility settings page
         async Task<object> ExecuteGoToAccessibilitySettings()
         {
             AccessibilitySettingsPage nextPage = new AccessibilitySettingsPage();
@@ -157,7 +158,7 @@ namespace COMP3000Project.Views.MainMenu
             return null;
         }
 
-
+        //populate past searches array
         async void populatePastSearchesArray(string optionsJSON)
         {
             PastSearches = sortByLatest(JsonSerializer.Deserialize<ObservableCollection<PastSearch>>(optionsJSON));
@@ -165,7 +166,9 @@ namespace COMP3000Project.Views.MainMenu
 
         ObservableCollection<PastSearch> sortByLatest(ObservableCollection<PastSearch> pastSearches)
         {
+            //convert collection to array
             PastSearch[] pastSearchArray = new List<PastSearch>(pastSearches).ToArray();
+            //clear collection
             pastSearches.Clear();
 
             PastSearch t;
@@ -174,10 +177,11 @@ namespace COMP3000Project.Views.MainMenu
             {
                 for (int i = 0; i <= pastSearchArray.Length - 2; i++)
                 {
+                    //convert to datetime for comparison
                     DateTime a = new DateTime(int.Parse(pastSearchArray[i].YearOfSearch), int.Parse(pastSearchArray[i].MonthOfSearch), int.Parse(pastSearchArray[i].DayOfSearch), int.Parse(pastSearchArray[i].Time.Substring(0, 2)), int.Parse(pastSearchArray[i].Time.Substring(2, 2)), 0);
                     DateTime b = new DateTime(int.Parse(pastSearchArray[i + 1].YearOfSearch), int.Parse(pastSearchArray[i + 1].MonthOfSearch), int.Parse(pastSearchArray[i + 1].DayOfSearch), int.Parse(pastSearchArray[i + 1].Time.Substring(0, 2)), int.Parse(pastSearchArray[i].Time.Substring(2, 2)), 0);
 
-                    if (a < b)
+                    if (a < b)//if selected past search's(a) date is earlier than following neighbour (b), swap past searches
                     {
                         t = pastSearchArray[i + 1];
                         pastSearchArray[i + 1] = pastSearchArray[i];
@@ -186,15 +190,17 @@ namespace COMP3000Project.Views.MainMenu
                 }
             }
 
+            //fillcollection
             foreach (PastSearch ps in pastSearchArray)
             {
                 pastSearches.Add(ps);
             }
 
-
+            //return sorted collection
             return pastSearches;
         }
 
+        //catches incoming messages from the publisher
         public void Update(Message message)
         {
             switch (message.type)
@@ -208,9 +214,6 @@ namespace COMP3000Project.Views.MainMenu
                     Console.WriteLine("[MSG] GOT PAST SEARCHES!");
                     Console.WriteLine(message.Items[0]);
                     populatePastSearchesArray(message.Items[0].ToString());
-                    
-                    //now populate past searches array...
-
 
                     break;
 

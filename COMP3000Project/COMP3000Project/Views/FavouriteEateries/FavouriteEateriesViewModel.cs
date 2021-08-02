@@ -116,7 +116,7 @@ namespace COMP3000Project.Views.FavouriteEateries
         }
 
         //FUNCTIONS
-
+        //navigate to favourite eatery details page
         async Task<object> ExecuteGoToFavouriteEateryDetailsPage()
         {
 
@@ -126,6 +126,7 @@ namespace COMP3000Project.Views.FavouriteEateries
             return null;
         }
 
+        //populate favourite eateries array
         async void populateFavouritesArray(string optionsJSON)
         {
             Favourites = JsonSerializer.Deserialize<ObservableCollection<EateryOption>>(optionsJSON);
@@ -136,11 +137,13 @@ namespace COMP3000Project.Views.FavouriteEateries
             }
         }
 
-
+        //hides the feedback text
         public void hideFeedbackText()
         {
             FeedbackTextIsVisible = false;
         }
+
+        //shows the feedback text
         void showFeedback(string text, string colour)
         {
             FeedbackText = text;
@@ -150,7 +153,7 @@ namespace COMP3000Project.Views.FavouriteEateries
 
 
 
-
+        //catches incoming messages from the publisher
         public void Update(Message message)
         {
             switch (message.type)

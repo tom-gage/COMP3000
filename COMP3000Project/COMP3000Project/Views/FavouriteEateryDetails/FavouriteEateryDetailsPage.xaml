@@ -95,7 +95,6 @@
                                         <ColumnDefinition Width="300" />
                                     </Grid.ColumnDefinitions>
 
-                                    <!--<Image Source="{Binding Image}" Aspect="Fill"  AbsoluteLayout.LayoutBounds=".5,0.5,1,1" AbsoluteLayout.LayoutFlags="All" />-->
                                     <Image Source="{Binding Image}" Aspect="Fill" />
                                 </Grid>
                             </Frame>

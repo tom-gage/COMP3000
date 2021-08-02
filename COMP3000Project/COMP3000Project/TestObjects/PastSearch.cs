@@ -10,6 +10,8 @@ namespace COMP3000Project.TestObjects
 {
     public class PastSearch
     {
+        //past search, holds the search parameters used to initaite a previous search
+
         //VARS
         public event PropertyChangedEventHandler PropertyChanged;
 

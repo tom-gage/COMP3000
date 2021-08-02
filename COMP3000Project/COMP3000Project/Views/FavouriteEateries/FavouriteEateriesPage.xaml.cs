@@ -28,8 +28,10 @@ namespace COMP3000Project.Views.FavouriteEateries
         {
             base.OnAppearing();
 
+            //on page appearing
+            //hide feedback text
             viewModel.hideFeedbackText();
-
+            //refresh favourites list
             WebsocketHandler.RequestGetFavourites(UserDetails.Username, UserDetails.Password);
 
 
