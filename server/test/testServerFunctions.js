@@ -46,11 +46,9 @@ describe('hooks', function () {
 
     after(function (){
         let username = "testUsername";
-        let password = "testPassword";
 
         serverFunctions.UserModel.deleteOne({
-            Username: username,
-            Password: password
+            Username: username
         }).exec(()=>{
             serverFunctions.closeConnection();
         })
@@ -147,39 +145,37 @@ describe('hooks', function () {
 
     describe('updatePassword()', function () {
         it('should take in a username, password and new password, then update the database', function (done) {
-            // this.timeout(10000);
-            // setTimeout(myfunc, 1000);
-            //assert user exists
             let username = "u1";
             let password = "p1";
 
-            // serverFunctions.UserModel.find({ Username : username, Password : password}).exec(function (err, result){
-            //     console.log(result);
-            //     assert.equal(result[0].Username, username);
-            //     assert.equal(result[0].Password, password);
-            // });
 
             //do update password
             serverFunctions.updatePassword(username, password, "newPassword").then(()=>{
 
                 //then assert password updated
-                serverFunctions.UserModel.find({ Username : username, Password : "newPassword"}).exec(function (err, result){
+                serverFunctions.UserModel.find({ Username : username }).exec(function (err, result){
 
+                    serverFunctions.comparePassword("newPassword", result.Password).then((match)=>{
+                        assert.isTrue(match);
+                    })
 
                     //then reset db entry
-                    serverFunctions.UserModel.updateOne(
-                        {
-                            Username : username
-                        },
-                        {
-                            Username : username,
-                            Password : password
-                        }).then(()=>{
-                        console.log(result);
-                        assert.equal(result[0].Username, username);
-                        assert.equal(result[0].Password, "newPassword");
-                        done();
+                    serverFunctions.generateSaltedAndHashedPassword("p1").then((hashedPass)=>{
+
+                        serverFunctions.UserModel.updateOne(
+                            {
+                                Username : username
+                            },
+                            {
+                                Username : username,
+                                Password : hashedPass
+                            }).then(()=>{
+                            console.log(result);
+                            done();
                         });
+                    })
+
+
                 });
 
 
@@ -353,25 +349,46 @@ describe('hooks', function () {
 
     describe('ValidateCredentials(), 0', function () {
         it('should take in a valid username and a password and return true', function () {
-            USERS.push(user0);
-            let actual = serverFunctions.validateCredentials(user0.Username, user0.Password);
-            assert.equal(actual, true);
+            serverFunctions.generateSaltedAndHashedPassword(user0.Password).then((hashedPassword)=>{
+                user0.password = hashedPassword;
+                USERS.push(user0);
+
+                serverFunctions.validateCredentials(user0.Username, user0.Password).then((credentialvalidity)=>{
+                    assert.equal(credentialvalidity, true);
+                })
+
+            })
+
+
+
         })
     });
 
     describe('ValidateCredentials(), 1', function () {
         it('should take in an invalid username and a password and return false', function () {
-            USERS.push(user0);
-            let actual = serverFunctions.validateCredentials("dqwdswq2221wxaasasasSADASX", "pdsdasadwadwadsadsads");
-            assert.equal(actual, false);
+            serverFunctions.generateSaltedAndHashedPassword(user0.Password).then((hashedPassword)=>{
+                user0.password = hashedPassword;
+                USERS.push(user0);
+
+                serverFunctions.validateCredentials("asdjioasjaldsjmlk", "asdmkxmzkxlmlas   1  joipakmlasdkmads").then((credentialvalidity)=>{
+                    assert.equal(credentialvalidity, false);
+                })
+
+            })
         })
     });
 
     describe('ValidateCredentials(), 2', function () {//this is failing, investigate it
-        it('should take in an invalid username and a password and return false', function () {
-            USERS.push(user0);
-            let actual = serverFunctions.validateCredentials("", "");
-            assert.equal(actual, false);
+        it('should take in a valid username and a password and return false', function () {
+            serverFunctions.generateSaltedAndHashedPassword(user0.Password).then((hashedPassword)=>{
+                user0.password = hashedPassword;
+                USERS.push(user0);
+
+                serverFunctions.validateCredentials(user0.Username, "asdmkxmzkxlmlas   1  joipakmlasdkmads").then((credentialvalidity)=>{
+                    assert.equal(credentialvalidity, false);
+                })
+
+            })
         })
     });
 
