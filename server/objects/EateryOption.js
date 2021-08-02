@@ -1,4 +1,6 @@
 class EateryOption {
+    //represents a real world eatery, eatery options are what is generated from the API call results
+
     ID;
     Title = '';
     Description = '';

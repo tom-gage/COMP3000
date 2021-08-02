@@ -1,4 +1,6 @@
 class User{
+    //represents a user
+
     Username = "";
     Password = "";
     current_WSID = "";
@@ -10,10 +12,7 @@ class User{
     }
 
     testSendWSMessage(ws, message){
-        console.log("testing...");
-        // let message = new Message(1, "debugMessage", "if you're reading this, the test has succeeded", []);
         ws.send(JSON.stringify(message));
-        console.log("test complete!");
     }
 
 

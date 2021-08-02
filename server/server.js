@@ -1,7 +1,4 @@
-// const EateryOption = require('./objects/EateryOption');
 const Message = require('./objects/Message');
-// const ActiveSearch = require('./objects/ActiveSearch');
-// const UserObj = require('./objects/User');
 
 const ServerFunctions = require('./ServerFunctions');
 
@@ -13,9 +10,6 @@ const { v4: uuid } = require('uuid');
 const prompt = require('prompt');
 const readline = require('readline');
 
-// const {Client} = require('@googlemaps/google-maps-services-js');
-// const client = new Client({});
-
 const port = 9000;
 const server = http.createServer(express);
 const wss = new WebSocket.Server({ server });
@@ -23,6 +17,7 @@ const wss = new WebSocket.Server({ server });
 serverFunctions = new ServerFunctions();
 serverFunctions.initConnection();
 
+//
 wss.on('connection', function connection(ws) {
     console.log('[WS] new websocket connection established');
 
@@ -36,23 +31,20 @@ wss.on('connection', function connection(ws) {
         // connectionsMap.delete(ws);//this dont work
     });
 
+
+    //on message recieved
     ws.on('message', function incoming(data){
-        console.log('[MSG] received message');
+
 
         let message = JSON.parse(data);
 
-        console.log('message type: ' + message.type);
-
-        // message.Items = [0,0,0,0,0,0,0,0,0]
+        console.log('[MSG] got message of type: ' + message.type);
 
         let username = message.Items[0];
         let password = message.Items[1];
 
         let newUsername = message.Items[2];
         let newPassword = message.Items[2];
-
-        let latitude = message.Items[2];
-        let longitude = message.Items[3];
 
         let searchCode = message.Items[2];
         let eateryOptionID = message.Items[3];
@@ -64,6 +56,8 @@ wss.on('connection', function connection(ws) {
         let eateryTitle = message.Items[2];
         let note = message.Items[3];
 
+
+        //switch on the message's type, each type corresponds to a function in the serverFunctions class
         switch(message.type) {
             case "testMessage":
                 console.log("[MSG] received debug message request, pinging back");
@@ -74,7 +68,7 @@ wss.on('connection', function connection(ws) {
             case "deleteFavouriteEatery":
                 console.log("[MSG] received delete favourite eatery request");
                 serverFunctions.validateCredentials(username, password).then((credentialsAreValid)=>{
-                    console.log("attempting validation, creds are: " + credentialsAreValid);
+                    console.log("attempting delete favourite eatery, creds are: " + credentialsAreValid);
                     if(credentialsAreValid){
                         serverFunctions.deleteFavouriteEatery(username, eateryTitle);
                     }
@@ -83,47 +77,50 @@ wss.on('connection', function connection(ws) {
 
 
             case "updateNote":
-                console.log("[MSG] received get favourites request");
+                console.log("[MSG] received updateNote request");
                 serverFunctions.validateCredentials(username, password).then((credentialsAreValid)=>{
-                    console.log("attempting log in, creds are: " + credentialsAreValid);
+                    console.log("attempting updateNote, creds are: " + credentialsAreValid);
                     if(credentialsAreValid){
                         serverFunctions.updateFavouriteEateryNote(username, eateryTitle, note);
                     }
                 })
                 break;
 
+
             case "getFavourites":
                 console.log("[MSG] received get favourites request");
                 serverFunctions.validateCredentials(username, password).then((credentialsAreValid)=>{
-                    console.log("attempting log in, creds are: " + credentialsAreValid);
+                    console.log("attempting get favourites, creds are: " + credentialsAreValid);
                     if(credentialsAreValid){
                         serverFunctions.getFavourites(username, password);
                     }
                 })
                 break;
 
+
             case "addToFavourites":
                 console.log("[MSG] received add to favourites request");
 
                 serverFunctions.validateCredentials(username, password).then((credentialsAreValid)=>{
-                    console.log("attempting log in, creds are: " + credentialsAreValid);
+                    console.log("attempting add to favourites, creds are: " + credentialsAreValid);
                     if(credentialsAreValid){
                         serverFunctions.addEateryToFavourites(username, message.Items[2]);
                     }
                 })
-
                 break;
 
             case "getPastSearches":
-                // console.log("[MSG] received get past searches request");
-                serverFunctions.getPastSearches(username);
+                console.log("[MSG] received get past searches request");
+                serverFunctions.validateCredentials(username, password).then((credentialsAreValid)=>{
+                    console.log("attempting get past searches, creds are: " + credentialsAreValid);
+                    if(credentialsAreValid){
+                        serverFunctions.getPastSearches(username);
+                    }
+                })
                 break;
 
             case "registerNewUser":
                 console.log("[MSG] received register new user request");
-                console.log(username);
-                console.log(password);
-
                 if(serverFunctions.usernameNotTaken(username)){
                     serverFunctions.registerNewUser(username, password, ws);
                 } else {
@@ -133,8 +130,6 @@ wss.on('connection', function connection(ws) {
 
             case "loginExistingUser":
                 console.log("[MSG] received login request");
-                console.log(username);
-                console.log(password);
 
                 serverFunctions.validateCredentials(username, password).then((credentialsAreValid)=>{
                     console.log("attempting log in, credentials are: " + credentialsAreValid);
@@ -144,17 +139,13 @@ wss.on('connection', function connection(ws) {
                         serverFunctions.rejectLoginRequest(ws);
                     }
                 })
-
                 break
 
             case "updateUsername":
                 console.log("[MSG] received update username request");
-                console.log(username);
-                console.log(password);
-                console.log(newUsername);
 
                 serverFunctions.validateCredentials(username, password).then((credentialsAreValid)=>{
-                    // console.log("attempting log in, creds are: " + credentialsAreValid);
+                    console.log("attempting update username, creds are: " + credentialsAreValid);
                     if(credentialsAreValid){
                         if(serverFunctions.usernameNotTaken(newUsername)){
                             serverFunctions.updateUsername(username, password, newUsername);
@@ -167,14 +158,9 @@ wss.on('connection', function connection(ws) {
 
             case "updatePassword":
                 console.log("[MSG] received update password request");
-                console.log(username);
-                console.log(password);
-                console.log(newPassword)
                 serverFunctions.validateCredentials(username, password).then((credentialsAreValid)=>{
-                    // console.log("attempting log in, creds are: " + credentialsAreValid);
+                    console.log("attempting update password, creds are: " + credentialsAreValid);
                     if(credentialsAreValid){
-                        //do update password
-                        //pass feedback to app
                         serverFunctions.updatePassword(username, password, newPassword);
                     } else {
                         serverFunctions.rejectUpdatePasswordRequest(ws);
@@ -185,13 +171,9 @@ wss.on('connection', function connection(ws) {
 
             case "deleteUser":
                 console.log("[MSG] received delete user request");
-                console.log(username);
-                console.log(password);
                 serverFunctions.validateCredentials(username, password).then((credentialsAreValid)=>{
-                    // console.log("attempting log in, creds are: " + credentialsAreValid);
+                    console.log("attempting delete user, creds are: " + credentialsAreValid);
                     if(credentialsAreValid){
-                        //do delete user
-                        //pass feedback to app
                         serverFunctions.deleteUser(username, password);
                     }
                 })
@@ -200,11 +182,9 @@ wss.on('connection', function connection(ws) {
 
             case "startNewSearch":
                 console.log("[MSG] received start new search request");
-                console.log(message);
                 serverFunctions.validateCredentials(username, password).then((credentialsAreValid)=>{
-                    console.log("attempting log in, creds are: " + credentialsAreValid);
+                    console.log("attempting start new search, creds are: " + credentialsAreValid);
                     if(credentialsAreValid){
-                        //do create new search
                         serverFunctions.createNewActiveSearch(username, locationName, time, eateryTypes);
                     }
                 })
@@ -213,10 +193,8 @@ wss.on('connection', function connection(ws) {
 
             case "joinExistingSearch":
                 console.log("[MSG] received join existing search request");
-                console.log(message);
-
                 serverFunctions.validateCredentials(username, password).then((credentialsAreValid)=>{
-                    console.log("attempting log in, creds are: " + credentialsAreValid);
+                    console.log("attempting join existing search, creds are: " + credentialsAreValid);
                     if(credentialsAreValid){
                         serverFunctions.joinExistingSearch(searchCode, username);
                     }
@@ -226,10 +204,8 @@ wss.on('connection', function connection(ws) {
 
             case "castVote":
                 console.log("[MSG] received cast vote request");
-                console.log(message);
-
                 serverFunctions.validateCredentials(username, password).then((credentialsAreValid)=>{
-                    console.log("attempting vote, creds are: " + credentialsAreValid);
+                    console.log("attempting cast vote, creds are: " + credentialsAreValid);
                     if(credentialsAreValid){
                         serverFunctions.castVoteInSearch(searchCode, username, eateryOptionID);
                     }

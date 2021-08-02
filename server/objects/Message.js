@@ -1,4 +1,6 @@
 class Message{
+    //used to transfer information between the server and the application
+
     ID;
     type;
     Body;

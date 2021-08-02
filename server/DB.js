@@ -5,16 +5,17 @@ let PastSearch;
 let EateryOption;
 
 async function initialiseConnection() {
-    //console.log('[DB] attempting to initialise connection...');
+    //handles communication to and from the database
 
     let dbUrl = "mongodb+srv://barnaby:admin@cluster0.3qn4a.mongodb.net/RestaurantTinder?retryWrites=true&w=majority";//
 
+    //the user schema, for interacting with user documents
     let userSchema = mongoose.Schema({
         Username:String,
         Password:String,
         current_WSID:String,
     });
-
+    //the past search schema, for interacting with past search documents
     let pastSearchSchema = mongoose.Schema({
         Username:String,
         Location : String,
@@ -26,6 +27,7 @@ async function initialiseConnection() {
         FullDateOfSearch : String
     });
 
+    //the eateryOption schema, for interacting with favourited eateryOption documents
     let eateryOptionSchema = mongoose.Schema({
         Username : String,
         ID:String,
@@ -52,12 +54,12 @@ async function initialiseConnection() {
         User = mongoose.model('Users', userSchema);//initiate user model
     }
 
-    if(!PastSearch){
-        PastSearch = mongoose.model('pastSearches', pastSearchSchema)
+    if(!PastSearch){//if pastSearch not initiated
+        PastSearch = mongoose.model('pastSearches', pastSearchSchema)//init past search
     }
 
-    if(!EateryOption){
-        EateryOption = mongoose.model('favourites', eateryOptionSchema)
+    if(!EateryOption){//if eateryOption not initiated
+        EateryOption = mongoose.model('favourites', eateryOptionSchema)//init EateryOption
     }
 
     try{
@@ -73,7 +75,7 @@ async function initialiseConnection() {
     }
 }
 
-async function closeConnection() {// close connection
+async function closeConnection() {// close connection to database
     mongoose.connection.close();
 }
 
