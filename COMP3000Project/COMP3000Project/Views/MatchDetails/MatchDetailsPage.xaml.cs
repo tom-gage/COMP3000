@@ -22,5 +22,12 @@ namespace COMP3000Project.Views.MatchDetails
 
             BindingContext = viewModel;
         }
+
+        protected override void OnAppearing()
+        {
+            viewModel.GetCoordinates();
+
+            base.OnAppearing();
+        }
     }
 }

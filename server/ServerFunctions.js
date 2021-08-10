@@ -264,6 +264,9 @@ class ServerFunctions{
     async createNewActiveSearch(username, locationName, time, eateryTypes){
         let selectedEateryType = eateryTypes[0];
 
+        let latitude;
+        let longitude;
+
         let eateryOptionsArray = [];
 
         //create an active search object, populated with a user and eatery options array
@@ -288,8 +291,8 @@ class ServerFunctions{
 
 
         }).then((geoCodeResponse) => {
-            let latitude = geoCodeResponse.data.results[0].geometry.location.lat;
-            let longitude = geoCodeResponse.data.results[0].geometry.location.lng;
+            latitude = geoCodeResponse.data.results[0].geometry.location.lat;
+            longitude = geoCodeResponse.data.results[0].geometry.location.lng;
 
             client.placesNearby({params:{//then, do a place search request for places nearby the coordinates to get list of nearby eateries
                     location : [latitude, longitude],
@@ -346,9 +349,13 @@ class ServerFunctions{
                         PlaceSearchResponse.data.results[i].formatted_address = placeDetailsResponse.data.result.formatted_address;
                         PlaceSearchResponse.data.results[i].formatted_phone_number = placeDetailsResponse.data.result.formatted_phone_number;
 
+                        placeDetailsResponse.Latitude = latitude;
+                        placeDetailsResponse.Longitude = longitude;
 
                         //responses are asynchronous and come in at varying times, this counter tracks which have come in
                         counter++;
+
+
 
                         if(counter >= PlaceSearchResponse.data.results.length){//when all the responses are accounted for the data can be compiled and sent to the user
                             this.compileAndSendToUser(username, PlaceSearchResponse, time);

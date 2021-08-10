@@ -14,6 +14,8 @@
   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
   <application android:label="COMP3000Project.Android" android:name="android.app.Application" android:allowBackup="true" android:icon="@mipmap/icon" android:debuggable="true" android:extractNativeLibs="true">
+    <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyBbIr0ggukOfFiCFLoQcpypMmhA5NAYCZw" />
+    <uses-library android:name="org.apache.http.legacy" android:required="false" />
     <activity android:configChanges="orientation|screenSize" android:icon="@mipmap/icon" android:label="COMP3000Project" android:theme="@style/MainTheme" android:name="crc64186e73278a3f5c53.MainActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />

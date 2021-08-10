@@ -22,6 +22,9 @@ namespace COMP3000Project.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            //I added this, itmakes the maps work on IOS
+            Xamarin.FormsMaps.Init();
+            
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
 

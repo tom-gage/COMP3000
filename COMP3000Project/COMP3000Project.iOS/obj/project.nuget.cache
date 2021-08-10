@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "NPHTYohdU2SD2AHzUTj0IvwAZVYoVTIAjllWVC/yVNbxVIVorrxAy2CEBZRQpLenW3NH1Rum6yxqtXL7O20xxQ==",
+  "dgSpecHash": "+xHSSgaCMfG6sKEg7TnAsTsFVA6Dx3aWf1pzNGHp56qZNalMj6hp05kDzG8xxE3ITpCUJ7NsBDljSBPU7ANo9g==",
   "success": true,
   "projectFilePath": "C:\\Users\\btgage\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project.iOS\\COMP3000Project.iOS.csproj",
   "expectedPackageFiles": [
@@ -17,7 +17,8 @@
     "C:\\Users\\btgage\\.nuget\\packages\\system.text.encodings.web\\5.0.1\\system.text.encodings.web.5.0.1.nupkg.sha512",
     "C:\\Users\\btgage\\.nuget\\packages\\system.text.json\\5.0.2\\system.text.json.5.0.2.nupkg.sha512",
     "C:\\Users\\btgage\\.nuget\\packages\\xamarin.essentials\\1.7.0\\xamarin.essentials.1.7.0.nupkg.sha512",
-    "C:\\Users\\btgage\\.nuget\\packages\\xamarin.forms\\5.0.0.2083\\xamarin.forms.5.0.0.2083.nupkg.sha512"
+    "C:\\Users\\btgage\\.nuget\\packages\\xamarin.forms\\5.0.0.2083\\xamarin.forms.5.0.0.2083.nupkg.sha512",
+    "C:\\Users\\btgage\\.nuget\\packages\\xamarin.forms.maps\\5.0.0.2083\\xamarin.forms.maps.5.0.0.2083.nupkg.sha512"
   ],
   "logs": []
 }

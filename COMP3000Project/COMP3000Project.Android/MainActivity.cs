@@ -20,6 +20,9 @@ namespace COMP3000Project.Droid
 
             base.OnCreate(savedInstanceState);
 
+            //I added this, it makes the maps work on android
+            Xamarin.FormsMaps.Init(this, savedInstanceState);
+
             //I added this, it makes the notifications work on android
             NotificationCenter.CreateNotificationChannel();
 

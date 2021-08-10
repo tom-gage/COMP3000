@@ -16,7 +16,8 @@
           "Plugin.LocalNotification": "8.0.2",
           "System.Text.Json": "5.0.2",
           "Xamarin.Essentials": "1.7.0",
-          "Xamarin.Forms": "5.0.0.2083"
+          "Xamarin.Forms": "5.0.0.2083",
+          "Xamarin.Forms.Maps": "5.0.0.2083"
         },
         "runtime": {
           "COMP3000Project.dll": {}
@@ -173,6 +174,17 @@
             "fileVersion": "5.0.0.716"
           }
         }
+      },
+      "Xamarin.Forms.Maps/5.0.0.2083": {
+        "dependencies": {
+          "Xamarin.Forms": "5.0.0.2083"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Xamarin.Forms.Maps.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "5.0.0.716"
+          }
+        }
       }
     }
   },
@@ -293,6 +305,13 @@
       "sha512": "sha512-KDKdEIq8SA3zP8/qyJZ9isIsP1KRLvhxUohTM4GS4HOQkkK3FARvi/FJv91O4IJ/30ByJg88mBdKuiLMyL9Q+w==",
       "path": "xamarin.forms/5.0.0.2083",
       "hashPath": "xamarin.forms.5.0.0.2083.nupkg.sha512"
+    },
+    "Xamarin.Forms.Maps/5.0.0.2083": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-fCrJIl7t5NDJ9sOfV0Hu7nX4b9dHvaPiyJzZRwVVFMIbb3JarmS+GVDSx/oqeAom/HywV+UOFdenQNCqJ8x5CA==",
+      "path": "xamarin.forms.maps/5.0.0.2083",
+      "hashPath": "xamarin.forms.maps.5.0.0.2083.nupkg.sha512"
     }
   }
 }

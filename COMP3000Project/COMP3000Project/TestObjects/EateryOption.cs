@@ -531,8 +531,6 @@ namespace COMP3000Project.TestObjects
             }
         }
 
-
-
         public EateryOption(string ID, string title, string description, float rating, string photoReference0, string photoReference1, string photoReference2, string photoReference3, string photoReference4, string[] Votes)
         {
             this.ID = ID;

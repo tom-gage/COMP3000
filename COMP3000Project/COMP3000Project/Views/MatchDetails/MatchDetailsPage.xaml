@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
              x:Class="COMP3000Project.Views.MatchDetails.MatchDetailsPage"
-             Title="Matched!">
+             Title="You've matched!">
     <ContentPage.Content>
         <ScrollView>
             <Grid Padding="10" Margin="10">
@@ -44,8 +44,51 @@
                 FontAttributes="Bold"
                     HorizontalTextAlignment="Center"/>
 
-                
-                <CollectionView Grid.Row="3"
+
+                <ContentView 
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Content="{Binding Map}"/>
+
+                <!--<maps:Map x:Name="map" MapType="Street" HasScrollEnabled="True" HasZoomEnabled="True"
+                          Grid.Row="3"
+                          Grid.Column="0"
+                          BindingContext="{Binding }">
+                    
+                    <x:Arguments>
+                        <maps:MapSpan>
+                            <x:Arguments>
+                                <maps:Position>
+                                    <x:Arguments>
+                                        <x:Double>{StaticResource Latitude}</x:Double>
+                                        <x:Double>"{Binding Longitude}"</x:Double>
+                                    </x:Arguments>
+                                </maps:Position>
+                                <x:Double>0.01</x:Double>
+                                <x:Double>0.01</x:Double>
+                            </x:Arguments>
+                        </maps:MapSpan>
+                    </x:Arguments>
+
+                    <maps:Map.Pins>
+                        <maps:Pin 
+                            Label="my pin"
+                            Address="address"
+                            Type="Place">
+                            <maps:Pin.Position>
+                                <maps:Position>
+                                    <x:Arguments>
+                                        <x:Double>36.9628066</x:Double>
+                                        <x:Double>-122.0194722</x:Double>
+                                    </x:Arguments>
+                                </maps:Position>
+                            </maps:Pin.Position>
+                        </maps:Pin>
+                    </maps:Map.Pins>
+                </maps:Map>-->
+
+
+                <!--<CollectionView Grid.Row="3"
                                 Grid.Column="0"
                             Grid.ColumnSpan="1"
                             ItemsSource="{Binding Images}"
@@ -72,7 +115,7 @@
                             </Frame>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
-                </CollectionView>
+                </CollectionView>-->
 
 
                 <Label

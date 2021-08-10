@@ -51,6 +51,8 @@ C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\bin\iPhon
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\bin\iPhone\Debug\zh-HK\Xamarin.Forms.Platform.iOS.resources.dll
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\bin\iPhone\Debug\zh-Hans\Xamarin.Forms.Platform.iOS.resources.dll
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\bin\iPhone\Debug\zh-Hant\Xamarin.Forms.Platform.iOS.resources.dll
+C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\bin\iPhone\Debug\Xamarin.Forms.Maps.dll
+C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\bin\iPhone\Debug\Xamarin.Forms.Maps.iOS.dll
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\bin\iPhone\Debug\COMP3000Project.dll
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\bin\iPhone\Debug\COMP3000Project.pdb
 C:\Users\btgage\Documents\COMP3000\COMP3000Project\COMP3000Project.iOS\obj\iPhone\Debug\actool\_PartialAppManifest.items
