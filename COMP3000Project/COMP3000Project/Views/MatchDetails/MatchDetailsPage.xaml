@@ -10,7 +10,7 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
-                    <RowDefinition Height="310"/>
+                    <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
@@ -46,53 +46,18 @@
 
 
                 <ContentView 
-                    Grid.Row="3"
+                    Grid.Row="4"
                     Grid.Column="0"
-                    Content="{Binding Map}"/>
-
-                <!--<maps:Map x:Name="map" MapType="Street" HasScrollEnabled="True" HasZoomEnabled="True"
-                          Grid.Row="3"
-                          Grid.Column="0"
-                          BindingContext="{Binding }">
-                    
-                    <x:Arguments>
-                        <maps:MapSpan>
-                            <x:Arguments>
-                                <maps:Position>
-                                    <x:Arguments>
-                                        <x:Double>{StaticResource Latitude}</x:Double>
-                                        <x:Double>"{Binding Longitude}"</x:Double>
-                                    </x:Arguments>
-                                </maps:Position>
-                                <x:Double>0.01</x:Double>
-                                <x:Double>0.01</x:Double>
-                            </x:Arguments>
-                        </maps:MapSpan>
-                    </x:Arguments>
-
-                    <maps:Map.Pins>
-                        <maps:Pin 
-                            Label="my pin"
-                            Address="address"
-                            Type="Place">
-                            <maps:Pin.Position>
-                                <maps:Position>
-                                    <x:Arguments>
-                                        <x:Double>36.9628066</x:Double>
-                                        <x:Double>-122.0194722</x:Double>
-                                    </x:Arguments>
-                                </maps:Position>
-                            </maps:Pin.Position>
-                        </maps:Pin>
-                    </maps:Map.Pins>
-                </maps:Map>-->
+                    Content="{Binding Map}"
+                    HeightRequest="310"/>
 
 
-                <!--<CollectionView Grid.Row="3"
+                <CollectionView Grid.Row="3"
                                 Grid.Column="0"
                             Grid.ColumnSpan="1"
                             ItemsSource="{Binding Images}"
-                            ItemsLayout="HorizontalList">
+                            ItemsLayout="HorizontalList"
+                                HeightRequest="310">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
 
@@ -115,7 +80,7 @@
                             </Frame>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
-                </CollectionView>-->
+                </CollectionView>
 
 
                 <Label
