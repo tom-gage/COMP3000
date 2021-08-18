@@ -19,7 +19,8 @@ using System.Collections.ObjectModel;
 using System.Text.Json;
 using COMP3000Project.Views.EateryOptionDetails;
 using COMP3000Project.Views.FavouriteEateryDetails;
-
+using COMP3000Project.Views.Tutorial;
+using COMP3000Project.LDH;
 
 namespace COMP3000Project.Views.Search
 {
@@ -136,6 +137,19 @@ namespace COMP3000Project.Views.Search
 
             //register this class as a subscriber to the websocket handler, allows for the recieving of inter class messages
             WebsocketHandler.registerSubscriber(this);
+        }
+
+        //checks for first start up, opens tutorial page if true
+        public async void OpenTutorialPage()
+        {
+            if (UserDetails.SearchPageTutorialShown == false)
+            {
+                UserDetails.SearchPageTutorialShown = true;
+                await LocalDataHandler.SaveUserDetails();
+
+                TutorialPage nextPage = new TutorialPage();
+                await Navigation.PushAsync(nextPage, true);
+            }
         }
 
 

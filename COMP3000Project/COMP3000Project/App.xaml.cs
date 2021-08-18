@@ -1,5 +1,5 @@
 ﻿using COMP3000Project.Views.MainMenu;
-using COMP3000Project.Views.Testing;
+using COMP3000Project.Views.Tutorial;
 using COMP3000Project.Views.Login;
 
 using System;
@@ -16,7 +16,7 @@ namespace COMP3000Project
         public App()
         {
             InitializeComponent();
-            TestingPage testingPage = new TestingPage();
+
             LoginPage loginPage = new LoginPage();
             
             MainPage = new NavigationPage(loginPage);

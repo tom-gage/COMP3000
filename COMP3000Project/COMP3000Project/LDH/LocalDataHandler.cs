@@ -32,19 +32,20 @@ namespace COMP3000Project.LDH
                     File.Create(path);//create file
                 }
 
+                //read the contents of the file
                 string[] readText = File.ReadAllLines(path);
                 foreach (string s in readText)
                 {
-                    //string.Concat(content, s);
                     content = content + s;
                 }
 
-                userDetailsMap = JsonConvert.DeserializeObject<MapToUserDetails>(content);//create cardCollectionStore
+                userDetailsMap = JsonConvert.DeserializeObject<MapToUserDetails>(content);//use contents to make a userDetailsMap
 
-                if (userDetailsMap == null)//if file is empty, return an empty collection store
+                if (userDetailsMap == null)//if file is empty, first start up is true
                 {
                     UserDetails.IsFirstStartUp = true;
-                } else
+                    UserDetails.SearchPageTutorialShown = false;
+                } else //else, set user details from map
                 {
                     SetUserDetails(userDetailsMap);
                 }
@@ -69,6 +70,7 @@ namespace COMP3000Project.LDH
             UserDetails.PreferVeryLargeText = userDetailsMap.PreferVeryLargeText;
             UserDetails.PreferLargeText = userDetailsMap.PreferLargeText;
             UserDetails.PreferMediumText = userDetailsMap.PreferMediumText;
+            UserDetails.SearchPageTutorialShown = userDetailsMap.SearchPageTutorialShown;
         }
 
         //gets a user details map object
@@ -85,7 +87,7 @@ namespace COMP3000Project.LDH
         }
 
 
-        //save user details locally
+        //save the local store of user details
         public static async Task SaveUserDetails()
         {
             JsonSerializer serializer = new JsonSerializer();//initialise serialiser
@@ -98,5 +100,17 @@ namespace COMP3000Project.LDH
             }
         }
 
+        //wipe the local store of user details
+        public static async Task WipeUserDetails()
+        {
+            JsonSerializer serializer = new JsonSerializer();//initialise serialiser
+
+            using (StreamWriter sw = new StreamWriter(path))//initialise writer, targeting to local storage file
+
+            using (JsonWriter writer = new JsonTextWriter(sw))
+            {
+                serializer.Serialize(writer, null);//serialise data to file 
+            }
+        }
     }
 }

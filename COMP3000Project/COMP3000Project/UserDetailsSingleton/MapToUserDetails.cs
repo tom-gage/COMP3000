@@ -100,5 +100,18 @@ namespace COMP3000Project.UserDetailsSingleton
                 }
             }
         }
+
+        private bool searchPageTutorialShown;
+        public bool SearchPageTutorialShown
+        {
+            get { return searchPageTutorialShown; }
+            set
+            {
+                if (searchPageTutorialShown != value)
+                {
+                    searchPageTutorialShown = value;
+                }
+            }
+        }
     }
 }

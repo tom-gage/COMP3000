@@ -102,7 +102,18 @@ namespace COMP3000Project.UserDetailsSingleton
             }
         }
 
-
+        private static bool searchPageTutorialShown;
+        public static bool SearchPageTutorialShown
+        {
+            get { return searchPageTutorialShown; }
+            set
+            {
+                if (searchPageTutorialShown != value)
+                {
+                    searchPageTutorialShown = value;
+                }
+            }
+        }
 
         //functions
         public static void setDetails(string username, string password)

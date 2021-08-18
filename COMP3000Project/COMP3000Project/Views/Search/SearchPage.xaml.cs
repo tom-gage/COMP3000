@@ -38,6 +38,13 @@ namespace COMP3000Project.Views.Search
             SwipeCardView.Dragging += OnDragging;
         }
 
+        protected override void OnAppearing()
+        {
+            viewModel.OpenTutorialPage();
+
+            base.OnAppearing();
+        }
+
 
         private void OnDragging(object sender, DraggingCardEventArgs e)
         {

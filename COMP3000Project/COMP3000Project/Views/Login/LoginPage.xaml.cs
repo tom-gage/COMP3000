@@ -28,6 +28,11 @@ namespace COMP3000Project.Views.Login
             BindingContext = viewModel;
 
 
+            //TEST
+            //LocalDataHandler.WipeUserDetails();
+
+
+
             //get user details from local storage
             LocalDataHandler.SetUserDetailsFromLocalStorage();
 
@@ -59,6 +64,8 @@ namespace COMP3000Project.Views.Login
 
             //hide feedback text
             viewModel.hideLoginFeedbackText();
+
+
             base.OnAppearing();
         }
 

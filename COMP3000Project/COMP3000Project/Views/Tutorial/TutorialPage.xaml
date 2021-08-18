@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="COMP3000Project.Views.Tutorial.TutorialPage"
+             Title="Tutorial">
+    <ContentPage.Content>
+        <Grid Padding="5" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+
+
+            <Label Grid.Row="0"
+                   Grid.Column="0"
+                    Grid.ColumnSpan="5"
+                   Grid.RowSpan="1"
+                Text="You've started your first search!"
+                   FontSize="{Binding Large}"
+                   FontAttributes="Bold"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+
+            <Label Grid.Row="1"
+                   Grid.Column="1"
+                    Grid.ColumnSpan="3"
+                Text="Swipe up on a card to view more information!"
+                   FontSize="{Binding Medium}"
+                   FontAttributes="Bold"
+                   HorizontalTextAlignment="Center"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+
+            <Label Grid.Row="2"
+                   Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                Text="Swipe left to vote no!"
+                   FontSize="{Binding Medium}"
+                   FontAttributes="Bold"
+                   HorizontalTextAlignment="Center"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+
+            <Label Grid.Row="2"
+                   Grid.Column="3"
+                    Grid.ColumnSpan="2"
+                Text="Swipe right to vote yes!"
+                   FontSize="{Binding Medium}"
+                   FontAttributes="Bold"
+                   HorizontalTextAlignment="Center"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+
+            <Label Grid.Row="3"
+                   Grid.Column="1"
+                    Grid.ColumnSpan="3"
+                Text="When you and a friend vote for the same restaurant, you'll match with eachother!"
+                   FontSize="{Binding Medium}"
+                   FontAttributes="Bold"
+                   HorizontalTextAlignment="Center"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+
+            <Button
+                Grid.Row="5"
+                Grid.Column="1"
+                Grid.ColumnSpan="3"
+                Text="I've got it!"
+                Command="{Binding Done}">
+                
+            </Button>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
