@@ -280,6 +280,7 @@ class ServerFunctions{
 
         this.createNewPastSearch(username, locationName, time, selectedEateryType);
 
+        let that = this;
 
         //make the API calls to get the relevant data on nearby eateries
         client.geocode({params : {//first, do geocode request which converts a location string into coordinates
@@ -391,6 +392,9 @@ class ServerFunctions{
         }).catch(function (err){
             console.log('GEOCODE REQUEST FAILED');
             console.log(err);
+
+            let MSG = new Message(1, "geoCodeFailed", "", []);//respond to user, inform them of account creation
+            that.sendToUser(username, MSG);
         });
 
 

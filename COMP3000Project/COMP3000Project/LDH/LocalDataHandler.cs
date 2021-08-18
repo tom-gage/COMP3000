@@ -57,6 +57,7 @@ namespace COMP3000Project.LDH
                 UserDetails.Password = "";
                 UserDetails.SearchID = "";
                 UserDetails.IsFirstStartUp = true;
+                UserDetails.SearchPageTutorialShown = false;
             }
         }
 
@@ -82,6 +83,10 @@ namespace COMP3000Project.LDH
             map.Password = UserDetails.Password;
             map.SearchID = UserDetails.SearchID;
             map.IsFirstStartUp = UserDetails.IsFirstStartUp;
+            map.PreferVeryLargeText = UserDetails.PreferVeryLargeText;
+            map.PreferLargeText = UserDetails.PreferLargeText;
+            map.PreferMediumText = UserDetails.PreferMediumText;
+            map.SearchPageTutorialShown = UserDetails.SearchPageTutorialShown;
 
             return map;
         }

@@ -296,6 +296,13 @@ namespace COMP3000Project.Views.Search
                     Navigation.PushAsync(nextPage, true);
                     break;
 
+                case "geoCodeFailed":
+                    Console.WriteLine("[MSG] geocode failed!");
+                    //return to parameters page
+                    ShowToast("Search failed! Location not found!");
+                    SearchCode = "Location not found!";
+                    break;
+
                 default:
                     Console.WriteLine("[MSG] Search page recieved unknown message");
                     break;
