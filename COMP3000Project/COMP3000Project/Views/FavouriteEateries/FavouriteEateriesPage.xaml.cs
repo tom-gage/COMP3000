@@ -26,16 +26,29 @@ namespace COMP3000Project.Views.FavouriteEateries
 
         protected override void OnAppearing()
         {
-            base.OnAppearing();
-
             //on page appearing
             //hide feedback text
             viewModel.hideFeedbackText();
             //refresh favourites list
             WebsocketHandler.RequestGetFavourites(UserDetails.Username, UserDetails.Password);
 
+            //register subscriber with publisher
+            WebsocketHandler.registerSubscriber(viewModel);
+
+            base.OnAppearing();
 
 
+
+
+
+        }
+
+        protected override void OnDisappearing()
+        {
+            //remove subscriber from publisher
+            WebsocketHandler.removeSubsciber(viewModel);
+
+            base.OnDisappearing();
         }
     }
 }

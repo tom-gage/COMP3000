@@ -114,9 +114,9 @@ namespace COMP3000Project.Views.Login
             //initialise the connection with the server
             WebsocketHandler.InitialiseConnectionAsync();
 
-            //register this class as a subscriber to the websocket handler, allows for the recieving of inter class messages
-            WebsocketHandler.registerSubscriber(this);
         }
+
+
 
         //FUNCTIONS
 

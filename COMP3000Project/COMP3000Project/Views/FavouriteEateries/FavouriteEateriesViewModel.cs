@@ -112,7 +112,6 @@ namespace COMP3000Project.Views.FavouriteEateries
             Small = UserDetails.GetSmallTextSetting();
 
 
-            WebsocketHandler.registerSubscriber(this);
         }
 
         //FUNCTIONS

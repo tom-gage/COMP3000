@@ -226,7 +226,21 @@ namespace COMP3000Project.WS
         //register subscriber, registered subscribers can recieve message updates
         public static void registerSubscriber(Subscriber subscriber)
         {
-            subscribers.Add(subscriber);
+            bool isUnique = true;
+
+
+            for(int i = 0; i < subscribers.Count; i++)
+            {
+                if(subscribers[i] == subscriber)
+                {
+                    isUnique = false;
+                }
+            }
+
+            if (isUnique)
+            {
+                subscribers.Add(subscriber);
+            }
         }
 
         //remove subscriber

@@ -120,9 +120,6 @@ namespace COMP3000Project.Views.SearchParameters
             Large = UserDetails.GetlargeTextSetting();
             Medium = UserDetails.GetMediumTextSetting();
             Small = UserDetails.GetSmallTextSetting();
-
-            //register this class as a subscriber to the websocket handler, allows for the recieving of inter class messages
-            WebsocketHandler.registerSubscriber(this);
         }
 
         //CONSTRUCTOR 2, for initialising past searches
@@ -158,8 +155,6 @@ namespace COMP3000Project.Views.SearchParameters
             //set commands
             GoToStartSearch = new Command(async () => await ExecuteGoToSearchPage());
 
-            //register this class as a subscriber to the websocket handler, allows for the recieving of inter class messages
-            WebsocketHandler.registerSubscriber(this);
         }
 
         //FUNCTIONS

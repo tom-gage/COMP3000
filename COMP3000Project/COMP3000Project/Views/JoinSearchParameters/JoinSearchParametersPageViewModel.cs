@@ -86,8 +86,7 @@ namespace COMP3000Project.Views.JoinSearchParameters
             Medium = UserDetails.GetMediumTextSetting();
             Small = UserDetails.GetSmallTextSetting();
 
-            //register this class as a subscriber to the websocket handler, allows for the recieving of inter class messages
-            WebsocketHandler.registerSubscriber(this);
+
         }
 
 

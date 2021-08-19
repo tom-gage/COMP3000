@@ -141,8 +141,6 @@ namespace COMP3000Project.Views.EateryOptionDetails
 
             populateImagesArray(eateryOption);
 
-            WebsocketHandler.registerSubscriber(this);
-
 
         }
 

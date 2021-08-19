@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using COMP3000Project.UserDetailsSingleton;
+using COMP3000Project.WS;
 using MLToolkit.Forms.SwipeCardView.Core;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -42,7 +44,24 @@ namespace COMP3000Project.Views.Search
         {
             viewModel.OpenTutorialPage();
 
+            //register subscriber with publisher
+            WebsocketHandler.registerSubscriber(viewModel);
+
             base.OnAppearing();
+        }
+
+        protected override void OnDisappearing()
+        {
+            //remove subscriber from publisher
+
+            if(UserDetails.SearchPageTutorialShown == true)
+            {
+                WebsocketHandler.removeSubsciber(viewModel);
+            }
+
+
+
+            base.OnDisappearing();
         }
 
 

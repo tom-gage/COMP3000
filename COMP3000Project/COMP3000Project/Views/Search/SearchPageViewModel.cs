@@ -110,8 +110,6 @@ namespace COMP3000Project.Views.Search
             //populate eateryOptions array
             StartNewSearch(location, time, eateryTypes);
 
-            //register this class as a subscriber to the websocket handler, allows for the recieving of inter class messages
-            WebsocketHandler.registerSubscriber(this);
         }
 
         //CONSTRUCTOR 2
@@ -135,8 +133,7 @@ namespace COMP3000Project.Views.Search
             //populate eateryOptions array
             populateOptionsArray(eateryOptionsJson);
 
-            //register this class as a subscriber to the websocket handler, allows for the recieving of inter class messages
-            WebsocketHandler.registerSubscriber(this);
+
         }
 
         //checks for first start up, opens tutorial page if true
@@ -144,8 +141,7 @@ namespace COMP3000Project.Views.Search
         {
             if (UserDetails.SearchPageTutorialShown == false)
             {
-                UserDetails.SearchPageTutorialShown = true;
-                await LocalDataHandler.SaveUserDetails();
+
 
                 TutorialPage nextPage = new TutorialPage();
                 await Navigation.PushAsync(nextPage, true);

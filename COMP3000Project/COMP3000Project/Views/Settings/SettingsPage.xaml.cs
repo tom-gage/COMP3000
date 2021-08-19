@@ -1,4 +1,5 @@
-﻿using System;
+﻿using COMP3000Project.WS;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,21 +15,33 @@ namespace COMP3000Project.Views.Settings
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SettingsPage : ContentPage
     {
-        SettingsPageViewModel vm;
+        SettingsPageViewModel viewModel;
         public SettingsPage()
         {
             InitializeComponent();
 
-            vm = new SettingsPageViewModel();
+            viewModel = new SettingsPageViewModel();
 
-            BindingContext = vm;
+            BindingContext = viewModel;
         }
 
         protected override void OnAppearing()
         {
             //on appearing, hide feedback text
-            vm.hideFeedbackText();
+            viewModel.hideFeedbackText();
+
+            //register subscriber with publisher
+            WebsocketHandler.registerSubscriber(viewModel);
+
             base.OnAppearing();
+        }
+
+        protected override void OnDisappearing()
+        {
+            //remove subscriber from publisher
+            WebsocketHandler.removeSubsciber(viewModel);
+
+            base.OnDisappearing();
         }
     }
 }

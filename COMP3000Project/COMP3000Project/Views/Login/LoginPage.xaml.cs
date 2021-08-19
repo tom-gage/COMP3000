@@ -9,6 +9,7 @@ using Xamarin.Forms.Xaml;
 using COMP3000Project.UserDetailsSingleton;
 using COMP3000Project.Views.AccessibilitySettings;
 using COMP3000Project.LDH;
+using COMP3000Project.WS;
 
 namespace COMP3000Project.Views.Login
 {
@@ -29,7 +30,7 @@ namespace COMP3000Project.Views.Login
 
 
             //TEST
-            //LocalDataHandler.WipeUserDetails();
+            LocalDataHandler.WipeUserDetails();
 
 
 
@@ -42,6 +43,10 @@ namespace COMP3000Project.Views.Login
 
                 //no longer the first start up, set flag to false
                 UserDetails.IsFirstStartUp = false;
+
+                UserDetails.SearchPageTutorialShown = false;
+
+
                 LocalDataHandler.SaveUserDetails();
             }
 
@@ -65,8 +70,18 @@ namespace COMP3000Project.Views.Login
             //hide feedback text
             viewModel.hideLoginFeedbackText();
 
+            //register subscriber with publisher
+            WebsocketHandler.registerSubscriber(viewModel);
 
             base.OnAppearing();
+        }
+
+        protected override void OnDisappearing()
+        {
+            //remove subscriber from publisher
+            WebsocketHandler.removeSubsciber(viewModel);
+
+            base.OnDisappearing();
         }
 
     }

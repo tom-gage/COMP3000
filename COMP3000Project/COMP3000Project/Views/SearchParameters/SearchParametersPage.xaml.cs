@@ -1,4 +1,5 @@
-﻿using System;
+﻿using COMP3000Project.WS;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,6 +31,22 @@ namespace COMP3000Project.Views.SearchParameters
 
             viewModel = new SearchParametersPageViewModel(location, time, eateryTypes);
             BindingContext = viewModel;
+        }
+
+        protected override void OnAppearing()
+        {
+            //register subscriber with publisher
+            WebsocketHandler.registerSubscriber(viewModel);
+
+            base.OnAppearing();
+        }
+
+        protected override void OnDisappearing()
+        {
+            //remove subscriber from publisher
+            WebsocketHandler.removeSubsciber(viewModel);
+
+            base.OnDisappearing();
         }
     }
 }

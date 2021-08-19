@@ -1,4 +1,6 @@
-﻿using System;
+﻿using COMP3000Project.LDH;
+using COMP3000Project.UserDetailsSingleton;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +22,14 @@ namespace COMP3000Project.Views.Tutorial
             viewModel = new TutorialPageViewModel();
             BindingContext = viewModel;
             
+        }
+
+        protected override void OnAppearing()
+        {
+            UserDetails.SearchPageTutorialShown = true;
+            LocalDataHandler.SaveUserDetails();
+
+            base.OnAppearing();
         }
     }
 }

@@ -28,9 +28,20 @@ namespace COMP3000Project.Views.MainMenu
             //refresh past searches...
             WebsocketHandler.RequestGetPastSearches(UserDetails.Username, UserDetails.Password);
 
+            //register subscriber with publisher
+            WebsocketHandler.registerSubscriber(viewModel);
+
             base.OnAppearing();
 
 
+        }
+
+        protected override void OnDisappearing()
+        {
+            //remove subscriber from publisher
+            WebsocketHandler.removeSubsciber(viewModel);
+
+            base.OnDisappearing();
         }
     }
 }
