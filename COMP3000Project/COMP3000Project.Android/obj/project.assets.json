@@ -3351,11 +3351,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\btgage\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project.Android\\COMP3000Project.Android.csproj",
+      "projectUniqueName": "C:\\Users\\btgage\\Desktop\\COMP3000\\COMP3000Project\\COMP3000Project.Android\\COMP3000Project.Android.csproj",
       "projectName": "COMP3000Project.Android",
-      "projectPath": "C:\\Users\\btgage\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project.Android\\COMP3000Project.Android.csproj",
+      "projectPath": "C:\\Users\\btgage\\Desktop\\COMP3000\\COMP3000Project\\COMP3000Project.Android\\COMP3000Project.Android.csproj",
       "packagesPath": "C:\\Users\\btgage\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\btgage\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project.Android\\obj\\",
+      "outputPath": "C:\\Users\\btgage\\Desktop\\COMP3000\\COMP3000Project\\COMP3000Project.Android\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
@@ -3378,8 +3378,8 @@
       "frameworks": {
         "monoandroid10.0": {
           "projectReferences": {
-            "C:\\Users\\btgage\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project\\COMP3000Project.csproj": {
-              "projectPath": "C:\\Users\\btgage\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project\\COMP3000Project.csproj"
+            "C:\\Users\\btgage\\Desktop\\COMP3000\\COMP3000Project\\COMP3000Project\\COMP3000Project.csproj": {
+              "projectPath": "C:\\Users\\btgage\\Desktop\\COMP3000\\COMP3000Project\\COMP3000Project\\COMP3000Project.csproj"
             }
           }
         }

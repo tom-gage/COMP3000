@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "6rAUSoF5ulsJt8PivJxh8updtMOveCCbsmWGjfK/pqTNZs3uncSz07qx5bvM6fA3SNwIU+lyxoCu2LZZlfwqLw==",
+  "dgSpecHash": "gS98/wSzZbB3D4FPj9WWaiLW+Y4yDqnapvmPGgJPZ3A9AnlZZDewjOiwC91OYPxKcfKP2hTZwPCE5eWl4Z9NWA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\btgage\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project.Tests\\COMP3000Project.Tests.csproj",
+  "projectFilePath": "C:\\Users\\btgage\\Desktop\\COMP3000\\COMP3000Project\\COMP3000Project.Tests\\COMP3000Project.Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\btgage\\.nuget\\packages\\microsoft.codecoverage\\16.10.0\\microsoft.codecoverage.16.10.0.nupkg.sha512",
     "C:\\Users\\btgage\\.nuget\\packages\\microsoft.net.test.sdk\\16.10.0\\microsoft.net.test.sdk.16.10.0.nupkg.sha512",

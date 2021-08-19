@@ -73,6 +73,16 @@
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
 
+            <Label Grid.Row="4"
+                   Grid.Column="1"
+                    Grid.ColumnSpan="3"
+                Text="Give the code at the top of your screen to your friends to invite them"
+                   FontSize="{Binding Medium}"
+                   FontAttributes="Bold"
+                   HorizontalTextAlignment="Center"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+
             <Button
                 Grid.Row="5"
                 Grid.Column="1"

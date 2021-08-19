@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\btgage\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project.iOS\\COMP3000Project.iOS.csproj": {}
+    "C:\\Users\\btgage\\Desktop\\COMP3000\\COMP3000Project\\COMP3000Project.iOS\\COMP3000Project.iOS.csproj": {}
   },
   "projects": {
-    "C:\\Users\\btgage\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project.iOS\\COMP3000Project.iOS.csproj": {
+    "C:\\Users\\btgage\\Desktop\\COMP3000\\COMP3000Project\\COMP3000Project.iOS\\COMP3000Project.iOS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\btgage\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project.iOS\\COMP3000Project.iOS.csproj",
+        "projectUniqueName": "C:\\Users\\btgage\\Desktop\\COMP3000\\COMP3000Project\\COMP3000Project.iOS\\COMP3000Project.iOS.csproj",
         "projectName": "COMP3000Project.iOS",
-        "projectPath": "C:\\Users\\btgage\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project.iOS\\COMP3000Project.iOS.csproj",
+        "projectPath": "C:\\Users\\btgage\\Desktop\\COMP3000\\COMP3000Project\\COMP3000Project.iOS\\COMP3000Project.iOS.csproj",
         "packagesPath": "C:\\Users\\btgage\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\btgage\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project.iOS\\obj\\",
+        "outputPath": "C:\\Users\\btgage\\Desktop\\COMP3000\\COMP3000Project\\COMP3000Project.iOS\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "fallbackFolders": [
@@ -34,8 +34,8 @@
         "frameworks": {
           "xamarinios10": {
             "projectReferences": {
-              "C:\\Users\\btgage\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project\\COMP3000Project.csproj": {
-                "projectPath": "C:\\Users\\btgage\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project\\COMP3000Project.csproj"
+              "C:\\Users\\btgage\\Desktop\\COMP3000\\COMP3000Project\\COMP3000Project\\COMP3000Project.csproj": {
+                "projectPath": "C:\\Users\\btgage\\Desktop\\COMP3000\\COMP3000Project\\COMP3000Project\\COMP3000Project.csproj"
               }
             }
           }
@@ -95,14 +95,14 @@
         }
       }
     },
-    "C:\\Users\\btgage\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project\\COMP3000Project.csproj": {
+    "C:\\Users\\btgage\\Desktop\\COMP3000\\COMP3000Project\\COMP3000Project\\COMP3000Project.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\btgage\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project\\COMP3000Project.csproj",
+        "projectUniqueName": "C:\\Users\\btgage\\Desktop\\COMP3000\\COMP3000Project\\COMP3000Project\\COMP3000Project.csproj",
         "projectName": "COMP3000Project",
-        "projectPath": "C:\\Users\\btgage\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project\\COMP3000Project.csproj",
+        "projectPath": "C:\\Users\\btgage\\Desktop\\COMP3000\\COMP3000Project\\COMP3000Project\\COMP3000Project.csproj",
         "packagesPath": "C:\\Users\\btgage\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\btgage\\Documents\\COMP3000\\COMP3000Project\\COMP3000Project\\obj\\",
+        "outputPath": "C:\\Users\\btgage\\Desktop\\COMP3000\\COMP3000Project\\COMP3000Project\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
